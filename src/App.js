@@ -2,12 +2,15 @@ import React from "react";
 import "./Style/style.css";
 import { BrowserRouter } from "react-router-dom";
 import Manager from "./Components/Manager";
+import { FoodFindProvider } from "./context";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Manager />
-    </BrowserRouter>
+    <FoodFindProvider>
+      <BrowserRouter>
+        <Manager />
+      </BrowserRouter>
+    </FoodFindProvider>
   );
 }
 
