@@ -1,7 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, } from "react";
 import FoodFindLogo from "../assats/foodfind.png";
 import { FoodFindContext } from "../context";
 import LoginForm from "../Components/LoginForm";
+import { useHistory } from "react-router-dom";
+
+
 
 
 const Login = () => {
@@ -9,26 +12,22 @@ const Login = () => {
   const [businessUsers, setBusinessUsers] = useState("");
   const [error, setError] = useState("");
 
+  const history = useHistory();
 
-  // useEffect(() => {
-  //   async () => {
+  const checkIfLoggedIn = () => {
+    let fromLocalStorage = window.localStorage.getItem("user")
+    if(fromLocalStorage !== null && fromLocalStorage !== undefined) {
+      history.push("/");
+    }
+
+  }
   
-  //   }
-   
-  // }, []);
+  
+  useEffect(() => {
+  checkIfLoggedIn();
+  }, []);
 
-  // useEffect(() => {
-  //   //find id from db and push myID to user context
-  //   (async () => {
-  //     setBusinessUsers(data);
-  //   })()
-  // }, []);
-
-
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+  console.log(user);
   return (
     <div className="min-h-screen flex items-center justify-center bg-green-400 py-12 px-4 sm:px-6 lg:px-8">
       

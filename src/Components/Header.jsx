@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Logo from "../assats/foodfind.png";
+import { FoodFindContext } from "../context";
+import { useHistory } from "react-router-dom";
+import { retrieveLocalStorageData } from "../utility/localStorage";
 
 export const Header = () => {
+  const { user, setUser } = useContext(FoodFindContext);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    (async () => {
+      const userData = await retrieveLocalStorageData("user");
+      console.log(userData);
+      await setUser(userData);
+    })();
+  }, []);
+
+  const Logout = () => {
+    window.localStorage.removeItem("user");
+    history.push("/login");
+  };
+
   return (
-    <div className="flex w-auto h-20 m-5 rounded-3xl bg-gray-300 shadow-xl">
-      <a href="/#" className="flex justify-center items-center w-20 h-20 text-black  opacity-80 rounded-xl hover:bg-white hover:opacity-100 hover:text-green-500 transform hover:translate-x-3 duration-300">
+    <div className="flex w-auto h-20 m-5 rounded-3xl bg-gray-300 shadow-xl sticky justify-evenly">
+      <a
+        href="/login"
+        onClick={Logout}
+        className="flex justify-center items-center w-20 h-20 text-black  opacity-80 rounded-xl hover:bg-white hover:opacity-100 hover:text-green-500 transform hover:translate-x-3 duration-300"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-16 w-16 ml-5"
@@ -20,13 +44,12 @@ export const Header = () => {
           />
         </svg>
       </a>
-      <img
-        src={Logo}
-        alt="Logo"
-        className="ml-auto mr-5"
-      />
+      <span className="flex justify-center items-center ml-96 ">
+        שלום {user ?user.businessName : null}
+      </span>
+      <img src={Logo} alt="Logo" className="ml-auto mr-5" />
     </div>
   );
 };
 
-export default Header
+export default Header;

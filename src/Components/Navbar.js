@@ -51,9 +51,9 @@ export const Navbar = () => {
           </svg>
         </a>
       </Link>
-      {/* כפתור שינוי סטטוס עסק */}
+      {/* כפתור לדף תפריט */}
       <Link
-        to="/3"
+        to="/businessMenu"
         onClick={() => setStatusBtn(!statusBtn)}
         className="flex justify-center items-center w-24 h-24  text-black opacity-80 rounded-xl hover:bg-white hover:opacity-100 hover:text-green-500 transform hover:-translate-y-4 duration-300"
       >
