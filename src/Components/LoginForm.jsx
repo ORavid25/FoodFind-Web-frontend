@@ -1,20 +1,41 @@
-import React ,{useState} from 'react'
+import React ,{useState,useEffect} from 'react'
 import FoodFindLogo from "../assats/foodfind.png";
 import {LoginWithEmailAndPass} from '../api/BusinessUserController';
 
 const LoginForm = () => {
     
-    const [details,setDetails] = useState({businessEmail:"",password:""})
+    const [details,setDetails] = useState({
+      businessEmail:"",
+      password:""
+    })
 
-    const submitHandler = async () => {
-      try {
-        const data = await LoginWithEmailAndPass(details.businessEmail,details.password)
-        console.log(data);
-      } catch (error) {
-        console.log(error);
+    const submitHandler = async (e) => {
+      e.preventDefault();
+      if(details.businessEmail!==null && details.password!==null){
+       const res = LoginWithEmailAndPass(details.businessEmail, details.password); 
+       console.log(res);
       }
-
+      else alert("harkosh!!!")
+      
+    
     }
+
+    useEffect(async() => {
+        const req = {
+                  method: "GET",
+              };
+              try{
+                  const res = await fetch('http://proj14.ruppin-tech.co.il/api/GetAllBusinessUsers',req);
+                  if(res.status!==201 && res.status!==200) return "Conflict";
+                  const data = await res.json(); 
+                  console.log("ALLBU",data);
+                  return data;
+              }
+              catch(error){
+                  console.log(error);
+                  return null;
+              }
+    }, []);
 
 
 
@@ -31,7 +52,7 @@ const LoginForm = () => {
                 התחבר כבעל עסק
               </h2>
             </div>
-            <form className="mt-14 space-y-6"  >
+            <form className="mt-14 space-y-6" onSubmit={submitHandler}>
               <div className="rounded-md shadow-sm -space-y-px">
                 <div>
                   <input
@@ -43,7 +64,7 @@ const LoginForm = () => {
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-400  focus:border-green-500 focus:z-10 sm:text-sm"
                     placeholder="אימייל"
                     dir="rtl"
-                    onChange={e => setDetails({...details, businessEmail:e.target.value})} value={details.businessEmail}
+                    onChange={e => setDetails({...details, businessEmail:e.target.value})} 
                   />
                 </div>
                 <div>
@@ -56,7 +77,7 @@ const LoginForm = () => {
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
                     placeholder="סיסמא"
                     dir="rtl"
-                    onChange={e => setDetails({...details, password:e.target.value})} value={details.password}
+                    onChange={e => setDetails({...details, password:e.target.value})}
                   />
                 </div>
               </div>
@@ -81,9 +102,8 @@ const LoginForm = () => {
   
               <div>
                 <button
-                  type="submit"
                   className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-50"
-                  onClick={submitHandler}
+                  type="submit"
                 >
                   התחבר
                 </button>
