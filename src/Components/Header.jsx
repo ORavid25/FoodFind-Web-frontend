@@ -23,7 +23,8 @@ export const Header = () => {
   };
 
   return (
-    <div className="flex w-auto h-20 m-5 rounded-3xl bg-gray-300 shadow-xl sticky justify-evenly">
+    
+    <div className="flex text-2xl items-center justify-between w-auto h-20 m-3 rounded-3xl bg-green-500 shadow-xl">
       <a
         href="/login"
         onClick={Logout}
@@ -31,7 +32,7 @@ export const Header = () => {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-16 w-16 ml-5"
+          className="h-16 w-16 ml-2"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -44,11 +45,12 @@ export const Header = () => {
           />
         </svg>
       </a>
-      <span className="flex justify-center items-center ml-96 ">
+      <span className="flex text-center justify-center items-center text-2xl">
         שלום {user ?user.businessName : null}
       </span>
-      <img src={Logo} alt="Logo" className="ml-auto mr-5" />
+      <img src={Logo} alt="Logo" className=" w-52 h-auto mr-5" />
     </div>
+ 
   );
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <div className="flex text-center justify-evenly text-lg w-auto h-20 m-5 rounded-3xl bg-green-500 shadow-xl">
+    <div className="flex text-2xl items-center justify-evenly w-auto h-20 m-3 rounded-3xl bg-green-500 shadow-xl">
      
         <p>!צור קשר</p>
       

@@ -47,7 +47,7 @@ const BusinessOrders = () => {
   });
 
   return (
-    <div className="container">
+    <div className="flex container">
       <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6" dir="rtl">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
