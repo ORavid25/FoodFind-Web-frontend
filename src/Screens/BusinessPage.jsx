@@ -16,7 +16,7 @@ const BusinessPage = () => {
   return (
     <Layout>
       <Navbar />
-      <div className="flex ml-44 p-5 justify-center bg-blue-400 h-screen">
+      <div className="flex ml-44 p-5 justify-center h-screen">
         <BusinessUpdateForm />
       </div>
     </Layout>

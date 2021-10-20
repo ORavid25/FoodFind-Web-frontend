@@ -77,8 +77,8 @@ const BusinessOrders = () => {
   console.log("data=",data);
   console.log("orderData=",orderData);
   return (
-    <div className="flex justify-center items-center w-80">
-      <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div className="flex justify-center items-center w-80 ">
+      <div class="bg-gray-200 shadow-md overflow-hidden sm:rounded-lg  ring-4 ring-opacity-90 ring-green-300 ">
         <div class="px-4 py-5 sm:px-6" dir="rtl">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
             מסך ההזמנות
