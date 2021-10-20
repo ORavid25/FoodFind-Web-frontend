@@ -21,14 +21,18 @@ console.log(inputs);
           className=" items-center justify-evenly h-36  bg-yellow-500"
         >
           <h1 className="text-xl p-5">הכנס את הפרטים הנדרשים</h1>
-          <input className="m-5 text-center" placeholder="שם מוצר" onChange={(val) => {
+          <input className="m-5 px-3 py-0.5 rounded-sm text-center" placeholder="שם מוצר" onChange={(val) => {
             setInputs({...inputs,itemName: val})
           }}/>
-          <input className="m-5 text-center" placeholder="מחיר מוצר"></input>
-          <input className="m-5 text-center" placeholder="תיאור מוצר"></input>
-          <button className="bg-green-500 text-xl rounded-xl p-1" onClick={async ()=>{
-           await setIsClicked(!isClicked)
-           await props.open(isClicked)
+          <input className="m-5 px-3 py-0.5 rounded-sm text-center" placeholder="מחיר מוצר" onChange={(val) => {
+            setInputs({...inputs,itemPrice: val})
+          }}/>
+          <input className="m-5 px-3 py-0.5 rounded-sm text-center" placeholder="תיאור מוצר" onChange={(val) => {
+            setInputs({...inputs,comment: val})
+          }}/>
+          <button className="bg-green-500 px-6 rounded-lg text-lg" onClick={async ()=>{
+           await setIsClicked(!isClicked);
+           await props.open(isClicked);
           }}>אשר</button>
       
         </div>

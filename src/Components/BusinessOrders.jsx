@@ -1,44 +1,72 @@
-import React from "react";
+import React,{useContext} from "react";
+import { FoodFindContext } from "../context";
 
 const BusinessOrders = () => {
-  const words = ["sky", "blue", "falcon", "wood", "cloud"];
+
+  const {orderData,setOrderData} = useContext(FoodFindContext);
+
+
   const data = [
     {
       id: "1",
       productName: "המבורגר",
-      Added: "בצל מטוגן, ביצת עין, בלי ירקות",
+      orderDate: "17/10/2021",
       orderTime: "20:25",
-      howOrder: "שקד שרווי",
+      orderAddress: "החרצית 5 חדרה",
+      whoOrder: "דוד ביטון",
+      products: "המבורגר 220",
+      Added: "בצל מטוגן, ביצת עין",
+      comment: "בלי עגבניה ובלי בצל חי , הרבה רטבים בצד",
     },
     {
       id: "2",
-      productName: "ג'חנון",
-      orderTime: "20:35",
-      howOrder: "אור רביד",
+      productName: "המבורגר טלה ",
+      orderDate: "19/10/2021",
+      orderTime: "20:40",
+      orderAddress: "בסיס מחנה 80",
+      whoOrder: "שקד שרווי",
+      products: "המבורגר 220,המבורגר אנטריקוט 300",
+      Added: "בצל מטוגן,פטריות צרובות",
+      comment: "בבקשה תפנק אנחנו חיילים בעורב צנחנים",
     },
     {
       id: "3",
-      productName: "פיצה",
-      orderTime: "20:50",
-      howOrder: "שקד ואור",
+      productName: "המבורגר טלה ",
+      orderDate: "19/10/2021",
+      orderTime: "20:40",
+      orderAddress: "בסיס מחנה 80",
+      whoOrder: "שקד שרווי",
+      products: "המבורגר 220,המבורגר אנטריקוט 300",
+      Added: "בצל מטוגן,פטריות צרובות",
+      comment: "בבקשה תפנק אנחנו חיילים בעורב צנחנים",
     },
+
   ];
+
+  // const OrderHandler = () => {
+         
+    
+  // }
+
   const items = data.map((data, idx) => {
     return (
-      <div className="contianer hover:bg-red-300" onClick={() => {
-        alert("heyy!")
-      }}>
-        <ul className="" key={data.id}>
+      <div
+        className="flex container hover:bg-green-300"
+        onClick={(data) => {
+          alert("heyy")
+        }}
+      >
+        <ul className="container" key={data.id}>
           <div class=" p-6 flex flex-col justify-evenly">
-            <div className="flex flex-row-reverse mb-6">
-              <h1 class=" text-sm font-medium text-gray-500">
+            <div className="flex flex-row justify-between mb-6">
+              <p class="text-sm text-gray-900">{data.orderTime}</p>
+              <p class=" text-sm font-medium text-gray-500 self-center">
                 {data.productName}
-              </h1>
-              <p class="mr-44 text-sm text-gray-900">{data.orderTime}</p>
+              </p>
             </div>
             <div className="flex flex-row-reverse justify-between">
               <p className="ml-14">הוזמן על ידי</p>
-              <p className="text-lg">{data.howOrder}</p>
+              <p className="text-lg">{data.whoOrder}</p>
             </div>
           </div>
         </ul>
@@ -46,8 +74,10 @@ const BusinessOrders = () => {
     );
   });
 
+  console.log("data=",data);
+  console.log("orderData=",orderData);
   return (
-    <div className="flex container">
+    <div className="flex justify-center items-center w-80">
       <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6" dir="rtl">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
