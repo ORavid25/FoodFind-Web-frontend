@@ -24,7 +24,7 @@ export const Header = () => {
 
   return (
     
-    <div className="flex text-2xl items-center justify-between w-auto h-20 m-3 rounded-3xl bg-green-500 shadow-xl">
+    <div className="flex text-2xl items-center justify-between w-auto h-20 m-3 rounded-3xl bg-green-400 shadow-xl">
       <a
         href="/login"
         onClick={Logout}

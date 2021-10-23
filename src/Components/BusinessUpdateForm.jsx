@@ -3,7 +3,7 @@ import { HiChevronDown } from "react-icons/hi";
 
 const businessUpdateForm = () => {
   return (
-    <div className="container w-8/12 bg-gray-200 shadow-lg rounded-xl p-5  ring-4 ring-opacity-90 ring-green-300 ">
+    <div className="container w-8/12 bg-gray-200 shadow-lg rounded-xl p-5  ring-4 ring-opacity-90 ring-green-200 ">
       {/* title div */}
       <div dir="rtl" className=" px-8 mt-6">
         <h1 className="mb-1 text-2xl font-medium leading-6">עדכון דף עסקי</h1>

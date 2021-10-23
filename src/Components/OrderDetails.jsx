@@ -14,7 +14,7 @@ const OrderDetails = () => {
   };
 
   return (
-    <div className="flex container flex-col w-full mx-2 my-2 bg-gray-200  rounded-lg  ring-4 ring-opacity-90 ring-green-300 ">
+    <div className="flex container flex-col w-full mx-2 my-2 h-full bg-gray-200  rounded-lg  ring-4 ring-opacity-90 ring-green-300 ">
       <div dir="rtl" className="flex flex-col justify-between p-4 ">
         <h1 className="text-lg leading-6 font-medium text-gray-900">
           פירוט הזמנה

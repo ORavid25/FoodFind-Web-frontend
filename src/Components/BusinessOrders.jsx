@@ -40,6 +40,28 @@ const BusinessOrders = () => {
       Added: "בצל מטוגן,פטריות צרובות",
       comment: "בבקשה תפנק אנחנו חיילים בעורב צנחנים",
     },
+    {
+      id: "4",
+      productName: "המבורגר טלה ",
+      orderDate: "19/10/2021",
+      orderTime: "20:40",
+      orderAddress: "בסיס מחנה 80",
+      whoOrder: "שקד שרווי",
+      products: "המבורגר 220,המבורגר אנטריקוט 300",
+      Added: "בצל מטוגן,פטריות צרובות",
+      comment: "בבקשה תפנק אנחנו חיילים בעורב צנחנים",
+    },
+    {
+      id: "5",
+      productName: "המבורגר טלה ",
+      orderDate: "19/10/2021",
+      orderTime: "20:40",
+      orderAddress: "בסיס מחנה 80",
+      whoOrder: "שקד שרווי",
+      products: "המבורגר 220,המבורגר אנטריקוט 300",
+      Added: "בצל מטוגן,פטריות צרובות",
+      comment: "בבקשה תפנק אנחנו חיילים בעורב צנחנים",
+    },
 
   ];
 
@@ -74,10 +96,8 @@ const BusinessOrders = () => {
     );
   });
 
-  console.log("data=",data);
-  console.log("orderData=",orderData);
   return (
-    <div className="flex justify-center items-center w-80 ">
+    <div className="flex justify-center items-center w-80 h-full ">
       <div class="bg-gray-200 shadow-md overflow-hidden sm:rounded-lg  ring-4 ring-opacity-90 ring-green-300 ">
         <div class="px-4 py-5 sm:px-6" dir="rtl">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
