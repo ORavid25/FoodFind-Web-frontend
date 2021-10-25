@@ -32,8 +32,18 @@ export const BusinessUsersController = {
 };
 
 
+export const GetAllBusinessItemsByBusinessId = `${Base_URL}/businessitems/GetAllBusinessItemsByBusinessId/`;
+export const GetBusinessItemNameById = `${Base_URL}/businessitems/GetItemById/`
+
 export const InsertItemOfBusinessUser = `${Base_URL}/businessitems/InsertItemOfBusinessUser`;
+export const InsertToppingOfItem = `${Base_URL}/businessitems/InsertToppingOfItem`;
 
 export const BusinessItemController = {
+    GetAllBusinessItemsByBusinessId,
+    GetBusinessItemNameById,
+
+
     InsertItemOfBusinessUser,
+    InsertToppingOfItem,
+    
 }

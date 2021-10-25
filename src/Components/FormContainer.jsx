@@ -32,13 +32,13 @@ const FormContainer = (props) => {
 
 console.log("inputs=",inputs);
   return (
-    <div className="w-full max-h-96 rounded-xl  bg-pink-500">
+    <div className="max-h-96 w-11/12 mx-16 rounded-xl  b-white">
       <div>
         <div
           dir="rtl"
-          className=" items-center justify-evenly h-36  bg-yellow-500"
+          className=" items-center justify-evenly h-28  bg-gray-200"
         >
-          <h1 className="text-xl p-5">הכנס את הפרטים הנדרשים</h1>
+          <h1 className="text-xl px-5 pt-3">הכנס את הפרטים הנדרשים</h1>
           <input className="m-5 px-3 py-0.5 rounded-sm text-center" placeholder="שם מוצר" onChange={(e) => {
             setInputs({...inputs,itemName: e.target.value})
           }}/>
@@ -48,11 +48,12 @@ console.log("inputs=",inputs);
           <input className="m-5 px-3 py-0.5 rounded-sm text-center" placeholder="תיאור מוצר" onChange={(e) => {
             setInputs({...inputs,comment: e.target.value})
           }}/>
-          <button className="bg-green-500 px-6 rounded-lg text-lg" onClick={async ()=>{
+          <button className="px-5 py-2 m-5 bg-green-500 text-md text-white font-medium ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300 " onClick={async ()=>{
           const res= await InsertItemOfBusinessUser(inputs.itemName,id,inputs.itemPrice,inputs.comment)
-          console.log(res);
+          console.log("result =",res);
            await setIsClicked(!isClicked);
            await props.open(isClicked);
+           await props.dataItemID(res);
           }}>אשר</button>
       
         </div>

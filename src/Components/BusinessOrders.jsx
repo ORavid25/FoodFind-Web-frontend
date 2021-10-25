@@ -73,16 +73,16 @@ const BusinessOrders = () => {
   const items = data.map((data, idx) => {
     return (
       <div
-        className="flex container hover:bg-green-300"
+        classNameName="flex container hover:bg-green-300"
         onClick={(data) => {
           alert("heyy")
         }}
       >
-        <ul className="container" key={data.id}>
-          <div class=" p-6 flex flex-col justify-evenly">
+        <ul classNameName="container" key={data.id}>
+          <div className=" p-6 flex flex-col justify-evenly">
             <div className="flex flex-row justify-between mb-6">
-              <p class="text-sm text-gray-900">{data.orderTime}</p>
-              <p class=" text-sm font-medium text-gray-500 self-center">
+              <p className="text-sm text-gray-900">{data.orderTime}</p>
+              <p className=" text-sm font-medium text-gray-500 self-center">
                 {data.productName}
               </p>
             </div>
@@ -97,17 +97,17 @@ const BusinessOrders = () => {
   });
 
   return (
-    <div className="flex justify-center items-center w-80 h-full ">
-      <div class="bg-gray-200 shadow-md overflow-hidden sm:rounded-lg  ring-4 ring-opacity-90 ring-green-300 ">
-        <div class="px-4 py-5 sm:px-6" dir="rtl">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">
+    <div classNameName="flex justify-center items-center w-80 h-full ">
+      <div className="bg-gray-200 shadow-md overflow-hidden sm:rounded-lg  ring-4 ring-opacity-90 ring-green-300 ">
+        <div className="px-4 py-5 sm:px-6" dir="rtl">
+          <h3 className="text-lg leading-6 font-medium text-gray-900">
             מסך ההזמנות
           </h3>
-          <p class="mt-1 max-w-2xl text-sm text-gray-500">
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">
             כאן תוכל לראות את ההזמנות הנכנסות
           </p>
         </div>
-        <div className="container">{items}</div>
+        <div classNameName="container">{items}</div>
       </div>
     </div>
   );
