@@ -14,7 +14,7 @@ export const Home = () => {
       <div className="ml-44 h-full flex flex-col">
         <div className="flex w-full justify-end items-center p-5 ">
             <OrderDetails />
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center ">
             <BusinessOrders />
           </div>
         </div>
