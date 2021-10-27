@@ -132,15 +132,9 @@ const BusinessMenu = () => {
             ""
           )}
 
-<<<<<<< HEAD
          
-            <ItemsDisplay/>
-         
-=======
-          <div className="bg-red-400 w-full h-full mt-10 px-5 py-4">
             <ItemsDisplay businessItems={businessItems}/>
-          </div>
->>>>>>> e3a43d70ccca2a430b8d760d40d0ba711541d904
+         
           
         </div>
       </div>
