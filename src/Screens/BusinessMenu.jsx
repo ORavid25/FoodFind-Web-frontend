@@ -20,6 +20,7 @@ const BusinessMenu = () => {
   const [addButtonClicked, setAddButtonClicked] = useState(false);
   const [toppingAgreed, setToppingAgreed] = useState(false);
   const [itemData, setItemData] = useState({});
+  const [businessItems,setBusinessItems] = useState([]);
 
   const handleOpenToppingMenu = (data) => {
     console.log("data=", data);
@@ -35,9 +36,11 @@ const BusinessMenu = () => {
       const storage = await retrieveLocalStorageData("user");
       const businessID = storage.businessID;
       const res = await GetBusinessItemsByBusinessID(businessID);
-      console.log(res);
-      const res2 = await GetBusinessItemNameById(res[0].itemID);
-      console.log(res2);
+      console.log("res GetBusinessItemsByBusinessID",res);
+      await setBusinessItems(res);
+      // console.log("businessItems",businessItems);
+      // const res2 = await GetBusinessItemNameById(res[0].itemID);
+      // console.log(res2);
     })();
   }, []);
 
@@ -130,7 +133,7 @@ const BusinessMenu = () => {
           )}
 
           <div className="bg-red-400 w-full h-full mt-10 px-5 py-4">
-            <ItemsDisplay/>
+            <ItemsDisplay businessItems={businessItems}/>
           </div>
           
         </div>
