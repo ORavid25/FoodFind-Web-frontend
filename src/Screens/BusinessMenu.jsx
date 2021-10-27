@@ -129,9 +129,9 @@ const BusinessMenu = () => {
             ""
           )}
 
-          <div className="bg-red-400 w-full h-full mt-10 px-5 py-4">
+         
             <ItemsDisplay/>
-          </div>
+         
           
         </div>
       </div>
