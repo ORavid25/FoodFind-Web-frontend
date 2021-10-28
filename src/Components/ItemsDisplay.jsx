@@ -30,7 +30,6 @@ const ItemsDisplay = ({ businessItems }) => {
     return (
       <button className=" bg-gray-300 w-full h-20 " onClick={async() => {
         openModal()
-        alert(data.itemID)
         await setItemForEdit(data)
 
       }}>

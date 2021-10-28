@@ -15,10 +15,10 @@ module.exports = {
         },
         animateModal :{
           '0%': {
-            top: '-100px'
+            top: '-20px'
           },
           '100%': {
-            top:'380px',
+            top:'200px',
         
           }
         },

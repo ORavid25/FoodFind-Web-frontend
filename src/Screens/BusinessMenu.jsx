@@ -17,7 +17,7 @@ const BusinessMenu = () => {
   const [addItem, setAddItem] = useState(false);
   const [toppingItem, setToppingItem] = useState(false);
   const [ifOpenTopping, setIfOpenTopping] = useState(false);
-  const [addButtonClicked, setAddButtonClicked] = useState(false);
+
   const [toppingAgreed, setToppingAgreed] = useState(false);
   const [itemData, setItemData] = useState({});
   const [businessItems,setBusinessItems] = useState([]);
@@ -48,27 +48,13 @@ const BusinessMenu = () => {
     })();
   }, []);
 
-  console.log("addButtonClicked=", addButtonClicked);
+
   return (
     <Layout>
       <Navbar />
       <div className="ml-44">
         <div className="flex h-screen flex-col">
-          <div dir="rtl" className="w-full flex justify-around items-center">
-            <button
-              className="p-3 m-5 bg-green-500 w-52 text-2xl text-white font-medium py-4  ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300"
-              onClick={() => {
-                setAddButtonClicked(!addButtonClicked);
-              }}
-            >
-              הוסף מוצר חדש
-            </button>
-            <button className="p-3 m-5 bg-green-500 w-52 text-2xl text-white font-medium py-4  ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300 ">
-              לעדכון מוצרים
-            </button>
-          </div>
-
-          <div className="bg-green-400 flex h-10 w-11/12 mx-16 justify-end items-center rounded-t-xl">
+          <div className="bg-green-400 flex h-10 w-11/12 mx-16 justify-end items-center rounded-t-xl mt-10 ">
             <div className="flex m-5 justify-end items-center">
               <h1 className="ml-5 text-2xl">הוספת מוצר חדש</h1>
               <button
