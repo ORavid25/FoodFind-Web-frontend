@@ -2,26 +2,9 @@ import React, { useState, useEffect } from "react";
 import { UpdateItemOfBusiness } from "../api/BusinessItemController";
 import { GrFormClose } from "react-icons/gr";
 
-const EditBusinessItems = ({ ItemForEdit, filteredToppings }) => {
-
+const EditBusinessItems = ({ ItemForEdit, toppingItems }) => {
   const [itemPrice, setItemPrice] = useState(0);
-  const [itemComment, setItemComment] = useState("")
-
-  useEffect(() => {
-    setItemPrice(ItemForEdit.itemPrice)
-    setItemComment(ItemForEdit.comment)
-
-  }, [])
-
-
-  const handleUpdateBusinessItem = async () => {
-    debugger;
-    if (itemPrice !== ItemForEdit.itemPrice || itemComment !== ItemForEdit.comment) {
-      const res = await UpdateItemOfBusiness(ItemForEdit.businessID, ItemForEdit.itemID, itemPrice, itemComment);
-      if (res === 1) alert('עודכן בהצלחה')
-      console.log("updateBusinessItem res = ", res);
-    } else
-      alert('לא שונו הפרטים')
+  const [itemComment, setItemComment] = useState("");
 
   useEffect(() => {
     setItemPrice(ItemForEdit.itemPrice);
@@ -81,18 +64,18 @@ const EditBusinessItems = ({ ItemForEdit, filteredToppings }) => {
           עדכון
         </button>
       </div>
-      <div className="pt-3 bg-gray-300">
+      <div className="mt-10">
         <div>
           <h1 className="font-semibold text-lg mx-5">
             התוספות של המוצר {ItemForEdit.itemName}
           </h1>
           <h2 className="text-md font-normal text-gray-500 mx-5">
-            כאן ניתן לראות את כל התוספות הקשורות למוצר זה
+            כאן ניתן לראות את כל התוספות {ItemForEdit.itemName}
           </h2>
         </div>
 
 
-        <div className="grid grid-cols-5 gap-x-20 gap-y-5 max-h-100 p-5 rounded-lg justify-items-center bg-gray-300">
+        <div className="grid grid-cols-5 gap-x-20 gap-y-5 max-h-100 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">
 
         {toppingItems !== null &&
           toppingItems.map((item) => {
