@@ -5,12 +5,22 @@ module.exports = {
     extend: {
       animation:{
         beat: 'beat 5s ease-out infinite ',
-        bounceSlow:'bounce 3s infinite',
+        bounceSlow:'bounce 1s  ',
+        animateModal:'animateModal 0.5s ease-out forwards'
       },
       keyframes:{
         beat:{
           '0%,100%': {transform:'scale(1)'},
           '25%': { transform:'scale(1.2)'}
+        },
+        animateModal :{
+          '0%': {
+            top: '-100px'
+          },
+          '100%': {
+            top:'380px',
+        
+          }
         },
         
       },

@@ -40,6 +40,47 @@ export const GetBusinessItemsByBusinessID = async (businessID) => {
 };
 
 
+////////////////// UPDATE
+export const UpdateItemOfBusiness = async (businessID,itemID,itemPrice,comment) => {
+  const req = {
+    method: "PUT",
+    headers: {
+      "Accept": "application/json",
+      "content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+        businessID:businessID,
+        itemID:itemID,
+        itemPrice:itemPrice,
+        comment:comment}),
+  };
+  
+  try {
+    const res = await fetch(
+        BusinessItemController.UpdateItemOfBusiness,
+      req
+    );
+    if (res.status !== 201 && res.status !== 200) return "Conflict";
+    const data = await res.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+
+
+
+}
+
+
+
+
+
+
+
+
 
 ////////////INSERT Methods
 export const InsertItemOfBusinessUser = async (

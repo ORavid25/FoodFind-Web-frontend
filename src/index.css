@@ -1,19 +1,23 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
-
-
 @layer base {
-    body{
+    body {
         @apply bg-gray-50 text-gray-900;
         @apply min-h-screen;
-    
-
     }
-
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+    ::-webkit-scrollbar {
+        border-radius: 25px;
+        width: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(#34d399 , #00b3cc);
+        border-radius: 25px;
+        /* background-color: #34d399; */
+        width: 5px;
   
+    }
 }
-
-

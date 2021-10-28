@@ -22,6 +22,7 @@ const BusinessMenu = () => {
   const [itemData, setItemData] = useState({});
   const [businessItems,setBusinessItems] = useState([]);
 
+
   const handleOpenToppingMenu = (data) => {
     console.log("data=", data);
     setIfOpenTopping(data);
@@ -36,8 +37,11 @@ const BusinessMenu = () => {
       const storage = await retrieveLocalStorageData("user");
       const businessID = storage.businessID;
       const res = await GetBusinessItemsByBusinessID(businessID);
-      console.log("res GetBusinessItemsByBusinessID",res);
-      await setBusinessItems(res);
+      const items = res["items"];
+      await setBusinessItems(items)
+      console.log(businessItems);
+      // console.log("res GetBusinessItemsByBusinessID",res);
+      // await setBusinessItems(res);
       // console.log("businessItems",businessItems);
       // const res2 = await GetBusinessItemNameById(res[0].itemID);
       // console.log(res2);
@@ -48,7 +52,7 @@ const BusinessMenu = () => {
   return (
     <Layout>
       <Navbar />
-      <div className="ml-44 bg-blue-400">
+      <div className="ml-44">
         <div className="flex h-screen flex-col">
           <div dir="rtl" className="w-full flex justify-around items-center">
             <button
@@ -78,9 +82,6 @@ const BusinessMenu = () => {
             </div>
 
           </div>
-
-          {/* {[...Array(itemsCount)].map((_,i) => <AddItem key={i}/> )} */}
-
           
           
 
