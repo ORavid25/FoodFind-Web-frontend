@@ -21,6 +21,7 @@ const BusinessMenu = () => {
   const [toppingAgreed, setToppingAgreed] = useState(false);
   const [itemData, setItemData] = useState({});
   const [businessItems,setBusinessItems] = useState([]);
+  const [businessToppings,setBusinessToppings] = useState([]);
 
 
   const handleOpenToppingMenu = (data) => {
@@ -38,7 +39,9 @@ const BusinessMenu = () => {
       const businessID = storage.businessID;
       const res = await GetBusinessItemsByBusinessID(businessID);
       const items = res["items"];
+      const toppings =res["toppings"];
       await setBusinessItems(items)
+      await setBusinessToppings(toppings)
       console.log(businessItems);
       // console.log("res GetBusinessItemsByBusinessID",res);
       // await setBusinessItems(res);
@@ -120,7 +123,7 @@ const BusinessMenu = () => {
           )}
 
          
-            <ItemsDisplay businessItems={businessItems}/>
+            <ItemsDisplay businessItems={businessItems} businessToppings={businessToppings}/>
          
           
         </div>
