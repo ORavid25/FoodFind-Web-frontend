@@ -4,7 +4,7 @@ import Modal from "../Components/Modal";
 import EditBusinessItems from "../Components/EditBusinessItems"
 
 
-const ItemsDisplay = ({ businessItems }) => {
+const ItemsDisplay = ({ businessItems , toppingItems }) => {
   const [itemPress, setItemPress] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemForEdit,setItemForEdit] =useState({});
@@ -47,7 +47,7 @@ const ItemsDisplay = ({ businessItems }) => {
   };
 
   return (
-    <div dir="rtl" className="w-full h-5/6 rounded-xl   px-5 py-5">
+    <div dir="rtl" className="w-full rounded-xl px-5 py-5">
         
 
       <div className="flex flex-col justify-around p-5 bg-gray-200 h-20 rounded-t-xl">
@@ -57,17 +57,17 @@ const ItemsDisplay = ({ businessItems }) => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-20 gap-y-16 h-5/6 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">
+      <div className="grid grid-cols-2 gap-x-20 gap-y-16 max-h-100 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">
         {businessItems !== null && businessItems.map((item) => {
           return (
             <div className="bg-gray-300 w-full h-20">
-              <Item id={item.itemID} data={item} />
+              <Item key={item.itemID} id={item.itemID} data={item} />
             </div>
           );
         })}
        
         <Modal showModal={modalIsOpen} setShowModal={setModalIsOpen}>
-        <EditBusinessItems ItemForEdit={itemForEdit}/>
+        <EditBusinessItems ItemForEdit={itemForEdit} toppingItems={toppingItems}/>
         </Modal>
 
         

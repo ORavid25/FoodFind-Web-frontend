@@ -15,12 +15,13 @@ import { retrieveLocalStorageData } from "../utility/localStorage";
 
 const BusinessMenu = () => {
   const [addItem, setAddItem] = useState(false);
-  const [toppingItem, setToppingItem] = useState(false);
+  const [toppingItemClicked, setToppingItemClicked] = useState(false);
   const [ifOpenTopping, setIfOpenTopping] = useState(false);
 
   const [toppingAgreed, setToppingAgreed] = useState(false);
   const [itemData, setItemData] = useState({});
   const [businessItems,setBusinessItems] = useState([]);
+  const [toppingItems, setToppingItems] = useState([]);
 
 
   const handleOpenToppingMenu = (data) => {
@@ -38,8 +39,12 @@ const BusinessMenu = () => {
       const businessID = storage.businessID;
       const res = await GetBusinessItemsByBusinessID(businessID);
       const items = res["items"];
-      await setBusinessItems(items)
-      console.log(businessItems);
+      const toppings = res["toppings"];
+      console.log("toppings=",toppings);
+      await setBusinessItems(items);
+      await setToppingItems(toppings);
+      console.log("businessItems",businessItems);
+      // console.log("toppingItem=",toppingItem);
       // console.log("res GetBusinessItemsByBusinessID",res);
       // await setBusinessItems(res);
       // console.log("businessItems",businessItems);
@@ -53,7 +58,7 @@ const BusinessMenu = () => {
     <Layout>
       <Navbar />
       <div className="ml-44">
-        <div className="flex h-screen flex-col">
+        <div className="flex h-full flex-col">
           <div className="bg-green-400 flex h-10 w-11/12 mx-16 justify-end items-center rounded-t-xl mt-10 ">
             <div className="flex m-5 justify-end items-center">
               <h1 className="ml-5 text-2xl">הוספת מוצר חדש</h1>
@@ -84,7 +89,7 @@ const BusinessMenu = () => {
                     <button
                       className="flex justify-center items-center w-12 h-12 "
                       onClick={() => {
-                        setToppingItem(!toppingItem);
+                        setToppingItemClicked(!toppingItemClicked);
                       }}
                     >
                       <HiPlusSm />
@@ -95,7 +100,7 @@ const BusinessMenu = () => {
                 ""
               )}
 
-              {toppingItem ? <AddTopping data={itemData} /> : ""}
+              {toppingItemClicked ? <AddTopping data={itemData} /> : ""}
             </div>
           ) : (
             ""
@@ -107,9 +112,7 @@ const BusinessMenu = () => {
                 <h1 className="ml-5 text-2xl">הוספת תוספת חדשה</h1>
                 <button
                   className="flex justify-center items-center w-12 h-12 "
-                  onClick={() => {
-                    setToppingItem(!toppingItem);
-                  }}
+                 
                 >
                   <HiPlusSm />
                 </button>
@@ -120,7 +123,7 @@ const BusinessMenu = () => {
           )}
 
          
-            <ItemsDisplay businessItems={businessItems}/>
+            <ItemsDisplay businessItems={businessItems} />
          
           
         </div>

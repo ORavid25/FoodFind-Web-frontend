@@ -9,7 +9,7 @@ export const Navbar = () => {
   const [reportsBtn, setReportsBtn] = useState(false);
 
   return (
-    <div className="flex justify-evenly p-7 w-36  absolute bg-green-400 flex-col space-y-20 h-full rounded-3xl shadow-lg ">
+    <div className="flex justify-evenly p-7 w-36  absolute bg-green-400 flex-col space-y-10 h-full rounded-3xl shadow-lg ">
       {/* כפתור בית */}
       <Link
         to="/"
