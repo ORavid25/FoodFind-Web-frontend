@@ -2,9 +2,26 @@ import React, { useState, useEffect } from "react";
 import { UpdateItemOfBusiness } from "../api/BusinessItemController";
 import { GrFormClose } from "react-icons/gr";
 
-const EditBusinessItems = ({ ItemForEdit, toppingItems }) => {
+const EditBusinessItems = ({ ItemForEdit, filteredToppings }) => {
+
   const [itemPrice, setItemPrice] = useState(0);
-  const [itemComment, setItemComment] = useState("");
+  const [itemComment, setItemComment] = useState("")
+
+  useEffect(() => {
+    setItemPrice(ItemForEdit.itemPrice)
+    setItemComment(ItemForEdit.comment)
+
+  }, [])
+
+
+  const handleUpdateBusinessItem = async () => {
+    debugger;
+    if (itemPrice !== ItemForEdit.itemPrice || itemComment !== ItemForEdit.comment) {
+      const res = await UpdateItemOfBusiness(ItemForEdit.businessID, ItemForEdit.itemID, itemPrice, itemComment);
+      if (res === 1) alert('עודכן בהצלחה')
+      console.log("updateBusinessItem res = ", res);
+    } else
+      alert('לא שונו הפרטים')
 
   useEffect(() => {
     setItemPrice(ItemForEdit.itemPrice);

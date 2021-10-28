@@ -4,10 +4,11 @@ import Modal from "../Components/Modal";
 import EditBusinessItems from "../Components/EditBusinessItems"
 
 
-const ItemsDisplay = ({ businessItems , toppingItems }) => {
+const ItemsDisplay = ({ businessItems,businessToppings }) => {
   const [itemPress, setItemPress] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemForEdit,setItemForEdit] =useState({});
+  const [itemToppings,setItemsToppings]= useState([]);
 
   const openModal = () => {
     setModalIsOpen(!modalIsOpen);
@@ -26,11 +27,13 @@ const ItemsDisplay = ({ businessItems , toppingItems }) => {
   // }, [businessItems]);
 
   const Item = ({ data }) => {
-    console.log("data=", data);
     return (
       <button className=" bg-gray-300 w-full h-20 " onClick={async() => {
         openModal()
         await setItemForEdit(data)
+        const filteredToppings = businessToppings.filter(item => item.itemID ===data.itemID)
+       
+        await setItemsToppings(filteredToppings)
 
       }}>
         <div className="">
@@ -67,7 +70,7 @@ const ItemsDisplay = ({ businessItems , toppingItems }) => {
         })}
        
         <Modal showModal={modalIsOpen} setShowModal={setModalIsOpen}>
-        <EditBusinessItems ItemForEdit={itemForEdit} toppingItems={toppingItems}/>
+        <EditBusinessItems ItemForEdit={itemForEdit} filteredToppings={itemToppings}/>
         </Modal>
 
         
