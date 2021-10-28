@@ -123,7 +123,7 @@ const BusinessMenu = () => {
           )}
 
          
-            <ItemsDisplay businessItems={businessItems} />
+            <ItemsDisplay businessItems={businessItems} toppingItems={toppingItems}/>
          
           
         </div>

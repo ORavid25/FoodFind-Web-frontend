@@ -80,7 +80,7 @@ const EditBusinessItems = ({ ItemForEdit, toppingItems }) => {
         {toppingItems !== null &&
           toppingItems.map((item) => {
             return (
-              <div key={item.toppingID} className="flex flex-row justify-center items-center p-2">
+              <div className="flex flex-row justify-center items-center p-2">
                 <div className=" text-xl font-semibold rounded-lg w-40 bg-yellow-200 py-2 flex justify-around items-center">
                   <button>
                     <GrFormClose
