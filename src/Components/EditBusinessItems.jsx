@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { UpdateItemOfBusiness } from "../api/BusinessItemController";
 import { GrFormClose } from "react-icons/gr";
+import { AddTopping } from "./AddTopping";
 
 const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
   const [itemPrice, setItemPrice] = useState(0);
   const [itemComment, setItemComment] = useState("");
+  const [addToppingClicked,setAddToppingClicked] = useState(false);
 
   useEffect(() => {
     setItemPrice(ItemForEdit.itemPrice);
@@ -52,6 +54,8 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
         <textarea
           defaultValue={ItemForEdit.comment}
           className="h-16 w-56 rounded-md"
+          rows={5}
+          cols={5}
           onChange={(e) => {
             setItemComment(e.target.value);
           }}
@@ -73,6 +77,13 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
             כאן ניתן לראות את כל התוספות {ItemForEdit.itemName}
           </h2>
         </div>
+        <button
+          type="button"
+          className="p-2 m-5 bg-green-500 w-44 text-xl text-white font-small ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300" 
+           onClick={()=>{setAddToppingClicked(!addToppingClicked)}} >
+            להוספת תוספת
+          </button>
+          {addToppingClicked&& <AddTopping data={ItemForEdit}/>}
         {itemToppings.length === 0 ? <div className="w-full h-54 text-xl font-semibold flex justify-center item-center mt-16">אין תוספות למוצר זה</div> :
 
           <div className="grid grid-cols-5 gap-x-20 gap-y-5 max-h-100 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">

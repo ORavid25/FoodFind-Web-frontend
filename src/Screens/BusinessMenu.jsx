@@ -17,7 +17,6 @@ const BusinessMenu = () => {
   const [addItem, setAddItem] = useState(false);
   const [toppingItem, setToppingItem] = useState(false);
   const [ifOpenTopping, setIfOpenTopping] = useState(false);
-
   const [toppingAgreed, setToppingAgreed] = useState(false);
   const [itemData, setItemData] = useState({});
   const [businessItems,setBusinessItems] = useState([]);
@@ -41,12 +40,6 @@ const BusinessMenu = () => {
       const toppings =res["toppings"];
       await setBusinessItems(items)
       await setBusinessToppings(toppings)
-      console.log("businessToppings",businessToppings);
-      // console.log("res GetBusinessItemsByBusinessID",res);
-      // await setBusinessItems(res);
-      // console.log("businessItems",businessItems);
-      // const res2 = await GetBusinessItemNameById(res[0].itemID);
-      // console.log(res2);
     })();
   }, []);
 
