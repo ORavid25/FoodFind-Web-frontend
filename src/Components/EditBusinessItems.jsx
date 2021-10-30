@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { UpdateItemOfBusiness } from "../api/BusinessItemController";
 import { GrFormClose } from "react-icons/gr";
 
-const EditBusinessItems = ({ ItemForEdit, toppingItems }) => {
+const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
   const [itemPrice, setItemPrice] = useState(0);
   const [itemComment, setItemComment] = useState("");
 
@@ -28,7 +28,7 @@ const EditBusinessItems = ({ ItemForEdit, toppingItems }) => {
   };
 
   return (
-    <div className="flex flex-col justify-around w-11/12 p-5 h-20 rounded-t-xl mt-80 ">
+    <div className="flex flex-col justify-around w-11/12 p-5 h-20 rounded-t-xl mt-72 ">
       <div className="rounded-t-xl bg-gray-300 p-5 shadow-xl">
         <h1 className="text-lg font-medium ">פירוט המוצרים והתוספות</h1>
         <h2 className="text-md font-normal text-gray-500">
@@ -73,29 +73,30 @@ const EditBusinessItems = ({ ItemForEdit, toppingItems }) => {
             כאן ניתן לראות את כל התוספות {ItemForEdit.itemName}
           </h2>
         </div>
+        {itemToppings.length === 0 ? <div className="w-full h-54 text-xl font-semibold flex justify-center item-center mt-16">אין תוספות למוצר זה</div> :
+
+          <div className="grid grid-cols-5 gap-x-20 gap-y-5 max-h-100 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">
 
 
-        <div className="grid grid-cols-5 gap-x-20 gap-y-5 max-h-100 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">
+            {itemToppings.map((item) => {
+              return (
+                <div className="flex flex-row justify-center items-center p-2">
+                  <div className=" text-xl font-semibold rounded-lg w-40 bg-yellow-200 py-2 flex justify-around items-center">
+                    <button>
+                      <GrFormClose
+                        size={25}
 
-        {toppingItems !== null &&
-          toppingItems.map((item) => {
-            return (
-              <div className="flex flex-row justify-center items-center p-2">
-                <div className=" text-xl font-semibold rounded-lg w-40 bg-yellow-200 py-2 flex justify-around items-center">
-                  <button>
-                    <GrFormClose
-                      size={25}
-                    
-                    />
-                  </button>
-                  {item.toppingName}
+                      />
+                    </button>
+                    {item.toppingName}
+                  </div>
+                  {/* <h1 className="text-xl font-semibold ml-40"></h1> */}
+                  {/* <h2 className="text-xl">מחיר: {item.toppingPrice}</h2> */}
                 </div>
-                {/* <h1 className="text-xl font-semibold ml-40"></h1> */}
-                {/* <h2 className="text-xl">מחיר: {item.toppingPrice}</h2> */}
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        }
       </div>
     </div>
   );

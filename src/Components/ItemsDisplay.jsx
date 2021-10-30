@@ -4,17 +4,18 @@ import Modal from "../Components/Modal";
 import EditBusinessItems from "../Components/EditBusinessItems"
 
 
-const ItemsDisplay = ({ businessItems,toppingItems }) => {
+const ItemsDisplay = ({ businessItems, businessToppings }) => {
+
   const [itemPress, setItemPress] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [itemForEdit,setItemForEdit] =useState({});
+  const [itemForEdit, setItemForEdit] = useState({});
+  const [itemToppings, setItemsToppings] = useState([]);
 
   const openModal = () => {
     setModalIsOpen(!modalIsOpen);
-    console.log("modalOpen", modalIsOpen);
   };
 
-  const afterOpenModal = () => {};
+  const afterOpenModal = () => { };
 
   const closeModal = () => {
     setModalIsOpen(!modalIsOpen);
@@ -26,11 +27,15 @@ const ItemsDisplay = ({ businessItems,toppingItems }) => {
   // }, [businessItems]);
 
   const Item = ({ data }) => {
-    console.log("data=", data);
     return (
-      <button className=" bg-gray-300 w-full h-20 " onClick={async() => {
+      <button className=" bg-gray-300 w-full h-20 " onClick={async () => {
         openModal()
         await setItemForEdit(data)
+        console.log("busToppingFromItemDisplay", businessToppings);
+        const filteredToppings = businessToppings.filter(item => item.itemID === data.itemID)
+      
+        console.log("filteredToppings", filteredToppings);
+        await setItemsToppings(filteredToppings)
 
       }}>
         <div className="">
@@ -41,14 +46,14 @@ const ItemsDisplay = ({ businessItems,toppingItems }) => {
             </div>
           </div>
         </div>
- 
+
       </button>
     );
   };
 
   return (
     <div dir="rtl" className="w-full rounded-xl px-5 py-5">
-        
+
 
       <div className="flex flex-col justify-around p-5 bg-gray-200 h-20 rounded-t-xl">
         <h1 className="text-lg font-medium my-2">רשימת המוצרים</h1>
@@ -65,12 +70,12 @@ const ItemsDisplay = ({ businessItems,toppingItems }) => {
             </div>
           );
         })}
-       
+
         <Modal showModal={modalIsOpen} setShowModal={setModalIsOpen}>
-        <EditBusinessItems ItemForEdit={itemForEdit} toppingItems={toppingItems} />
+          <EditBusinessItems ItemForEdit={itemForEdit} itemToppings={itemToppings} />
         </Modal>
 
-        
+
       </div>
     </div>
   );
