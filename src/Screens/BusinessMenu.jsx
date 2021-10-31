@@ -31,13 +31,14 @@ const BusinessMenu = () => {
     await setItemData(data);
   };
 
+  //GET ALL ITEMS && TOPPING OF BUSINESS 
   useEffect(() => {
     (async () => {
       const storage = await retrieveLocalStorageData("user");
       const businessID = storage.businessID;
       const res = await GetBusinessItemsByBusinessID(businessID);
-      const items = res["items"];
-      const toppings =res["toppings"];
+      const items = res["items"];//SEPARATE ITEMS
+      const toppings =res["toppings"];//SEPERATE TOPPINGS
       await setBusinessItems(items)
       await setBusinessToppings(toppings)
     })();
