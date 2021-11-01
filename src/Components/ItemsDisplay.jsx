@@ -62,7 +62,7 @@ const ItemsDisplay = ({ businessItems, businessToppings }) => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-20 gap-y-16 max-h-100 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">
+      <div className="grid grid-cols-3 gap-x-10 gap-y-8 max-h-100 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">
         {businessItems !== null && businessItems.map((item) => {
           return (
             <div className="bg-gray-300 w-full h-20">

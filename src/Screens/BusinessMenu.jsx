@@ -48,7 +48,7 @@ const BusinessMenu = () => {
   return (
     <Layout>
       <Navbar />
-      <div className="ml-44">
+      <div className="container ml-44">
         <div className="flex h-screen flex-col">
           <div className="bg-green-400 flex h-10 w-11/12 mx-16 justify-end items-center rounded-t-xl mt-10 ">
             <div className="flex m-5 justify-end items-center">

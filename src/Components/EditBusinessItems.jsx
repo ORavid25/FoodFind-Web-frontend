@@ -23,7 +23,9 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
       const activeTopping = itemToppings.filter(item => item.isActive === true)
       await setActiveToppings(activeTopping);
     })()
-  }, [itemToppings]);
+
+
+  }, []);
 
   const handleUpdateBusinessItem = async () => {
     debugger;
@@ -42,17 +44,17 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
   };
 
   return (
-    <div className="flex flex-col justify-around w-11/12 p-5 max-h-full rounded-t-xl ">
-      <div className="rounded-t-xl bg-gray-300 rounded shadow-xl p-5">
+    <div className="flex flex-col justify-around w-11/12 p-5 h-max rounded-t-xl ">
+      <div className="rounded-t-xl bg-gray-300 p-5 shadow-xl">
         <h1 className="text-lg font-medium ">פירוט המוצרים והתוספות</h1>
         <h2 className="text-md font-normal text-gray-500">
           כאן ניתן לבצע שינויים במוצר ובתוספות המוצר
         </h2>
       </div>
       <div className=" flex justify-center items-center p-2 bg-gray-300">
-        <h1 className="text-md font-semibold">{ItemForEdit.itemName}</h1>
+        <h1 className="text-xl font-semibold">{ItemForEdit.itemName}</h1>
       </div>
-      <div className="flex max-h-40 justify-evenly items-center flex-row font-semibold text-lg  bg-gray-300 ">
+      <div className="flex h-32 justify-evenly items-center flex-row p-5 font-semibold text-lg rounded-b-xl bg-gray-300 ">
         <h1>מחיר מוצר</h1>
         <input
           type="number"
@@ -94,7 +96,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
           להוספת תוספת
         </button>
         {addToppingClicked && <AddTopping data={ItemForEdit} />}
-        {itemToppings.length === 0 ? <div className="w-full h-54 text-xl font-semibold flex justify-center item-center mt-16">אין תוספות למוצר זה</div> :
+        {itemToppings.length === 0 ? <div className="w-full h-54 text-xl font-semibold flex justify-center item-center mt-">אין תוספות למוצר זה</div> :
 
           <div className="grid grid-cols-5 gap-x-20 gap-y-5 max-h-full p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">
 
