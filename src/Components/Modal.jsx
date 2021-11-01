@@ -7,7 +7,7 @@ const Modal = ({ showModal, setShowModal, children }) => {
   return (
     <>
       {showModal ? (
-        <div className="w-4/6 h-5/6 pt-10 shadow-xl bg-gray-200  flex flex-col absolute rounded-xl p-2 animate-animateModal ">
+        <div className="max-w-full max-h-full pt-10 shadow-xl bg-gray-200  flex flex-col absolute rounded-xl p-2 animate-animateModal ">
           <div className="flex absolute inset-x-3/4 mx-52">
             <button className="w-max mx-5 -my-5 ">
               <GrFormClose

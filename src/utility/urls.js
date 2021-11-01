@@ -39,6 +39,13 @@ export const InsertItemOfBusinessUser = `${Base_URL}/businessitems/InsertItemOfB
 export const InsertToppingOfItem = `${Base_URL}/businessitems/InsertToppingOfItem`;
 
 export const UpdateItemOfBusiness = `${Base_URL}/businessitems/UpdateItemOfBusiness`;
+export const UpdateToppingToUnActive = `${Base_URL}/businesstoppingsitem/UpdateToppingToUnActive`;
+export const UpdateToppingToActive = `${Base_URL}/businesstoppingsitem/UpdateToppingToActive`;
+
+
+
+export const DeleteItemOfBusiness = `${Base_URL}/businessitems/DeleteItemOfBusinessById`;
+
 
 export const BusinessItemController = {
     GetAllBusinessItemsByBusinessId,
@@ -49,5 +56,12 @@ export const BusinessItemController = {
     InsertToppingOfItem,
 
     UpdateItemOfBusiness,
+    UpdateToppingToUnActive,
+    UpdateToppingToActive,
+
+    DeleteItemOfBusiness,
+
+
+
     
 }
