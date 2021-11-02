@@ -212,20 +212,17 @@ export const insertTopping = async (
 };
 
 
-export const DeleteItemOfBusiness = async (
-  businessID,itemID,
-) => {
+export const DeleteItemOfBusiness = async (businessID,itemID) => {
   const req = {
     method: "DELETE",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify({
       businessID: businessID,
-      itemID: itemID,
-
+      itemID: itemID
     }),
   };
   try {
@@ -233,7 +230,7 @@ export const DeleteItemOfBusiness = async (
       BusinessItemController.DeleteItemOfBusiness,
       req
     );
-    if (res.status !== 201 && res.status !== 200) return console.log("res is =",res);
+    if (res.status !== 201 && res.status !== 200) return "Conflict";
     const data = await res.json();
     console.log(data);
     return data;

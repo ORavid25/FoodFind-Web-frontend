@@ -7,9 +7,10 @@ const Modal = ({ showModal, setShowModal, children }) => {
   return (
     <>
       {showModal ? (
-        <div className="max-w-full max-h-full pt-10 shadow-xl bg-gray-200  flex flex-col absolute rounded-xl p-2 animate-animateModal ">
-          <div className="flex absolute inset-x-3/4 mx-52">
-            <button className="w-max mx-5 -my-5 ">
+        <div className="max-w-full max-h-full pt-3 shadow-xl bg-gray-200  flex flex-col absolute rounded-xl p-5 animate-animateModal ">
+        
+            <div className="flex justify-end">
+            <button className="w-max mx-5">
               <GrFormClose
                 size={40}
                 onClick={() => {
@@ -17,7 +18,9 @@ const Modal = ({ showModal, setShowModal, children }) => {
                 }}
               />
             </button>
-          </div>
+              
+            </div>
+         
           <div className="flex justify-center items-center">{children}</div>
         </div>
       ) : null}

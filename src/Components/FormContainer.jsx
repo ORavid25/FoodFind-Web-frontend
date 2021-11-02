@@ -21,16 +21,13 @@ const FormContainer = (props) => {
   useEffect(() => {
     (async () => {
       const userData = await retrieveLocalStorageData("user");
-      console.log(userData);
+      // console.log(userData);
       const id = userData.businessID;
       setID(id)
       
     })();
   }, []);
 
-
-
-console.log("inputs=",inputs);
   return (
     <div className="max-h-96 w-11/12 mx-16 rounded-xl  b-white">
       <div>

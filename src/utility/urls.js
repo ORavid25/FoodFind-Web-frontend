@@ -42,8 +42,6 @@ export const UpdateItemOfBusiness = `${Base_URL}/businessitems/UpdateItemOfBusin
 export const UpdateToppingToUnActive = `${Base_URL}/businesstoppingsitem/UpdateToppingToUnActive`;
 export const UpdateToppingToActive = `${Base_URL}/businesstoppingsitem/UpdateToppingToActive`;
 
-
-
 export const DeleteItemOfBusiness = `${Base_URL}/businessitems/DeleteItemOfBusinessById`;
 
 
@@ -61,7 +59,4 @@ export const BusinessItemController = {
 
     DeleteItemOfBusiness,
 
-
-
-    
 }

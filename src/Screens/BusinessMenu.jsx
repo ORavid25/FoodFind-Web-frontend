@@ -116,7 +116,7 @@ const BusinessMenu = () => {
           )}
 
          
-            <ItemsDisplay businessItems={businessItems} businessToppings={businessToppings}/>
+            <ItemsDisplay businessItems={businessItems} setBusinessItems={setBusinessItems} businessToppings={businessToppings} />
          
           
         </div>

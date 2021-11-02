@@ -1,32 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { DeleteItemOfBusiness } from "../api/BusinessItemController";
+import { DeleteItemOfBusiness, GetBusinessItemsByBusinessID } from "../api/BusinessItemController";
 import { AiFillDelete } from "react-icons/ai";
 import Modal from "../Components/Modal";
 import EditBusinessItems from "../Components/EditBusinessItems";
 
-const ItemsDisplay = ({ businessItems, businessToppings  }) => {
-  const [itemPress, setItemPress] = useState("");
+const ItemsDisplay = ({ businessItems, setBusinessItems, businessToppings }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [dialogModal, setDialogModal] = useState(false);
   const [itemForEdit, setItemForEdit] = useState({});
   const [itemToppings, setItemsToppings] = useState([]);
 
+
+
   const openModal = () => {
     setModalIsOpen(!modalIsOpen);
   };
 
-  const afterOpenModal = () => {};
 
-  const closeModal = () => {
-    setModalIsOpen(!modalIsOpen);
+  const renderDel = async () => {
+   
+    if (businessItems.length !== 0) {
+      const res = await GetBusinessItemsByBusinessID(businessItems['0'].businessID);
+      const items =res['items'];
+    
+      console.log("GetBusinessItemsByBusinessID", res);
+      await setBusinessItems(items);
+    }
   };
 
-  // useEffect(() => {
-  //   const res = businessItems.filter((item) => item.itemID == 12);
-  //   console.log("filter", res);
-  // }, [businessItems]);
+  useEffect(() => {
+
+  }, [setBusinessItems]);
+
+
+  const handleDeleteItem = async () => {
+    console.log("itemForEdit", itemForEdit);
+    if (itemForEdit !== null) {
+      const res = await DeleteItemOfBusiness(itemForEdit.businessID, itemForEdit.itemID);
+      console.log("result from web api", res);
+      if(res===1){
+       renderDel();
+       setDialogModal(!dialogModal);
+      }
+
+    }
+ 
+
+  }
 
   const Item = ({ data }) => {
+
     return (
       <div className="flex justify-around item-center flex-row">
         <button
@@ -34,7 +57,7 @@ const ItemsDisplay = ({ businessItems, businessToppings  }) => {
           onClick={async () => {
             openModal();
             await setItemForEdit(data);
-            console.log("busToppingFromItemDisplay", businessToppings);
+            // console.log("busToppingFromItemDisplay", businessToppings);
             const filteredToppings = businessToppings.filter(
               (item) => item.itemID === data.itemID
             );
@@ -47,19 +70,18 @@ const ItemsDisplay = ({ businessItems, businessToppings  }) => {
             {data !== null && data.itemName}
           </h1>
         </button>
-        <div className="">
-          <div className="flex flex-row justify-between items-center  p-5 ">
-            <div className="flex justify-center items-center">
-              <button
-                onClick={() => {
-                  setDialogModal(!dialogModal);
-                  console.log("itemID = ", data.itemID);
-                  console.log("businessID = ", data.businessID);
-                }}
-              >
-                <AiFillDelete size={40} color="red" />
-              </button>
-            </div>
+
+        <div className="flex flex-row justify-between items-center  p-5 ">
+          <div className="flex justify-center items-center">
+            <button
+              onClick={async() => {
+                setDialogModal(!dialogModal);
+                await setItemForEdit(data)
+                
+              }}
+            >
+              <AiFillDelete size={40} color="red" />
+            </button>
           </div>
         </div>
       </div>
@@ -76,14 +98,14 @@ const ItemsDisplay = ({ businessItems, businessToppings  }) => {
       </div>
 
       <div className="grid grid-cols-3 gap-x-10 gap-y-8 max-h-100 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">
-        {businessItems !== null &&
-          businessItems.map((item) => {
+        {businessItems!==null? businessItems.map((item) => {
             return (
               <div className="bg-gray-300 w-full h-20">
-                <Item key={item.itemID} id={item.itemID} data={item} />
+                <Item key={item.itemID} data={item} />
               </div>
             );
-          })}
+            
+          }) : <div></div>}
 
         <Modal showModal={modalIsOpen} setShowModal={setModalIsOpen}>
           <EditBusinessItems
@@ -92,26 +114,23 @@ const ItemsDisplay = ({ businessItems, businessToppings  }) => {
           />
         </Modal>
         <Modal showModal={dialogModal} setShowModal={setDialogModal}>
-          <div className="w-80 h-36 ">
-            <h1 className="text-xl font-bold leading-6">
+          <div className="max-w-9/12 h-48 px-5 py-5 ">
+            <h1 className="text-2xl font-bold leading-6">
               האם ברצונך למחוק מוצר זה ?
             </h1>
-            <h2 className="text-md font-semibold leading-6">
+            <h2 className="text-xl font-semibold leading-6">
               לידיעתך תוספות המוצר ימחקו בעת פעולה זו
             </h2>
             <div className="flex items-center justify-around mx-10 my-10">
               <button
-                className="bg-red-300"
+                className="px-5 py-2 m-5 bg-red-500 text-md text-white font-medium ring-4 ring-red-400 rounded-lg hover:bg-red-400 transition-color duration-300 "
                 onClick={() => {
                   setDialogModal(!dialogModal);
                 }}
               >
                 <h1>ביטול</h1>
               </button>
-              <button className="bg-green-500" onClick={async () => {
-                const x = await DeleteItemOfBusiness(businessItems.businessID,businessItems.itemID);
-                console.log(x);
-              }}>
+              <button className="px-5 py-2 m-5 bg-green-500 text-md text-white font-medium ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300 " onClick={handleDeleteItem}>
                 <h1>אישור</h1>
               </button>
             </div>
