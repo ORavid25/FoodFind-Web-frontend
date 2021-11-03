@@ -44,6 +44,7 @@ export const UpdateToppingToActive = `${Base_URL}/businesstoppingsitem/UpdateTop
 
 export const DeleteItemOfBusiness = `${Base_URL}/businessitems/DeleteItemOfBusinessById`;
 
+export const UpdateToppingPrice = `${Base_URL}/businesstoppingsitem/UpdateToppingPrice`;
 
 export const BusinessItemController = {
     GetAllBusinessItemsByBusinessId,
@@ -56,6 +57,7 @@ export const BusinessItemController = {
     UpdateItemOfBusiness,
     UpdateToppingToUnActive,
     UpdateToppingToActive,
+    UpdateToppingPrice,
 
     DeleteItemOfBusiness,
 

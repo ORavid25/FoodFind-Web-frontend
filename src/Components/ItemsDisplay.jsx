@@ -4,7 +4,7 @@ import { AiFillDelete } from "react-icons/ai";
 import Modal from "../Components/Modal";
 import EditBusinessItems from "../Components/EditBusinessItems";
 
-const ItemsDisplay = ({ businessItems, setBusinessItems,SendToParentUpdate, businessToppings,setBusinessToppings }) => {
+const ItemsDisplay = ({ businessItems, setBusinessItems, businessToppings}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [dialogModal, setDialogModal] = useState(false);
   const [itemForEdit, setItemForEdit] = useState({});
@@ -16,23 +16,12 @@ const ItemsDisplay = ({ businessItems, setBusinessItems,SendToParentUpdate, busi
     setModalIsOpen(!modalIsOpen);
   };
 
-  // const renderDataToppings = async () => {
-  //   if (businessToppings.length !== 0) {
-  //     const res = await GetBusinessItemsByBusinessID(businessToppings['0'].businessID);
-  //     const items = res['toppings'];
-  //     console.log("renderDataToppings", res);
-  //     await setItemsToppings(res);
-  //   }
- //}
-
-
-
   const renderDel = async () => {
 
     if (businessItems.length !== 0) {
       const res = await GetBusinessItemsByBusinessID(businessItems['0'].businessID);
       const items = res['items'];
-      // console.log("GetBusinessItemsByBusinessID", res);
+      console.log("GetBusinessItemsByBusinessID", items);
       await setBusinessItems(items);
     }
   };
@@ -84,7 +73,7 @@ const ItemsDisplay = ({ businessItems, setBusinessItems,SendToParentUpdate, busi
               onClick={async () => {
                 setDialogModal(!dialogModal);
                 await setItemForEdit(data)
-
+                await renderDel();
               }}
             >
               <AiFillDelete size={40} color="red" />
@@ -119,7 +108,7 @@ const ItemsDisplay = ({ businessItems, setBusinessItems,SendToParentUpdate, busi
             ItemForEdit={itemForEdit}
             itemToppings={itemToppings}
             setItemsToppings={setItemsToppings}
-         
+            
           />
         </Modal>
         <Modal showModal={dialogModal} setShowModal={setDialogModal}>

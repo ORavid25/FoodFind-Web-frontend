@@ -49,9 +49,10 @@ const FormContainer = (props) => {
             if(inputs.itemName!==""&&inputs.itemPrice!==""){
               const res= await InsertItemOfBusinessUser(inputs.itemName,id,inputs.itemPrice,inputs.comment)
               // console.log("result =",res);
-               await setIsClicked(!isClicked);
-               await props.open(isClicked);
+              //  await setIsClicked(!isClicked);
+              //  await props.open(isClicked);
                await props.dataItemID(res);
+               await props.GetAllItemsAndToppings();
             }else{
               alert('נא למלא את הפרטים, מלבד תיאור מוצר שאינו חובה אך מומלץ!')
             }

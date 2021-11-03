@@ -217,7 +217,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
           </div>
         )}
             <Modal showModal={updateTopping} setShowModal={setUpdateTopping} >
-                 <AddTopping data={currentToppingForUpdate} ifUpdate={true} />
+                 <AddTopping data={currentToppingForUpdate} ifUpdate={true} renderDataToppings={renderDataToppings} setUpdateTopping={setUpdateTopping} />
                 </Modal>
       </div>
     </div>

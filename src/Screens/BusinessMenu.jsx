@@ -15,17 +15,15 @@ import { retrieveLocalStorageData } from "../utility/localStorage";
 
 const BusinessMenu = () => {
   const [addItem, setAddItem] = useState(false);
-  const [toppingItem, setToppingItem] = useState(false);
-  const [ifOpenTopping, setIfOpenTopping] = useState(false);
-  const [toppingAgreed, setToppingAgreed] = useState(false);
+
   const [itemData, setItemData] = useState({});
   const [businessItems, setBusinessItems] = useState([]);
   const [businessToppings, setBusinessToppings] = useState([]);
 
 
-  const handleOpenToppingMenu = (data) => {
-    setIfOpenTopping(data);
-  };
+  // const handleOpenToppingMenu = (data) => {
+  //   setIfOpenTopping(data);
+  // };
 
   const upliftData = async (data) => {
     await setItemData(data);
@@ -74,33 +72,17 @@ const BusinessMenu = () => {
           {addItem ? (
             <div className="">
               <FormContainer
-                open={handleOpenToppingMenu}
                 dataItemID={upliftData}
+                GetAllItemsAndToppings={GetAllItemsAndToppings}
               />
-              {ifOpenTopping ? (
-                <div className="bg-green-400 flex h-10 w-11/12 mx-16 justify-end items-center">
-                  <div className="flex m-5 flex-wrap items-center">
-                    <h1 className="ml-5 text-xl">הוספת תוספת חדשה</h1>
-                    <button
-                      className="flex justify-center items-center w-12 h-12 "
-                      onClick={() => {
-                        setToppingItem(!toppingItem);
-                      }}
-                    >
-                      <HiPlusSm />
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
+              
 
-              {toppingItem ? <AddTopping data={itemData} /> : ""}
+              {/* {toppingItem ? <AddTopping data={itemData} /> : ""} */}
             </div>
           ) : (
             ""
           )}
-
+{/* 
           {toppingAgreed === true ? (
             <div className="bg-red-400 flex h-10 w-full justify-end items-center">
               <div className="flex m-5 flex-wrap items-center">
@@ -117,11 +99,13 @@ const BusinessMenu = () => {
             </div>
           ) : (
             ""
-          )}
+          )} */}
 
           <ItemsDisplay
             businessItems={businessItems}
             businessToppings={businessToppings}
+            setBusinessItems={setBusinessItems}
+            GetAllItemsAndToppings={GetAllItemsAndToppings}
           />
 
 

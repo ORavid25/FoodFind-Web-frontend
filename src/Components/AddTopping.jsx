@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { insertTopping } from "../api/BusinessItemController";
+import { insertTopping , UpdateToppingPrice } from "../api/BusinessItemController";
 
 export const AddTopping = ({
   data,
   renderDataToppings,
   setAddToppingClicked,
   ifUpdate,
+  setUpdateTopping
 }) => {
   const [inputs, setInputs] = useState({
     topName: "",
@@ -27,6 +28,19 @@ export const AddTopping = ({
     }
   };
 
+
+  const handleUpdateClick = async () => {
+    debugger
+    if(inputs.topPrice === ""){
+     alert("לא ניתן לעדכן מחיר מבלי להזין מחיר חדש")
+     return;
+    }
+    const res= await UpdateToppingPrice(data.businessID, data.itemID,data.toppingID,inputs.topPrice)
+      console.log(res);
+      await renderDataToppings();
+      await setUpdateTopping(false)
+  }
+
   console.log(data.businessID);
   return (
     <div className="w-11/12 mx-16 max-h-96 bg-gray-200">
@@ -44,12 +58,17 @@ export const AddTopping = ({
           <input
             className="m-5 px-3 py-0.5 rounded-sm text-center"
             placeholder="מחיר תוספת"
+            defaultValue={data.toppingPrice}
             onChange={(val) => {
               setInputs({ ...inputs, topPrice: val.target.value });
             }}
           />
           {ifUpdate ? (
-            <button className="px-5 py-2 m-5 bg-green-500 text-md text-white font-medium ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300 ">
+            <button 
+            className="px-5 py-2 m-5 bg-green-500 text-md text-white font-medium ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300 "
+            onClick={handleUpdateClick}
+
+            >
               עדכון
             </button>
           ) : (

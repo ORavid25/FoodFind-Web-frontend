@@ -141,6 +141,42 @@ export const UpdateToppingToActive = async (
   }
 };
 
+
+export const UpdateToppingPrice = async (
+  businessID,
+  itemID,
+  toppingID,
+ toppingPrice,
+  
+) => {
+  const req = {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      businessID: businessID,
+      itemID: itemID,
+      toppingID:toppingID,
+      toppingPrice: toppingPrice,
+      
+    }),
+  };
+
+  try {
+    const res = await fetch(BusinessItemController.UpdateToppingPrice, req);
+    if (res.status !== 201 && res.status !== 200) return "Conflict";
+    const data = await res.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 ////////////INSERT Methods
 export const InsertItemOfBusinessUser = async (
   itemName,
