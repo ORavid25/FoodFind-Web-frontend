@@ -100,7 +100,7 @@ export const UpdateToppingToUnActive = async (
     if (res.status !== 201 && res.status !== 200) return "Conflict";
     const data = await res.json();
     console.log(data);
-    return data;
+    return parseInt(data);
   } catch (error) {
     console.log(error);
     return null;

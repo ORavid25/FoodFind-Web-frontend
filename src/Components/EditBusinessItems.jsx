@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { UpdateItemOfBusiness } from "../api/BusinessItemController";
+import { UpdateItemOfBusiness, UpdateToppingToActive, UpdateToppingToUnActive, GetBusinessItemsByBusinessID } from "../api/BusinessItemController";
 import { GrFormClose } from "react-icons/gr";
-import {AiOutlinePlus} from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 import { AddTopping } from "./AddTopping";
 
-const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
+const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
   const [itemPrice, setItemPrice] = useState(0);
   const [itemComment, setItemComment] = useState("");
   const [unActiveToppings, setUnActiveToppings] = useState([]);
@@ -16,19 +16,35 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
     setItemComment(ItemForEdit.comment);
   }, []);
 
+
+  //get the corrent list of toppings for render it on screen
+  const renderDataToppings = async () => {
+    if (itemToppings.length !== 0) {
+      const res = await GetBusinessItemsByBusinessID(itemToppings['0'].businessID);
+      const toppings = res['toppings'];
+      // console.log("Before filter", toppings);
+      const filtered = toppings.filter(item => item.itemID === ItemForEdit.itemID)
+      await setItemsToppings(filtered);
+      // console.log("After filter", filtered);
+    }
+  }
+
+  // filter topping to category Active/UnActive
+  const filterToppings = async () => {
+    const unActiveTopping1 = itemToppings.filter(item => item.isActive === false)
+    await setUnActiveToppings(unActiveTopping1);
+ 
+    const activeTopping1 = itemToppings.filter(item => item.isActive === true)
+    await setActiveToppings(activeTopping1);
+
+
+  }
+
   useEffect(() => {
-    (async () => {
-      const unActiveTopping = itemToppings.filter(item => item.isActive === false)
-      await setUnActiveToppings(unActiveTopping);
-      const activeTopping = itemToppings.filter(item => item.isActive === true)
-      await setActiveToppings(activeTopping);
-    })()
-
-
+    filterToppings();
   }, [itemToppings]);
 
   const handleUpdateBusinessItem = async () => {
-    debugger;
     if (
       itemPrice !== ItemForEdit.itemPrice ||
       itemComment !== ItemForEdit.comment
@@ -42,6 +58,45 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
       console.log("updateBusinessItem res = ", res);
     }
   };
+  const ActiveTopping = ({ item }) => {
+    return (
+      <div className="flex flex-row justify-center items-center p-2">
+        <div className=" text-xl font-semibold rounded-lg w-40 bg-yellow-200 py-2 flex justify-around items-center">
+
+          <button onClick={async() => {
+           const res =await UpdateToppingToUnActive(item.businessID, item.itemID, item.toppingID)
+           
+            renderDataToppings();
+          }}>
+            <GrFormClose
+              size={25}
+            />
+          </button>
+          {item.toppingName}
+
+        </div>
+
+      </div>)
+
+  }
+
+  const UnActiveToppings = ({ item }) => {
+    return (
+      <div className="flex flex-row justify-center items-center p-2">
+        <div className=" text-lg font-semibold rounded-lg w-40 bg-red-400 py-2 flex flex-row justify-around items-center">
+          <button className="w-40 flex font-semibold justify-around" onClick={async() => {
+            const res =await UpdateToppingToActive(item.businessID, item.itemID, item.toppingID)
+            renderDataToppings();
+          }}>
+            <AiOutlinePlus
+              size={25}
+            />
+            {item.toppingName}
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col justify-around w-11/12 p-5 h-max rounded-t-xl ">
@@ -100,43 +155,15 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings }) => {
 
           <div className="grid grid-cols-4 gap-x-20 gap-y-5 max-h-full p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll overflow-x-hidden designedScroll">
 
-            {activeToppings.map((item) => {
-              return (
-                <div className="flex flex-row justify-center items-center p-2">
-                  <div className=" text-xl font-semibold rounded-lg w-40 bg-yellow-200 py-2 flex justify-around items-center">
+            {activeToppings !== null ? activeToppings.map((item) => {
+              return <ActiveTopping key={item.toppingID} item={item} />
+            })
+              : <div></div>
+            }
 
-                    <button onClick={() => { alert(item.toppingID) }}>
-                      <GrFormClose
-                        size={25}
-                      />
-                    </button>
-                    {item.toppingName}
-
-                  </div>
-
-                </div>
-              );
-            })}
-            
-            {unActiveToppings.map((item) => {
-              return (
-                <div className="flex flex-row justify-center items-center p-2">
-                <div className=" text-lg font-semibold rounded-lg w-40 bg-red-400 py-2 flex flex-row justify-around items-center">
-                <button className="w-40 flex font-semibold justify-around" onClick={() => { alert(item.toppingID) }}>
-                  <AiOutlinePlus
-                    size={25}
-                  />
-                  {item.toppingName}
-                </button>
-                </div>
-                </div>
-              );
-            })}
-
-
-
-
-
+            {unActiveToppings !== null ? unActiveToppings.map((item) => {
+              return <UnActiveToppings key={item.toppingID} item={item} />
+            }) : <div></div>}
 
 
           </div>

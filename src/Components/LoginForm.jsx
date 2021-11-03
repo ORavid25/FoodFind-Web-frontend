@@ -20,7 +20,7 @@ const LoginForm = () => {
       details.businessEmail,
       details.password
     );
-    console.log(res);
+    
     if (res === "Conflict") {
       alert("אחד הפרטים לא נכון");
     }
@@ -44,7 +44,7 @@ const LoginForm = () => {
       );
       if (res.status !== 201 && res.status !== 200) return "Conflict";
       const data = await res.json();
-      console.log("ALLBU", data);
+      // console.log("ALLBU", data);
       return data;
     } catch (error) {
       console.log(error);

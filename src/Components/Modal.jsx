@@ -3,7 +3,6 @@ import { GrFormClose } from "react-icons/gr";
 
 
 const Modal = ({ showModal, setShowModal, children }) => {
-  console.log("showModal=", showModal);
   return (
     <>
       {showModal ? (

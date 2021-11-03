@@ -4,7 +4,7 @@ import { AiFillDelete } from "react-icons/ai";
 import Modal from "../Components/Modal";
 import EditBusinessItems from "../Components/EditBusinessItems";
 
-const ItemsDisplay = ({ businessItems, setBusinessItems, businessToppings }) => {
+const ItemsDisplay = ({ businessItems, setBusinessItems,SendToParentUpdate, businessToppings,setBusinessToppings }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [dialogModal, setDialogModal] = useState(false);
   const [itemForEdit, setItemForEdit] = useState({});
@@ -16,36 +16,43 @@ const ItemsDisplay = ({ businessItems, setBusinessItems, businessToppings }) => 
     setModalIsOpen(!modalIsOpen);
   };
 
+  // const renderDataToppings = async () => {
+  //   if (businessToppings.length !== 0) {
+  //     const res = await GetBusinessItemsByBusinessID(businessToppings['0'].businessID);
+  //     const items = res['toppings'];
+  //     console.log("renderDataToppings", res);
+  //     await setItemsToppings(res);
+  //   }
+ //}
+
+
 
   const renderDel = async () => {
-   
+
     if (businessItems.length !== 0) {
       const res = await GetBusinessItemsByBusinessID(businessItems['0'].businessID);
-      const items =res['items'];
-    
-      console.log("GetBusinessItemsByBusinessID", res);
+      const items = res['items'];
+      // console.log("GetBusinessItemsByBusinessID", res);
       await setBusinessItems(items);
     }
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //    renderDataToppings()
 
-  }, [setBusinessItems]);
+  // }, []);
 
 
   const handleDeleteItem = async () => {
-    console.log("itemForEdit", itemForEdit);
+    // console.log("itemForEdit", itemForEdit);
     if (itemForEdit !== null) {
       const res = await DeleteItemOfBusiness(itemForEdit.businessID, itemForEdit.itemID);
-      console.log("result from web api", res);
-      if(res===1){
-       renderDel();
-       setDialogModal(!dialogModal);
+      // console.log("result from web api", res);
+      if (res === 1) {
+        renderDel();
+        setDialogModal(!dialogModal);
       }
-
     }
- 
-
   }
 
   const Item = ({ data }) => {
@@ -74,10 +81,10 @@ const ItemsDisplay = ({ businessItems, setBusinessItems, businessToppings }) => 
         <div className="flex flex-row justify-between items-center  p-5 ">
           <div className="flex justify-center items-center">
             <button
-              onClick={async() => {
+              onClick={async () => {
                 setDialogModal(!dialogModal);
                 await setItemForEdit(data)
-                
+
               }}
             >
               <AiFillDelete size={40} color="red" />
@@ -98,19 +105,21 @@ const ItemsDisplay = ({ businessItems, setBusinessItems, businessToppings }) => 
       </div>
 
       <div className="grid grid-cols-3 gap-x-10 gap-y-8 max-h-100 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll designedScroll">
-        {businessItems!==null? businessItems.map((item) => {
-            return (
-              <div className="bg-gray-300 w-full h-20">
-                <Item key={item.itemID} data={item} />
-              </div>
-            );
-            
-          }) : <div></div>}
+        {businessItems !== null ? businessItems.map((item) => {
+          return (
+            <div className="bg-gray-300 w-full h-20">
+              <Item key={item.itemID} data={item} />
+            </div>
+          );
+
+        }) : <div></div>}
 
         <Modal showModal={modalIsOpen} setShowModal={setModalIsOpen}>
           <EditBusinessItems
             ItemForEdit={itemForEdit}
             itemToppings={itemToppings}
+            setItemsToppings={setItemsToppings}
+         
           />
         </Modal>
         <Modal showModal={dialogModal} setShowModal={setDialogModal}>

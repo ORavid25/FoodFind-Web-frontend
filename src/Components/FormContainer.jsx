@@ -48,7 +48,7 @@ const FormContainer = (props) => {
           <button className="px-5 py-2 m-5 bg-green-500 text-md text-white font-medium ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300 " onClick={async ()=>{
             if(inputs.itemName!==""&&inputs.itemPrice!==""){
               const res= await InsertItemOfBusinessUser(inputs.itemName,id,inputs.itemPrice,inputs.comment)
-              console.log("result =",res);
+              // console.log("result =",res);
                await setIsClicked(!isClicked);
                await props.open(isClicked);
                await props.dataItemID(res);

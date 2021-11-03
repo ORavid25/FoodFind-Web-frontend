@@ -19,8 +19,8 @@ const BusinessMenu = () => {
   const [ifOpenTopping, setIfOpenTopping] = useState(false);
   const [toppingAgreed, setToppingAgreed] = useState(false);
   const [itemData, setItemData] = useState({});
-  const [businessItems,setBusinessItems] = useState([]);
-  const [businessToppings,setBusinessToppings] = useState([]);
+  const [businessItems, setBusinessItems] = useState([]);
+  const [businessToppings, setBusinessToppings] = useState([]);
 
 
   const handleOpenToppingMenu = (data) => {
@@ -32,16 +32,20 @@ const BusinessMenu = () => {
   };
 
   //GET ALL ITEMS && TOPPING OF BUSINESS 
+  const GetAllItemsAndToppings = async () => {
+    const storage = await retrieveLocalStorageData("user");
+    const businessID = storage.businessID;
+    const res = await GetBusinessItemsByBusinessID(businessID);
+    const items = res["items"];//SEPARATE ITEMS
+    const toppings = res["toppings"];//SEPERATE TOPPINGS
+    await setBusinessItems(items)
+    await setBusinessToppings(toppings)
+    // console.log("After Update Toppings=",businessToppings);
+    // console.log("renderFromBusinessMenu");
+  }
+
   useEffect(() => {
-    (async () => {
-      const storage = await retrieveLocalStorageData("user");
-      const businessID = storage.businessID;
-      const res = await GetBusinessItemsByBusinessID(businessID);
-      const items = res["items"];//SEPARATE ITEMS
-      const toppings =res["toppings"];//SEPERATE TOPPINGS
-      await setBusinessItems(items)
-      await setBusinessToppings(toppings)
-    })();
+  GetAllItemsAndToppings();
   }, []);
 
 
@@ -64,8 +68,8 @@ const BusinessMenu = () => {
             </div>
 
           </div>
-          
-          
+
+
 
           {addItem ? (
             <div className="">
@@ -115,10 +119,12 @@ const BusinessMenu = () => {
             ""
           )}
 
-         
-            <ItemsDisplay businessItems={businessItems} setBusinessItems={setBusinessItems} businessToppings={businessToppings} />
-         
-          
+          <ItemsDisplay
+            businessItems={businessItems}
+            businessToppings={businessToppings}
+          />
+
+
         </div>
       </div>
     </Layout>
