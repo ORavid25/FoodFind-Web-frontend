@@ -64,7 +64,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
         <div className=" text-xl font-semibold rounded-lg w-40 bg-yellow-200 py-2 flex justify-around items-center">
 
           <button onClick={async() => {
-           const res =await UpdateToppingToUnActive(item.businessID, item.itemID, item.toppingID)
+           const res = await UpdateToppingToUnActive(item.businessID, item.itemID, item.toppingID)
            
             renderDataToppings();
           }}>
@@ -150,7 +150,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
           onClick={() => { setAddToppingClicked(!addToppingClicked) }} >
           להוספת תוספת
         </button>
-        {addToppingClicked && <AddTopping data={ItemForEdit} />}
+        {addToppingClicked && <AddTopping data={ItemForEdit} renderDataToppings={renderDataToppings} setAddToppingClicked={setAddToppingClicked} />}
         {itemToppings.length === 0 ? <div className="w-full h-54 text-xl font-semibold flex justify-center item-center mt-">אין תוספות למוצר זה</div> :
 
           <div className="grid grid-cols-4 gap-x-20 gap-y-5 max-h-full p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll overflow-x-hidden designedScroll">

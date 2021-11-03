@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { insertTopping } from '../api/BusinessItemController';
 
-export const AddTopping = (props) => {
+export const AddTopping = ({data,renderDataToppings,setAddToppingClicked}) => {
 
   const [inputs, setInputs] = useState({
     topName:"",
@@ -12,12 +12,15 @@ export const AddTopping = (props) => {
 
   const handleAddClick = async () => {
     if (inputs.topName !== null && inputs.topPrice !== null) {
-      await insertTopping(inputs.topName,props.data.businessID,props.data.itemID,inputs.topPrice,true);
-      
+      await insertTopping(inputs.topName,data.businessID,data.itemID,inputs.topPrice,true);
+      alert('נוספה תוספת בהצלחה');
+      setAddToppingClicked(false);
+      await renderDataToppings();
+
     }
   }
 
-  console.log(props.data.businessID);
+  console.log(data.businessID);
     return (
         <div className="w-11/12 mx-16 max-h-96 bg-gray-200">
         <div>

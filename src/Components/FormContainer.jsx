@@ -30,7 +30,7 @@ const FormContainer = (props) => {
 
   return (
     <div className="max-h-96 w-11/12 mx-16 rounded-xl  b-white">
-      <div>
+      
         <div
           dir="rtl"
           className=" items-center justify-evenly h-28  bg-gray-200"
@@ -59,7 +59,7 @@ const FormContainer = (props) => {
           }}>אשר</button>
       
         </div>
-      </div>
+
     </div>
   );
 };
