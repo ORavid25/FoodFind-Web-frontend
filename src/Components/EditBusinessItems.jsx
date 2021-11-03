@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { UpdateItemOfBusiness, UpdateToppingToActive, UpdateToppingToUnActive, GetBusinessItemsByBusinessID } from "../api/BusinessItemController";
+import {
+  UpdateItemOfBusiness,
+  UpdateToppingToActive,
+  UpdateToppingToUnActive,
+  GetBusinessItemsByBusinessID,
+} from "../api/BusinessItemController";
 import { GrFormClose } from "react-icons/gr";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AddTopping } from "./AddTopping";
+import Modal from "./Modal";
 
 const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
   const [itemPrice, setItemPrice] = useState(0);
@@ -10,35 +16,44 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
   const [unActiveToppings, setUnActiveToppings] = useState([]);
   const [activeToppings, setActiveToppings] = useState([]);
   const [addToppingClicked, setAddToppingClicked] = useState(false);
+  const [currentToppingForUpdate,setCurrentToppingForUpdate ] = useState(false);
+  const [updateTopping,setUpdateTopping ] = useState(false);
+
+
 
   useEffect(() => {
     setItemPrice(ItemForEdit.itemPrice);
     setItemComment(ItemForEdit.comment);
   }, []);
 
-
   //get the corrent list of toppings for render it on screen
   const renderDataToppings = async () => {
     if (itemToppings.length !== 0) {
-      const res = await GetBusinessItemsByBusinessID(itemToppings['0'].businessID);
-      const toppings = res['toppings'];
+      const res = await GetBusinessItemsByBusinessID(
+        itemToppings["0"].businessID
+      );
+      const toppings = res["toppings"];
       // console.log("Before filter", toppings);
-      const filtered = toppings.filter(item => item.itemID === ItemForEdit.itemID)
+      const filtered = toppings.filter(
+        (item) => item.itemID === ItemForEdit.itemID
+      );
       await setItemsToppings(filtered);
       // console.log("After filter", filtered);
     }
-  }
+  };
 
   // filter topping to category Active/UnActive
   const filterToppings = async () => {
-    const unActiveTopping1 = itemToppings.filter(item => item.isActive === false)
+    const unActiveTopping1 = itemToppings.filter(
+      (item) => item.isActive === false
+    );
     await setUnActiveToppings(unActiveTopping1);
- 
-    const activeTopping1 = itemToppings.filter(item => item.isActive === true)
+
+    const activeTopping1 = itemToppings.filter(
+      (item) => item.isActive === true
+    );
     await setActiveToppings(activeTopping1);
-
-
-  }
+  };
 
   useEffect(() => {
     filterToppings();
@@ -62,41 +77,58 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
     return (
       <div className="flex flex-row justify-center items-center p-2">
         <div className=" text-xl font-semibold rounded-lg w-40 bg-yellow-200 py-2 flex justify-around items-center">
+          <button
+            onClick={async () => {
+              const res = await UpdateToppingToUnActive(
+                item.businessID,
+                item.itemID,
+                item.toppingID
+              );
 
-          <button onClick={async() => {
-           const res = await UpdateToppingToUnActive(item.businessID, item.itemID, item.toppingID)
-           
-            renderDataToppings();
-          }}>
-            <GrFormClose
-              size={25}
-            />
+              renderDataToppings();
+            }}
+          >
+            <GrFormClose size={25} />
           </button>
-          {item.toppingName}
-
-        </div>
-
-      </div>)
-
-  }
-
-  const UnActiveToppings = ({ item }) => {
-    return (
-      <div className="flex flex-row justify-center items-center p-2">
-        <div className=" text-lg font-semibold rounded-lg w-40 bg-red-400 py-2 flex flex-row justify-around items-center">
-          <button className="w-40 flex font-semibold justify-around" onClick={async() => {
-            const res =await UpdateToppingToActive(item.businessID, item.itemID, item.toppingID)
-            renderDataToppings();
-          }}>
-            <AiOutlinePlus
-              size={25}
-            />
+          <button
+            onClick={async () => {
+              await setUpdateTopping(!updateTopping);
+              await setCurrentToppingForUpdate(item)
+            }}
+          >
             {item.toppingName}
           </button>
         </div>
       </div>
-    )
-  }
+    );
+  };
+
+  const UnActiveToppings = ({ item }) => {
+    return (
+      <div className="flex flex-row justify-center items-center p-2">
+        <div className=" text-xl  font-semibold rounded-lg w-40 bg-red-200 py-2 flex justify-around items-center">
+          <button
+            onClick={async () => {
+              const res = await UpdateToppingToActive(
+                item.businessID,
+                item.itemID,
+                item.toppingID
+              );
+              renderDataToppings();
+            }}
+          >
+            <AiOutlinePlus size={25} />
+          </button>
+          <button onClick={async () => {
+              await setUpdateTopping(!updateTopping);
+              await setCurrentToppingForUpdate(item)
+            }}
+          >{item.toppingName}</button>
+          
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="flex flex-col justify-around w-11/12 p-5 h-max rounded-t-xl ">
@@ -135,7 +167,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
           עדכון
         </button>
       </div>
-      <div className="mt-10">
+      <div className="mt-10 max-h-96">
         <div>
           <h1 className="font-semibold text-lg mx-5">
             התוספות של המוצר {ItemForEdit.itemName}
@@ -147,27 +179,46 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
         <button
           type="button"
           className="p-2 m-5 bg-green-500 w-44 text-xl text-white font-small ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300"
-          onClick={() => { setAddToppingClicked(!addToppingClicked) }} >
+          onClick={() => {
+            setAddToppingClicked(!addToppingClicked);
+          }}
+        >
           להוספת תוספת
         </button>
-        {addToppingClicked && <AddTopping data={ItemForEdit} renderDataToppings={renderDataToppings} setAddToppingClicked={setAddToppingClicked} />}
-        {itemToppings.length === 0 ? <div className="w-full h-54 text-xl font-semibold flex justify-center item-center mt-">אין תוספות למוצר זה</div> :
-
-          <div className="grid grid-cols-4 gap-x-20 gap-y-5 max-h-full p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll overflow-x-hidden designedScroll">
-
-            {activeToppings !== null ? activeToppings.map((item) => {
-              return <ActiveTopping key={item.toppingID} item={item} />
-            })
-              : <div></div>
-            }
-
-            {unActiveToppings !== null ? unActiveToppings.map((item) => {
-              return <UnActiveToppings key={item.toppingID} item={item} />
-            }) : <div></div>}
-
-
+        {/* Open Add Toppings */}
+        {addToppingClicked && (
+          <AddTopping
+            data={ItemForEdit}
+            renderDataToppings={renderDataToppings}
+            setAddToppingClicked={setAddToppingClicked}
+          />
+        )}
+        {itemToppings.length === 0 ? (
+          <div className="w-full h-54 text-xl font-semibold flex justify-center item-center mt-">
+            אין תוספות למוצר זה
           </div>
-        }
+        ) : (
+          <div className="grid grid-cols-4 gap-x-20 gap-y-5 max-h-60 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll overflow-x-hidden designedScroll">
+            {activeToppings !== null ? (
+              activeToppings.map((item) => {
+                return <ActiveTopping key={item.toppingID} item={item} />;
+              })
+            ) : (
+              <div></div>
+            )}
+
+            {unActiveToppings !== null ? (
+              unActiveToppings.map((item) => {
+                return <UnActiveToppings key={item.toppingID} item={item} />;
+              })
+            ) : (
+              <div></div>
+            )}
+          </div>
+        )}
+            <Modal showModal={updateTopping} setShowModal={setUpdateTopping} >
+                 <AddTopping data={currentToppingForUpdate} ifUpdate={true} />
+                </Modal>
       </div>
     </div>
   );

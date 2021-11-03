@@ -145,6 +145,7 @@ const ItemsDisplay = ({ businessItems, setBusinessItems,SendToParentUpdate, busi
             </div>
           </div>
         </Modal>
+   
       </div>
     </div>
   );
