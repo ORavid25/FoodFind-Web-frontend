@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { insertTopping , UpdateToppingPrice } from "../api/BusinessItemController";
+import Loader from "./Loader";
 
 export const AddTopping = ({
   data,
@@ -23,6 +24,9 @@ export const AddTopping = ({
         true
       );
       alert("נוספה תוספת בהצלחה");
+      // setInterval(() => {
+      //   <Loader/>
+      // }, 3000);
       setAddToppingClicked(false);
       await renderDataToppings();
     }

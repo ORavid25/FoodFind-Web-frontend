@@ -8,15 +8,10 @@ import BusinessUpdateForm from "../Components/BusinessUpdateForm";
 
 const BusinessPage = () => {
 
-  const { user } = useContext(FoodFindContext);
-
-
-
-
   return (
     <Layout>
       <Navbar />
-      <div className="flex ml-44 p-5 justify-center h-screen">
+      <div className="flex ml-44 p-5 justify-center h-full w-full items-center">
         <BusinessUpdateForm />
       </div>
     </Layout>

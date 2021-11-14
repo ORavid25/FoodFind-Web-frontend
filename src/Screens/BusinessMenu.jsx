@@ -3,6 +3,7 @@ import Navbar from "../Components/Navbar";
 import Layout from "../Components/Layout";
 import ItemsDisplay from "../Components/ItemsDisplay"
 import FormContainer from "../Components/FormContainer";
+import Loader from "../Components/Loader"
 import { HiPlusSm } from "react-icons/hi";
 import { AddTopping } from "../Components/AddTopping";
 import {
@@ -43,7 +44,7 @@ const BusinessMenu = () => {
   }
 
   useEffect(() => {
-  GetAllItemsAndToppings();
+    GetAllItemsAndToppings();
   }, []);
 
 
@@ -75,14 +76,14 @@ const BusinessMenu = () => {
                 dataItemID={upliftData}
                 GetAllItemsAndToppings={GetAllItemsAndToppings}
               />
-              
+
 
               {/* {toppingItem ? <AddTopping data={itemData} /> : ""} */}
             </div>
           ) : (
             ""
           )}
-{/* 
+          {/* 
           {toppingAgreed === true ? (
             <div className="bg-red-400 flex h-10 w-full justify-end items-center">
               <div className="flex m-5 flex-wrap items-center">
@@ -100,16 +101,16 @@ const BusinessMenu = () => {
           ) : (
             ""
           )} */}
-
-          <ItemsDisplay
-            businessItems={businessItems}
-            businessToppings={businessToppings}
-            setBusinessItems={setBusinessItems}
-            GetAllItemsAndToppings={GetAllItemsAndToppings}
-          />
-
-
+          {businessItems === null || businessToppings === null ? <Loader /> :
+            <ItemsDisplay
+              businessItems={businessItems}
+              businessToppings={businessToppings}
+              setBusinessItems={setBusinessItems}
+              GetAllItemsAndToppings={GetAllItemsAndToppings}
+            />
+          }
         </div>
+        <Loader/>
       </div>
     </Layout>
   );

@@ -6,7 +6,9 @@ module.exports = {
       animation:{
         beat: 'beat 5s ease-out infinite ',
         bounceSlow:'bounce 1s  ',
-        animateModal:'animateModal 0.5s ease-out forwards'
+        animateModal:'animateModal 0.5s ease-out forwards',
+        bounce200: 'bounce 1s infinite 200ms',
+        bounce400: 'bounce 1s infinite 400ms',
       },
       keyframes:{
         beat:{
