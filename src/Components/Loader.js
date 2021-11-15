@@ -4,7 +4,7 @@ const Loader = () => {
     let circleCommonClasses = 'h-5 w-5 bg-green-500  rounded-full';
 
     return (
-        <div className='flex'>
+        <div className='flex justify-center items-center mt-56'>
             <div className={`${circleCommonClasses} mr-1 animate-bounce`}></div>
             <div
                 className={`${circleCommonClasses} mr-1 animate-bounce200`}

@@ -16,15 +16,9 @@ import { retrieveLocalStorageData } from "../utility/localStorage";
 
 const BusinessMenu = () => {
   const [addItem, setAddItem] = useState(false);
-
   const [itemData, setItemData] = useState({});
   const [businessItems, setBusinessItems] = useState([]);
   const [businessToppings, setBusinessToppings] = useState([]);
-
-
-  // const handleOpenToppingMenu = (data) => {
-  //   setIfOpenTopping(data);
-  // };
 
   const upliftData = async (data) => {
     await setItemData(data);
@@ -68,39 +62,17 @@ const BusinessMenu = () => {
 
           </div>
 
-
-
           {addItem ? (
             <div className="">
               <FormContainer
                 dataItemID={upliftData}
                 GetAllItemsAndToppings={GetAllItemsAndToppings}
               />
-
-
-              {/* {toppingItem ? <AddTopping data={itemData} /> : ""} */}
             </div>
           ) : (
             ""
           )}
-          {/* 
-          {toppingAgreed === true ? (
-            <div className="bg-red-400 flex h-10 w-full justify-end items-center">
-              <div className="flex m-5 flex-wrap items-center">
-                <h1 className="ml-5 text-2xl">הוספת תוספת חדשה</h1>
-                <button
-                  className="flex justify-center items-center w-12 h-12 "
-                  onClick={() => {
-                    setToppingItem(!toppingItem);
-                  }}
-                >
-                  <HiPlusSm />
-                </button>
-              </div>
-            </div>
-          ) : (
-            ""
-          )} */}
+         
           {businessItems === null || businessToppings === null ? <Loader /> :
             <ItemsDisplay
               businessItems={businessItems}
@@ -110,7 +82,7 @@ const BusinessMenu = () => {
             />
           }
         </div>
-        <Loader/>
+     
       </div>
     </Layout>
   );

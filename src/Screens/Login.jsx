@@ -9,7 +9,6 @@ import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const { user, setUser } = useContext(FoodFindContext);
-  const [businessUsers, setBusinessUsers] = useState("");
   const [error, setError] = useState("");
 
   const history = useHistory();
