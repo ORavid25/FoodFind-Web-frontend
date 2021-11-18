@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from "react";
-import { HiPlusSm } from "react-icons/hi";
 import {InsertItemOfBusinessUser} from "../api/BusinessItemController"
 import {retrieveLocalStorageData} from "../utility/localStorage";
 

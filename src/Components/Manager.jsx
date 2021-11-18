@@ -5,6 +5,7 @@ import Login from "../Screens/Login";
 import BusinessMenu from "../Screens/BusinessMenu";
 import BusinessPage from "../Screens/BusinessPage";
 import BusinessReport from "../Screens/BusinessReport";
+import AdminPage from "../Screens/AdminPage";
 
 
 const Manager = () => {
@@ -16,7 +17,8 @@ const Manager = () => {
         <Login />
       </Route>
       <Route exact path="/">
-        <Home />
+        {/* <Home /> */}
+        <AdminPage />
       </Route>
       <Route path="/businessMenu">
         <BusinessMenu />
@@ -26,6 +28,9 @@ const Manager = () => {
       </Route>
       <Route path="/businessReport">
         <BusinessReport />
+      </Route>
+      <Route path="/AdminPage">
+        <AdminPage />
       </Route>
     
     </Switch>

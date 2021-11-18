@@ -4,9 +4,9 @@ import Header from './Header'
 
 const Layout = ({children}) => {
     return (
-        <div className="min-h-screen flex flex-col bg-white">
+        <div className="min-h-screen min-w-screen flex flex-col bg-white">
             <Header/>
-            <main className="container flex-grow md:flex-col h-screen sm:px-6">{children}</main>
+            <main className="container flex-grow h-screen w-full md:flex-col  sm:px-6">{children}</main>
             <Footer/>
             
         </div>
