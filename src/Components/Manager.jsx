@@ -17,8 +17,8 @@ const Manager = () => {
         <Login />
       </Route>
       <Route exact path="/">
-        {/* <Home /> */}
-        <AdminPage />
+        <Home />
+        {/* <AdminPage /> */}
       </Route>
       <Route path="/businessMenu">
         <BusinessMenu />

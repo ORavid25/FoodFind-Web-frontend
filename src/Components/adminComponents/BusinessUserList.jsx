@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 
 const BusinessUserList = ({ businessUsersList }) => {
   return (
-    <div className=" bg-gray-200 w-11/12 h-5/6 flex flex-col items-center rounded-lg mt-5 overflow-y-auto">
+    <div className=" bg-gray-200 w-11/12 h-5/6 flex flex-col items-center rounded-lg mt-5 p-4 overflow-y-auto">
       {/* כותרת */}
-      <div className="w-full p-5 flex items-center justify-center text-2xl rounded-t-lg bg-green-400">
+      <div className="w-full p-5 flex items-center justify-center text-2xl rounded-lg bg-green-400">
         <h1>משתמשים בעלי עסק</h1>
       </div>
       <div className="flex w-full flex-col items-center p-3">
