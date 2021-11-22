@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Loader from "../Loader";
 
 const BusinessUserList = ({ businessUsersList }) => {
   return (
@@ -15,7 +16,7 @@ const BusinessUserList = ({ businessUsersList }) => {
           <h1>תאריך יצירה</h1>
         </div>
 
-        {businessUsersList.map((user) => {
+        {businessUsersList === null ? <Loader/> : businessUsersList.map((user) => {
           return (
             <div className="bg-gray-50 w-full flex justify-between my-2 flex-row-reverse p-5 text-lg leading-6 rounded-lg overflow-auto ring-4 ring-green-500 hover:bg-green-300">
               <h1>{user.businessID}</h1>

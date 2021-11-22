@@ -11,7 +11,7 @@ export const Home = () => {
   return (
     <Layout>
       <Navbar />
-      <div className="ml-56 h-full w-full flex flex-col">
+      <div className="ml-56 h-full w-full flex flex-col pt-10">
         <div className="flex w-full justify-end items-center p-5 ">
             <OrderDetails />
           <div className="flex justify-center items-center ">

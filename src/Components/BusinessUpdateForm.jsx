@@ -31,7 +31,8 @@ const BusinessUpdateForm = () => {
   const renderBusinessDetails = async () => {
     const res = await GetBusinessUserById(user.businessID);
     if (res !== null) {
-      await setUser(res);
+      setUser(res);
+      handleCheckBusinessUser();
     }
   }
 
@@ -43,26 +44,31 @@ const BusinessUpdateForm = () => {
     }
   }
 
-  const handleUpdateDetails = async () => {
+  
+  const handleCheckBusinessUser = () => {
+    if (businessLicense === ""||businessLicense!==user.businessLicense) {
+      setBusinessLicense(user.businessLicense)
+    }
+    if (businessName === ""||businessName!==user.businessName) {
+      setBusinessName(user.businessName)
+    }
+    if (businessAddress === ""||businessAddress!==user.businessAddress) {
+      setBusinessAddress(user.businessAddress)
+    }
+    if (businessPhone === ""||businessPhone!==user.businessPhone) {
+      setBusinessPhone(user.businessPhone)
+    }
+    if (businessDescription === ""||businessDescription!==user.businessDescription) {
+      setBusinessDescription(user.businessDescription)
+    }
+    if (businessStatus === ""||businessStatus!==user.businessStatus) {
+      setBusinessStatus(user.businessStatus)
+    }
+  }
 
-    if (businessLicense === "") {
-      await setBusinessLicense(user.businessLicense)
-    }
-    if (businessName === "") {
-      await setBusinessName(user.businessName)
-    }
-    if (businessAddress === "") {
-      await setBusinessAddress(user.businessAddress)
-    }
-    if (businessPhone === "") {
-      await setBusinessPhone(user.businessPhone)
-    }
-    if (businessDescription === "") {
-      await setBusinessDescription(user.businessDescription)
-    }
-    if (businessStatus === "") {
-      await setBusinessStatus(user.businessStatus)
-    }
+
+  const handleUpdateDetails = async () => {
+    handleCheckBusinessUser()
     if (user.businessID !== "" && businessLicense !== "" && businessName !== "" && businessAddress !== "" && businessPhone !== "" && businessDescription !== "" && businessStatus !== "") {
       const res = await UpdateBusinessUser({ businessID: user.businessID, businessLicense, businessName, businessAddress, businessPhone, businessDescription, businessStatus })
       if (res === 1) {

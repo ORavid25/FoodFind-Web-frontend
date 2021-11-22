@@ -70,10 +70,10 @@ const BusinessOrders = () => {
     
   // }
 
-  const items = data.map((data, idx) => {
+  const items = data.map((data) => {
     return (
       <div
-        classNameName="flex container hover:bg-green-300"
+        classNameName="flex container hover:bg-green-300 "
         onClick={(data) => {
           alert("heyy")
         }}
@@ -98,7 +98,7 @@ const BusinessOrders = () => {
 
   return (
     <div className="flex justify-center items-center w-80 h-full ">
-      <div className="bg-gray-200 shadow-md overflow-hidden sm:rounded-lg  ring-4 ring-opacity-90 ring-green-300 ">
+      <div className="bg-gray-200 shadow-md overflow-hidden sm:rounded-lg  ring-4 ring-opacity-90 ring-green-300 w-80    ">
         <div className="px-4 py-5 sm:px-6" dir="rtl">
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             מסך ההזמנות
