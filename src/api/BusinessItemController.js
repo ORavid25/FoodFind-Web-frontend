@@ -182,7 +182,8 @@ export const InsertItemOfBusinessUser = async (
   itemName,
   businessID,
   itemPrice,
-  comment
+  comment,
+  itemImg1
 ) => {
   const req = {
     method: "POST",
@@ -196,6 +197,7 @@ export const InsertItemOfBusinessUser = async (
       businessID: businessID,
       itemPrice: itemPrice,
       comment: comment,
+      itemImg:itemImg1,
     }),
   };
   try {

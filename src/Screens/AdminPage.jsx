@@ -52,7 +52,7 @@ const AdminPage = () => {
       {/* header */}
       <div className=" bg-green-300 w-full h-20 flex justify-around items-center">
         <h1 className="ml-96 text-xl font-sans leading-6 font-bold">
-          שלום דוד
+          !שלום אדמין
         </h1>
         <img src={Logo} alt="Logo" className=" w-52 mr-5 h-20" />
       </div>

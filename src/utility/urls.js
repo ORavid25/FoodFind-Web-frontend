@@ -24,6 +24,7 @@ export const LoginWithEmailAndPass = `${Base_URL}/businessuser/LoginWithEmailAnd
 export const UpdateBusinessUser = `${Base_URL}/businessuser/UpdateBusinessUser`;
 export const UpdateBusinessUserPass = `${Base_URL}/businessuser/UpdateBusinessUserPass`;
 
+
 export const BusinessUsersController = {
     GetAllBusinessUsers,
     GetBusinessUserById,
@@ -31,7 +32,8 @@ export const BusinessUsersController = {
     InsertBusinessUser,
     LoginWithEmailAndPass,
     UpdateBusinessUser,
-    UpdateBusinessUserPass
+    UpdateBusinessUserPass,
+ 
 };
 
 
@@ -48,11 +50,13 @@ export const UpdateToppingToActive = `${Base_URL}/businesstoppingsitem/UpdateTop
 export const DeleteItemOfBusiness = `${Base_URL}/businessitems/DeleteItemOfBusinessById`;
 
 export const UpdateToppingPrice = `${Base_URL}/businesstoppingsitem/UpdateToppingPrice`;
+export const UploadItemImage = `${Base_URL}/image/uploadimage`;
 
 export const BusinessItemController = {
     GetAllBusinessItemsByBusinessId,
     GetBusinessItemNameById,
 
+    UploadItemImage,
 
     InsertItemOfBusinessUser,
     InsertToppingOfItem,

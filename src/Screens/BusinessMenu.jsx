@@ -33,8 +33,6 @@ const BusinessMenu = () => {
     const toppings = res["toppings"];//SEPERATE TOPPINGS
     await setBusinessItems(items)
     await setBusinessToppings(toppings)
-    // console.log("After Update Toppings=",businessToppings);
-    // console.log("renderFromBusinessMenu");
   }
 
   useEffect(() => {
@@ -67,6 +65,7 @@ const BusinessMenu = () => {
               <FormContainer
                 dataItemID={upliftData}
                 GetAllItemsAndToppings={GetAllItemsAndToppings}
+                businessItems={businessItems}
               />
             </div>
           ) : (

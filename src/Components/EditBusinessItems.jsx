@@ -16,10 +16,8 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
   const [unActiveToppings, setUnActiveToppings] = useState([]);
   const [activeToppings, setActiveToppings] = useState([]);
   const [addToppingClicked, setAddToppingClicked] = useState(false);
-  const [currentToppingForUpdate,setCurrentToppingForUpdate ] = useState(false);
-  const [updateTopping,setUpdateTopping ] = useState(false);
-
-
+  const [currentToppingForUpdate, setCurrentToppingForUpdate] = useState(false);
+  const [updateTopping, setUpdateTopping] = useState(false);
 
   useEffect(() => {
     setItemPrice(ItemForEdit.itemPrice);
@@ -93,7 +91,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
           <button
             onClick={async () => {
               await setUpdateTopping(!updateTopping);
-              await setCurrentToppingForUpdate(item)
+              await setCurrentToppingForUpdate(item);
             }}
           >
             {item.toppingName}
@@ -119,12 +117,14 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
           >
             <AiOutlinePlus size={25} />
           </button>
-          <button onClick={async () => {
+          <button
+            onClick={async () => {
               await setUpdateTopping(!updateTopping);
-              await setCurrentToppingForUpdate(item)
+              await setCurrentToppingForUpdate(item);
             }}
-          >{item.toppingName}</button>
-          
+          >
+            {item.toppingName}
+          </button>
         </div>
       </div>
     );
@@ -138,8 +138,9 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
           כאן ניתן לבצע שינויים במוצר ובתוספות המוצר
         </h2>
       </div>
-      <div className=" flex justify-center items-center p-2 bg-gray-300">
+      <div className=" flex justify-around items-center p-2 bg-gray-300">
         <h1 className="text-xl font-semibold">{ItemForEdit.itemName}</h1>
+   
       </div>
       <div className="flex h-32 justify-evenly items-center flex-row p-5 font-semibold text-lg rounded-b-xl bg-gray-300 ">
         <h1>מחיר מוצר</h1>
@@ -216,9 +217,14 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
             )}
           </div>
         )}
-            <Modal showModal={updateTopping} setShowModal={setUpdateTopping} >
-                 <AddTopping data={currentToppingForUpdate} ifUpdate={true} renderDataToppings={renderDataToppings} setUpdateTopping={setUpdateTopping} />
-                </Modal>
+        <Modal showModal={updateTopping} setShowModal={setUpdateTopping}>
+          <AddTopping
+            data={currentToppingForUpdate}
+            ifUpdate={true}
+            renderDataToppings={renderDataToppings}
+            setUpdateTopping={setUpdateTopping}
+          />
+        </Modal>
       </div>
     </div>
   );
