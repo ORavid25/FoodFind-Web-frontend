@@ -23,7 +23,7 @@ const OrderDetails = () => {
   }, [orderDetail]);
 
   return (
-    <div className="flex container flex-col w-full mx-2 my-2 h-full bg-gray-200  rounded-lg  ring-4 ring-opacity-90 ring-green-300 mr-5 ">
+    <div className="flex container flex-col w-full m-2 h-full bg-gray-200  rounded-lg  ring-4 ring-opacity-90 ring-green-300 mr-5 ">
       <div dir="rtl" className="flex flex-col justify-between p-4 ">
         <h1 className="text-lg leading-6 font-medium text-gray-900">
           פירוט הזמנה
@@ -63,17 +63,23 @@ const OrderDetails = () => {
                 </h1>
                 <a>{orderDetail&&orderDetail["1"].userEmail}</a>
               </div>
-              <div className="shadow-sm p-2 flex flex-col">
+              <div className="flex h-96 shadow-sm p-2  flex-col overflow-y-scroll">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ">
                   פירוט ההזמנה:
                 </h1>
-                <div className="mt-2 flex flex-col mr-2 text-xl font-normal">
+                <div className="mt-2 flex flex-col mr-2 text-xl font-normal ">
                   {orderDetail && orderDetail["0"].map((order,index)=>{
                     return(
-                      <div>
-                        <a>
-                        {order.itemName},{order.comments}{order.itemAmount}{order.itemTotalPrice}
-                        </a>
+                      <div className=" h-24 ring-2 rounded-md ring-green-300">
+                        <div className="flex flex-row rounded-t-md px-2 bg-gray-300">
+                        <h2>{order.itemName}</h2>
+                        <span className="w-10"/>
+                        <h2>{order.itemAmount}X</h2>
+                        </div>
+                       
+                        <h2 className="text-gray-600 text-lg font-medium px-2 pt-2">תוספות וערות למוצר : {order.comments}</h2>
+                        
+                        <h2 className="text-gray-600 text-lg font-bold px-2">סה"כ מחיר למוצר : {order.itemTotalPrice}</h2>
                       </div>
                     )
                   })}
@@ -85,13 +91,13 @@ const OrderDetails = () => {
       </div>
 
       <div className="flex justify-around p-3 mb-3">
-        <button className="bg-yellow-900 ring-4 ring-yellow-600 border-white text-white p-3 text-lg rounded-lg " onClick={() => {
+        <button className="bg-yellow-900 ring-4 ring-yellow-600 border-white text-white p-5 px-10 text-lg rounded-lg " onClick={() => {
           alert("OrderReady / OnTheWay");
         }}>
-          ההזמנה מוכנה/יצאה למשלוח
+        ההזמנה מוכנה
         </button>
 
-        <button className="bg-green-600 ring-4 ring-green-300 hover:ring-green-900 text-white px-5 py-1 text-lg rounded-lg" onClick={() => {
+        <button className="bg-green-600 ring-4 ring-green-300 hover:ring-green-900 text-white p-5 px-10 text-xl rounded-lg" onClick={() => {
           alert("orderPaidUp = true");
         }}>
           אישור תשלום

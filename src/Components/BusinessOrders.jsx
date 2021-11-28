@@ -14,7 +14,7 @@ const BusinessOrders = ({orderList,businessOrdersToHome}) => {
         }}
       >
         <ul className="container" key={order.orderID}>
-          <div className=" p-6 flex flex-col justify-evenly">
+          <div className=" p-6 flex flex-col justify-evenly ">
             <div className="flex flex-row  justify-center items-center mb-3 ">
               <p className="text-lg text-gray-900 flex">{order.orderDate}</p>
             </div>
@@ -29,17 +29,17 @@ const BusinessOrders = ({orderList,businessOrdersToHome}) => {
   });
 
   return (
-    <div className="flex justify-center items-center w-80 max-h-full">
-      <div className="bg-gray-200 shadow-md overflow-hidden sm:rounded-lg ring-4 ring-opacity-90 ring-green-300 w-80    ">
+    <div className="flex justify-center w-80 max-h-full ">
+      <div className="bg-gray-200 shadow-md overflow-scroll rounded-lg ring-4 ring-opacity-90 ring-green-300 w-80 h-5/6">
         <div className="px-4 py-5 sm:px-6 " dir="rtl">
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             מסך ההזמנות
           </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+          <p className=" text-sm text-gray-500">
             כאן תוכל לראות את ההזמנות הנכנסות
           </p>
         </div>
-        <div classNameName="container">{orders}</div>
+        <div classNameName="container overflow-y-scroll  ">{orders}</div>
       </div>
     </div>
   );
