@@ -7,9 +7,9 @@ import OrderDetails from "../Components/OrderDetails";
 import { getAllOrdersByBusinessID, getAllItemOfOrderByOrderID } from '../api/OrderController';
 
 export const Home = () => {
-  const { user } = useContext(FoodFindContext);
+  const { user,setOrderDetail } = useContext(FoodFindContext);
   const [businessOrders, setBusinessOrders] = useState([]);
-  const [orderDetail,setOrderDetail]= useState({});
+ 
 
   const fetchOrders = async () => {
     if (user !== null && user !== undefined) {
@@ -38,7 +38,7 @@ export const Home = () => {
       <Navbar />
       <div className="ml-56 h-full w-full flex flex-col pt-10">
         <div className="flex w-full justify-end items-center p-5 ">
-          <OrderDetails orderDetail={orderDetail} />
+          <OrderDetails />
           <div className="flex justify-center items-center ">
             <BusinessOrders orderList={businessOrders} businessOrdersToHome={businessOrdersToHome} />
           </div>

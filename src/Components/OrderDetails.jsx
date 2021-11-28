@@ -1,6 +1,10 @@
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,useContext} from "react";
+import {FoodFindContext} from '../context';
 
-const OrderDetails = ({orderDetail}) => {
+const OrderDetails = () => {
+
+  const {orderDetail} = useContext(FoodFindContext);
+
   const data = {
     id: "1",
     productName: "המבורגר",
@@ -13,10 +17,10 @@ const OrderDetails = ({orderDetail}) => {
     comment: "בלי עגבניה ובלי בצל , הרבה רטבים בצד",
   };
   useEffect(() => {
-    // console.log("orderDetailsFromOrderblat",orderDetail);
+    console.log("orderDetailsFromOrderblat",orderDetail);
     // // console.log("listBizol",orderDetail["0"]);
     // // console.log("orderID",orderDetail["1"].orderID);
-  }, []);
+  }, [orderDetail]);
 
   return (
     <div className="flex container flex-col w-full mx-2 my-2 h-full bg-gray-200  rounded-lg  ring-4 ring-opacity-90 ring-green-300 mr-5 ">
@@ -36,31 +40,43 @@ const OrderDetails = ({orderDetail}) => {
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
                  מספר הזמנה: 
                 </h1>
-                <a>{orderDetail["1"].orderID}</a>
+                <a>{orderDetail&& orderDetail[1].orderID}</a>
               </div>
               <div className="shadow-sm p-2 flex">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
                   תאריך הזמנה:
                 </h1>
                 <a>
-                  {orderDetail["1"].orderDate}
+                  {orderDetail&&orderDetail["1"].orderDate}
                 </a>
               </div>
 
               <div className="shadow-sm p-2 flex">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
+                  שם לקוח:
+                </h1>
+                <a>{orderDetail&&orderDetail["1"].userName}</a>
+              </div>
+              <div className="shadow-sm p-2 flex">
+                <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
                   כתובת מייל:
                 </h1>
-                <a>{orderDetail["1"].userEmail}</a>
+                <a>{orderDetail&&orderDetail["1"].userEmail}</a>
               </div>
               <div className="shadow-sm p-2 flex flex-col">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ">
                   פירוט ההזמנה:
                 </h1>
                 <div className="mt-2 flex flex-col mr-2 text-xl font-normal">
-                  <a>{data.products}</a>
-                  <a>{data.Added}</a>
-                  <a>{data.comment}</a>
+                  {orderDetail && orderDetail["0"].map((order,index)=>{
+                    return(
+                      <div>
+                        <a>
+                        {order.itemName},{order.comments}{order.itemAmount}{order.itemTotalPrice}
+                        </a>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             </div>

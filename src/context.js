@@ -4,11 +4,10 @@ const FoodFindContext = React.createContext({});
 
 function FoodFindProvider({children}){
     const [user,setUser] = React.useState(null);
-    // const [businessUser,setBusinessUser] = React.useState(null);
-    const [orderData,setOrderData] = React.useState(null);
+    const [orderDetail,setOrderDetail] = React.useState();
    
 
-    const value = {user, setUser};
+    const value = {user, setUser,orderDetail,setOrderDetail};
     return <FoodFindContext.Provider value={value}>{children}</FoodFindContext.Provider>
 }
 
