@@ -42,7 +42,7 @@ const BusinessUpdateForm = () => {
     const res = await GetBusinessUserById(user.businessID);
     if (res !== null) {
       setUser(res);
-      handleCheckBusinessUser();
+      // handleCheckBusinessUser();
     }
   };
 
