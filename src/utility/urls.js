@@ -76,3 +76,9 @@ export const GetAllOrdersByBusinessID = `${Base_URL}/orders/GetAllOrdersByBusine
 export const OrdersController = {
     GetAllOrdersByBusinessID
 }
+
+
+export const GetAllItemOfOrderByOrderID = `${Base_URL}/orderofitems/GetAllItemOfOrderByOrderID/`;
+export const ItemOfOrdersController = {
+    GetAllItemOfOrderByOrderID,
+}

@@ -1,18 +1,16 @@
 import React,{useContext} from "react";
 import { FoodFindContext } from "../context";
 
-const BusinessOrders = ({orderList}) => {
+const BusinessOrders = ({orderList,businessOrdersToHome}) => {
 
   const {orderData,setOrderData} = useContext(FoodFindContext);
-
-
 
   const orders = orderList.map((order) => {
     return (
       <div
-        className="flex container hover:bg-green-300 "
+        className="flex container bg-white border-4 hover:bg-green-300 "
         onClick={() => {
-          alert(order.orderID)
+         businessOrdersToHome(order.orderID,order.orderDate,order.userName,order.userEmail)
         }}
       >
         <ul className="container" key={order.orderID}>

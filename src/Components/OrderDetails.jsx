@@ -1,6 +1,6 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 
-const OrderDetails = () => {
+const OrderDetails = ({orderDetail}) => {
   const data = {
     id: "1",
     productName: "המבורגר",
@@ -12,6 +12,11 @@ const OrderDetails = () => {
     Added: "בצל מטוגן, ביצת עין",
     comment: "בלי עגבניה ובלי בצל , הרבה רטבים בצד",
   };
+  useEffect(() => {
+    // console.log("orderDetailsFromOrderblat",orderDetail);
+    // // console.log("listBizol",orderDetail["0"]);
+    // // console.log("orderID",orderDetail["1"].orderID);
+  }, []);
 
   return (
     <div className="flex container flex-col w-full mx-2 my-2 h-full bg-gray-200  rounded-lg  ring-4 ring-opacity-90 ring-green-300 mr-5 ">
@@ -29,24 +34,24 @@ const OrderDetails = () => {
             <div dir="rtl" className="p-2">
               <div className="shadow-sm p-2 flex">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
-                  הזמנה מספר:
+                 מספר הזמנה: 
                 </h1>
-                <a>{data.id}</a>
+                <a>{orderDetail["1"].orderID}</a>
               </div>
               <div className="shadow-sm p-2 flex">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
                   תאריך הזמנה:
                 </h1>
                 <a>
-                  {data.orderDate} , {data.orderTime}
+                  {orderDetail["1"].orderDate}
                 </a>
               </div>
 
               <div className="shadow-sm p-2 flex">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
-                  כתובת למשלוח:
+                  כתובת מייל:
                 </h1>
-                <a>{data.orderAddress ? data.orderAddress : "איסוף עצמי"}</a>
+                <a>{orderDetail["1"].userEmail}</a>
               </div>
               <div className="shadow-sm p-2 flex flex-col">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ">
