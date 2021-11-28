@@ -50,8 +50,6 @@ const BusinessUpdateForm = () => {
     console.log("e.target.value", e.target.value);
     if (e.target.value === "notActive") {
       setBusinessStatus(false);
-    } else if (e.target.value === "Active") {
-      setBusinessStatus(true);
     } else {
       setBusinessStatus(user.businessStatus);
     }
@@ -218,7 +216,6 @@ const BusinessUpdateForm = () => {
                 onChange={handleBusinessStatus}
               >
                 <option value="choose"> בחר </option>
-                <option value="Active"> פעיל </option>
                 <option value="notActive">לא פעיל</option>
               </select>
             </div>

@@ -69,3 +69,10 @@ export const BusinessItemController = {
     DeleteItemOfBusiness,
 
 }
+
+
+export const GetAllOrdersByBusinessID = `${Base_URL}/orders/GetAllOrdersByBusinessID/`
+
+export const OrdersController = {
+    GetAllOrdersByBusinessID
+}

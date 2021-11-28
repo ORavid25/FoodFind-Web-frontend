@@ -1,12 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect,useState } from "react";
 import Navbar from "../Components/Navbar";
 import BusinessOrders from "../Components/BusinessOrders";
 import { FoodFindContext } from "../context";
 import Layout from "../Components/Layout";
 import OrderDetails from "../Components/OrderDetails";
+import {getAllOrdersByBusinessID} from '../api/OrderController';
 
 export const Home = () => {
   const { user } = useContext(FoodFindContext);
+  const [businessOrders,setBusinessOrders] = useState([]);
+
+  const fetchOrders = async () => {
+    const res = await getAllOrdersByBusinessID(user.businessID);
+    setBusinessOrders(res);
+  }
+
+  useEffect(() => {
+    fetchOrders();
+  },[user])
 
   return (
     <Layout>
@@ -15,7 +26,7 @@ export const Home = () => {
         <div className="flex w-full justify-end items-center p-5 ">
             <OrderDetails />
           <div className="flex justify-center items-center ">
-            <BusinessOrders />
+            <BusinessOrders orderList={businessOrders} />
           </div>
         </div>
 
