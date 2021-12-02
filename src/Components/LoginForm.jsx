@@ -1,8 +1,8 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import FoodFindLogo from "../assats/foodfind.png";
 import { LoginWithEmailAndPass } from "../api/BusinessUserController";
 import { useHistory } from "react-router-dom";
-import {FoodFindContext} from "../context";
+import { FoodFindContext } from "../context";
 
 const LoginForm = () => {
   const [details, setDetails] = useState({
@@ -16,21 +16,26 @@ const LoginForm = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const res = await LoginWithEmailAndPass(
+    let res = await LoginWithEmailAndPass(
       details.businessEmail,
       details.password
     );
-    
+
     if (res === "Conflict") {
       alert("אחד הפרטים לא נכון");
+      return;
     }
-      if (res !== null && res !== undefined && res !== "Conflict") {
-        await setUser(res)
-        history.push("/");
-        window.localStorage.setItem("user", JSON.stringify(res))
+    if (res !== undefined && res.isAdmin === 2) {
+      setUser(res)
+      history.push("/AdminPage");
+      window.localStorage.setItem("user", JSON.stringify(res))
+    }
 
-      }
-     
+    if (res !== null && res !== undefined && res !== "Conflict") {
+      setUser(res)
+      history.push("/");
+      window.localStorage.setItem("user", JSON.stringify(res))
+    }
   };
 
   useEffect(async () => {
@@ -44,7 +49,6 @@ const LoginForm = () => {
       );
       if (res.status !== 201 && res.status !== 200) return "Conflict";
       const data = await res.json();
-      // console.log("ALLBU", data);
       return data;
     } catch (error) {
       console.log(error);

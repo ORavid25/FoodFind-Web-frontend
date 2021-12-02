@@ -18,8 +18,6 @@ const OrderDetails = () => {
   };
   useEffect(() => {
     console.log("orderDetailsFromOrderblat",orderDetail);
-    // // console.log("listBizol",orderDetail["0"]);
-    // // console.log("orderID",orderDetail["1"].orderID);
   }, [orderDetail]);
 
   return (

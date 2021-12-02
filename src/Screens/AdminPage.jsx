@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useLayoutEffect } from "react";
 import Logo from "../assats/foodfind.png";
 import { FcApprove, FcDisapprove } from "react-icons/fc";
-import { GetAllBusinessUsers } from "../api/BusinessUserController";
+import { GetAllBusinessUsers,UpdateBusinessToActive } from "../api/BusinessUserController";
 import { GetAllClientUsers } from "../api/ClientUserController";
 import BusinessUserList from "../Components/adminComponents/BusinessUserList";
 import ClientUserList from "../Components/adminComponents/ClientUserList";
@@ -17,9 +17,7 @@ const AdminPage = () => {
     const res = await GetAllBusinessUsers();
     await setBusinessUsers(res);
     let active = res.filter((user) => user.businessStatus === true);
-
     await setActiveBusiness(active);
-    console.log(res);
   };
   const fetchAllClientUsers = async () => {
     const res = await GetAllClientUsers();
@@ -33,18 +31,25 @@ const AdminPage = () => {
     );
 
     await setUnActiveBusiness(unActive);
-    console.log("unActiveBusiness", unActive);
   };
 
+  const UpdateBusinessUserToActive = async (id) => {
+    if(id!==undefined&&id!==null){
+      let res = await UpdateBusinessToActive(id)
+      console.log("resActive",res);
+    }
+  }
+
   /// will work on page load
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchAllBusinessUsers();
     fetchAllClientUsers();
   }, []);
 
   /// will work only if we have data in BusinessUsers
-  useEffect(() => {
+  useLayoutEffect(() => {
     filterUnActiveBusiness();
+    // fetchAllBusinessUsers();
   }, [businessUsers]);
 
   return (
@@ -119,9 +124,7 @@ const AdminPage = () => {
                       <FcApprove
                         className="mx-5 cursor-pointer"
                         size={50}
-                        onClick={() => {
-                          alert("Approve");
-                        }}
+                        onClick={()=>UpdateBusinessUserToActive(user.businessID)}
                       />
                       <FcDisapprove
                         className="mx-5 cursor-pointer"

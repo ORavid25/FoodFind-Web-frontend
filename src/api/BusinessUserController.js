@@ -43,15 +43,15 @@ export const LoginWithEmailAndPass = async (email,password) => {
     const req = {
         method: "POST",
         headers: {
-            "Accept": "application/json",
+            Accept: "application/json",
             "content-Type": "application/json",
             "Access-Control-Allow-Origin": "*"
         },
-        body: JSON.stringify({businessEmail:email,password:password}),
+        body: JSON.stringify({Email:email,password:password}),
     };
     try{
         const res = await fetch(BusinessUsersController.LoginWithEmailAndPass,req);
-        if(res.status!==201 && res.status!==200) return "Conflict";
+        if(res.status!==201 && res.status!==200) return console.log(await res.json());
         const data = await res.json(); 
         console.log(data);
         return data;
@@ -97,6 +97,29 @@ export const UpdateBusinessUserPass = async (prevPass,newPass) => {
     };
     try{
         const res = await fetch(BusinessUsersController.UpdateBusinessUserPass,req);
+        if(res.status!==201 && res.status!==200) return "Conflict";
+        const data = await res.json(); 
+        console.log(data);
+        return data;
+    }
+    catch(error){
+        console.log(error);
+        return null;
+    }
+}
+
+export const UpdateBusinessToActive = async (id) => {
+    const req = {
+        method: "PUT",
+        headers: {
+            "Accept": "application/json",
+            "content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify(id),
+    };
+    try{
+        const res = await fetch(BusinessUsersController.UpdateBusinessToActive+id,req);
         if(res.status!==201 && res.status!==200) return "Conflict";
         const data = await res.json(); 
         console.log(data);

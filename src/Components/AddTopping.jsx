@@ -40,12 +40,10 @@ export const AddTopping = ({
      return;
     }
     const res= await UpdateToppingPrice(data.businessID, data.itemID,data.toppingID,inputs.topPrice)
-      console.log(res);
       await renderDataToppings();
       await setUpdateTopping(false)
   }
 
-  console.log(data.businessID);
   return (
     <div className="w-11/12 mx-16 max-h-96 bg-gray-200">
       <div>

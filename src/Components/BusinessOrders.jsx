@@ -29,7 +29,7 @@ const BusinessOrders = ({orderList,businessOrdersToHome}) => {
   });
 
   return (
-    <div className="flex justify-center w-80 max-h-full ">
+    <div className="flex justify-center w-80 max-h-screen">
       <div className="bg-gray-200 shadow-md overflow-scroll rounded-lg ring-4 ring-opacity-90 ring-green-300 w-80 h-5/6">
         <div className="px-4 py-5 sm:px-6 " dir="rtl">
           <h3 className="text-lg leading-6 font-medium text-gray-900">

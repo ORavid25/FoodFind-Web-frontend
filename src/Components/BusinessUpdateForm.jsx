@@ -38,22 +38,18 @@ const BusinessUpdateForm = () => {
 
   const renderBusinessDetails = async () => {
     const retrive = await retrieveLocalStorageData("user");
-    console.log("userStorage", retrive);
     const res = await GetBusinessUserById(user.businessID);
     if (res !== null) {
       setUser(res);
-      // handleCheckBusinessUser();
     }
   };
 
   const handleBusinessStatus = (e) => {
-    console.log("e.target.value", e.target.value);
     if (e.target.value === "notActive") {
       setBusinessStatus(false);
     } else {
       setBusinessStatus(user.businessStatus);
     }
-    console.log("businessStatus from handle", businessStatus);
   };
 
   const handleCheckBusinessUser = () => {
@@ -123,8 +119,6 @@ const BusinessUpdateForm = () => {
   };
 
   const handleUpdatePass = async () => {
-    console.log("prev", prevPass);
-    console.log("new", newPass);
     if (prevPass.length > 7 && newPass.length > 7) {
       const res = await UpdateBusinessUserPass(prevPass, newPass);
       if (res === 1) {
@@ -135,8 +129,7 @@ const BusinessUpdateForm = () => {
     } else alert("סיסמה קצרה מידי");
   };
 
-  // console.log("bu", user);
-  // console.log("bu after update=", user);
+
   return (
     <div className="container w-11/12 bg-gray-200 shadow-lg rounded-xl p-5  ring-4 ring-opacity-90 ring-green-200 ">
       <div>

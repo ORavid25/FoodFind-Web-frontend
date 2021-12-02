@@ -23,6 +23,7 @@ export const InsertBusinessUser = `${Base_URL}/businessuser/InsertBusinessUser`;
 export const LoginWithEmailAndPass = `${Base_URL}/businessuser/LoginWithEmailAndPass`;
 export const UpdateBusinessUser = `${Base_URL}/businessuser/UpdateBusinessUser`;
 export const UpdateBusinessUserPass = `${Base_URL}/businessuser/UpdateBusinessUserPass`;
+export const UpdateBusinessToActive = `${Base_URL}/businessuser/UpdateBusinessToActive/`;
 
 
 export const BusinessUsersController = {
@@ -33,6 +34,7 @@ export const BusinessUsersController = {
     LoginWithEmailAndPass,
     UpdateBusinessUser,
     UpdateBusinessUserPass,
+    UpdateBusinessToActive,
  
 };
 

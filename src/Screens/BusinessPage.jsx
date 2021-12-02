@@ -5,21 +5,9 @@ import Navbar from "../Components/Navbar";
 import BusinessUpdateForm from "../Components/BusinessUpdateForm";
 
 
-
-
 const BusinessPage = () => {
 
   const { user } = useContext(FoodFindContext);
-
-
-  const userDetails = (user) => {
-    console.log("userDetails = ",user);
-  } 
-
-
-  useEffect(() => {
-    userDetails(user);
-  })
 
   return (
     <Layout>
