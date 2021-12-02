@@ -12,7 +12,6 @@ export const Header = () => {
   useEffect(() => {
     (async () => {
       const userData = await retrieveLocalStorageData("user");
-      console.log(userData);
       await setUser(userData);
     })();
   }, []);
@@ -46,7 +45,7 @@ export const Header = () => {
         </svg>
       </a>
       <span className="flex text-center justify-center items-center text-2xl">
-        שלום {user ?user.businessName : null}
+        {user ?user.businessName : null}
       </span>
       <img src={Logo} alt="Logo" className=" w-52 h-auto mr-5" />
     </div>

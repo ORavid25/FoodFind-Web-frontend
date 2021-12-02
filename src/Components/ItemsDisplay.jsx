@@ -33,10 +33,8 @@ const ItemsDisplay = ({ businessItems, setBusinessItems, businessToppings}) => {
 
 
   const handleDeleteItem = async () => {
-    // console.log("itemForEdit", itemForEdit);
     if (itemForEdit !== null) {
       const res = await DeleteItemOfBusiness(itemForEdit.businessID, itemForEdit.itemID);
-      // console.log("result from web api", res);
       if (res === 1) {
         renderDel();
         setDialogModal(!dialogModal);

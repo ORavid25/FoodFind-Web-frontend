@@ -22,7 +22,6 @@ const FormContainer = (props) => {
       SetBase64(reader.result.split(";base64,")[1]);
     };
     reader.readAsDataURL(file);
-    console.log("file=", file);
   };
 
   //Gets a random name for image save.
@@ -58,8 +57,6 @@ const FormContainer = (props) => {
     });
 
     let data = await result.json();
-    console.log("data=", data);
-    console.log("data.path=", data.path);
     SetImageRes(data.path);
   };
 
@@ -128,9 +125,6 @@ const FormContainer = (props) => {
                   inputs.comment,
                   imageRes
                 );
-                // console.log("result =",res);
-                //  await setIsClicked(!isClicked);
-                //  await props.open(isClicked);
                 await props.dataItemID(res);
                 await props.GetAllItemsAndToppings();
               } else {

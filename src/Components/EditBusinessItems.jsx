@@ -36,7 +36,6 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
         (item) => item.itemID === ItemForEdit.itemID
       );
       await setItemsToppings(filtered);
-      // console.log("After filter", filtered);
     }
   };
 
