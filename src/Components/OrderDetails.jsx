@@ -4,14 +4,18 @@ import { UpdateOrderPaid, UpdateOrderFinished } from "../api/OrderController";
 import Modal from "../Components/Modal";
 
 const OrderDetails = ({renderAfterFinishedOrder}) => {
-  const { orderDetail } = useContext(FoodFindContext);
+  const { orderDetail,setOrderDetail } = useContext(FoodFindContext);
   const [finishedOrder, setFinishedOrder] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showModalPaid, setShowModalPaid] = useState(false);
+  
 
 
   const updateOrderPaid = async () => {
     const res = await UpdateOrderPaid(orderDetail[1].orderID);
     renderAfterFinishedOrder();
+    setShowModalPaid(showModalPaid=>!showModalPaid);
+    setOrderDetail();
     console.log("res=", res);
     console.log("orderDetails", orderDetail);
   };
@@ -101,7 +105,9 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
       </div>
 
       <div className="flex justify-around p-3 mb-3">
-        {orderDetail && !orderDetail["1"].orderStatus ? 
+        {orderDetail===undefined && <div></div> }
+        {orderDetail!==undefined&&
+        (!orderDetail["1"].orderStatus && !finishedOrder ? 
         <button
           className="bg-yellow-900 ring-4 ring-yellow-600 border-white text-white p-5 px-10 text-lg rounded-lg "
           onClick={() => {
@@ -112,6 +118,7 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
         </button>
         :
         <h1>הודעה נשלחה ללקוח</h1>
+        )
         }
 
         <Modal showModal={showModal} setShowModal={setShowModal}>
@@ -137,14 +144,45 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
           </div>
         </Modal>
 
+        {/* open modal for order paid */}
+
+        <Modal showModal={showModalPaid} setShowModal={setShowModalPaid}>
+          <div className="max-w-9/12 h-full px-5">
+            <div className="flex items-center justify-center w-full h-24 flex-col">
+            <h1 className="text-2xl font-bold leading-6 py-5 ">
+              ? האם ברצונך לסיים את ההזמנה
+            </h1>
+            <h2 className="text-xl leading-6 ">
+              בפעולה זו אתה מאשר שהלקוח שילם על ההזמנה, ההזמנה תעבור לדף הפקת דוחות
+            </h2>
+            </div>
+
+            <div className="flex items-center justify-evenly mt-8">
+              <button className="px-5 py-2 m-5 bg-red-500 text-md text-white font-medium ring-4 ring-red-400 rounded-lg hover:bg-red-400 transition-color duration-300 "
+              onClick={() => {
+                setShowModalPaid(!showModalPaid);
+              }}
+              >
+                <h1>ביטול</h1>
+              </button>
+              <button className="px-5 py-2 m-5 bg-green-500 text-md text-white font-medium ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300 "
+              onClick={updateOrderPaid}
+              >
+                <h1>אישור</h1>
+              </button>
+            </div>
+          </div>
+        </Modal>
+        {orderDetail===undefined?<div></div>:
         <button
           className="bg-green-600 ring-4 ring-green-300 hover:ring-green-900 text-white p-5 px-10 text-xl rounded-lg"
           onClick={() => {
-            updateOrderPaid();
+            setShowModalPaid(!showModalPaid);
           }}
         >
           אישור תשלום
         </button>
+        }
       </div>
     </div>
   );

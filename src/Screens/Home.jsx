@@ -9,6 +9,8 @@ import {
   getAllItemOfOrderByOrderID,
 } from "../api/OrderController";
 
+
+
 export const Home = () => {
   const { user,orderDetail, setOrderDetail } = useContext(FoodFindContext);
   const [businessOrders, setBusinessOrders] = useState([]);
@@ -22,7 +24,7 @@ export const Home = () => {
 
   const renderAfterFinishedOrder = () => {
     fetchOrders()
-    
+
   }
 
   const businessOrdersToHome = async (
