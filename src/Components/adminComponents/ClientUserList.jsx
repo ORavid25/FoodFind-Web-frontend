@@ -6,7 +6,7 @@ const ClientUserList = ({clientUsers}) => {
         <div className=" bg-gray-200 w-11/12 h-5/6 flex flex-col items-center rounded-lg mt-5 mb-5 p-4 overflow-y-auto">
       {/* כותרת */}
       <div className="w-full p-5 flex items-center justify-center text-2xl rounded-lg bg-green-400">
-        <h1>משתמשי צד לקוח</h1>
+        <h1>לקוחות</h1>
       </div>
       <div className="flex w-full flex-col items-center p-3">
         <div className="flex flex-row-reverse w-full text-xl p-3 justify-between ml-2">

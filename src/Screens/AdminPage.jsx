@@ -19,6 +19,7 @@ const AdminPage = () => {
     let active = res.filter((user) => user.businessStatus === true);
     await setActiveBusiness(active);
   };
+
   const fetchAllClientUsers = async () => {
     const res = await GetAllClientUsers();
     await setClientUsers(res);
@@ -37,11 +38,12 @@ const AdminPage = () => {
     if(id!==undefined&&id!==null){
       let res = await UpdateBusinessToActive(id)
       console.log("resActive",res);
+      fetchAllBusinessUsers();
     }
   }
 
   /// will work on page load
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchAllBusinessUsers();
     fetchAllClientUsers();
   }, []);
@@ -49,7 +51,6 @@ const AdminPage = () => {
   /// will work only if we have data in BusinessUsers
   useLayoutEffect(() => {
     filterUnActiveBusiness();
-    // fetchAllBusinessUsers();
   }, [businessUsers]);
 
   return (
