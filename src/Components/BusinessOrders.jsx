@@ -1,16 +1,30 @@
-import React,{useContext} from "react";
+import React,{useContext,useEffect,useState} from "react";
 import { FoodFindContext } from "../context";
 
 const BusinessOrders = ({orderList,businessOrdersToHome}) => {
 
   const {orderData,setOrderData} = useContext(FoodFindContext);
+  const [filterdActiveOrders,setFilterdActiveOrders] = useState([]);
 
-  const orders = orderList.map((order) => {
+
+  const filterActiveOrder = () => {
+    const filterOrder = orderList.filter(item => item.orderPaidUp === false)
+    console.log("filter = ",filterOrder);
+    setFilterdActiveOrders(filterOrder);
+    
+
+  }
+
+  useEffect(() => {
+    filterActiveOrder()
+  }, [orderList])
+
+  const orders = filterdActiveOrders.map((order) => {
     return (
       <div
         className="flex container bg-white border-4 hover:bg-green-300 "
         onClick={() => {
-         businessOrdersToHome(order.orderID,order.orderDate,order.userName,order.userEmail)
+         businessOrdersToHome(order.orderID,order.orderDate,order.userName,order.userEmail,order.orderStatus,order.orderPaidUp)
         }}
       >
         <ul className="container" key={order.orderID}>

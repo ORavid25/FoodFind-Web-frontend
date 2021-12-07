@@ -23,18 +23,6 @@ const BusinessUpdateForm = () => {
   const [prevPass, setPrevPass] = React.useState("");
   const [newPass, setNewPass] = React.useState("");
 
-  // const [businessDetails, setBusinessDetails] = React.useState({
-  //   businessLicense: "",
-  //   businessName: "",
-  //   businessAddress: "",
-  //   businessPhone: "",
-  //   businessDescription: "",
-  //   businessStatus: ""
-  // })
-
-  // useEffect(() => {
-
-  // }, []);
 
   const renderBusinessDetails = async () => {
     const retrive = await retrieveLocalStorageData("user");

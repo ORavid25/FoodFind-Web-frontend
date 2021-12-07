@@ -1,23 +1,32 @@
-import React,{useEffect,useState,useContext} from "react";
-import {FoodFindContext} from '../context';
+import React, { useEffect, useState, useContext } from "react";
+import { FoodFindContext } from "../context";
+import { UpdateOrderPaid, UpdateOrderFinished } from "../api/OrderController";
+import Modal from "../Components/Modal";
 
-const OrderDetails = () => {
+const OrderDetails = ({renderAfterFinishedOrder}) => {
+  const { orderDetail } = useContext(FoodFindContext);
+  const [finishedOrder, setFinishedOrder] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  const {orderDetail} = useContext(FoodFindContext);
 
-  const data = {
-    id: "1",
-    productName: "המבורגר",
-    orderDate: "17/10/2021",
-    orderTime: "20:25",
-    orderAddress: "החרצית 5 חדרה",
-    whoOrder: "שקד שרווי",
-    products: "המבורגר 220",
-    Added: "בצל מטוגן, ביצת עין",
-    comment: "בלי עגבניה ובלי בצל , הרבה רטבים בצד",
+  const updateOrderPaid = async () => {
+    const res = await UpdateOrderPaid(orderDetail[1].orderID);
+    renderAfterFinishedOrder();
+    console.log("res=", res);
+    console.log("orderDetails", orderDetail);
   };
+
+  const updateOrderFinished = async () => {
+    const res = await UpdateOrderFinished(orderDetail[1].orderID);
+    setFinishedOrder(finishedOrder => !finishedOrder);
+    renderAfterFinishedOrder();
+    setShowModal(showModal=> !showModal)
+    console.log("updateFinished=", res);
+  };
+
   useEffect(() => {
-    console.log("orderDetailsFromOrderblat",orderDetail);
+    console.log("orderDetailsFromOrderblat", orderDetail);
+
   }, [orderDetail]);
 
   return (
@@ -36,51 +45,54 @@ const OrderDetails = () => {
             <div dir="rtl" className="p-2">
               <div className="shadow-sm p-2 flex">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
-                 מספר הזמנה: 
+                  מספר הזמנה:
                 </h1>
-                <a>{orderDetail&& orderDetail[1].orderID}</a>
+                <a>{orderDetail && orderDetail[1].orderID}</a>
               </div>
               <div className="shadow-sm p-2 flex">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
                   תאריך הזמנה:
                 </h1>
-                <a>
-                  {orderDetail&&orderDetail["1"].orderDate}
-                </a>
+                <a>{orderDetail && orderDetail["1"].orderDate}</a>
               </div>
 
               <div className="shadow-sm p-2 flex">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
                   שם לקוח:
                 </h1>
-                <a>{orderDetail&&orderDetail["1"].userName}</a>
+                <a>{orderDetail && orderDetail["1"].userName}</a>
               </div>
               <div className="shadow-sm p-2 flex">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ml-2">
                   כתובת מייל:
                 </h1>
-                <a>{orderDetail&&orderDetail["1"].userEmail}</a>
+                <a>{orderDetail && orderDetail["1"].userEmail}</a>
               </div>
               <div className="flex h-96 shadow-sm p-2  flex-col overflow-y-scroll">
                 <h1 className="text-xl leading-6 font-medium text-gray-900 ">
                   פירוט ההזמנה:
                 </h1>
                 <div className="mt-2 flex flex-col mr-2 text-xl font-normal ">
-                  {orderDetail && orderDetail["0"].map((order,index)=>{
-                    return(
-                      <div className=" h-24 ring-2 rounded-md ring-green-300">
-                        <div className="flex flex-row rounded-t-md px-2 bg-gray-300">
-                        <h2>{order.itemName}</h2>
-                        <span className="w-10"/>
-                        <h2>{order.itemAmount}X</h2>
+                  {orderDetail &&
+                    orderDetail["0"].map((order, index) => {
+                      return (
+                        <div className=" h-24 ring-2 rounded-md ring-green-300">
+                          <div className="flex flex-row rounded-t-md px-2 bg-gray-300">
+                            <h2>{order.itemName}</h2>
+                            <span className="w-10" />
+                            <h2>{order.itemAmount}X</h2>
+                          </div>
+
+                          <h2 className="text-gray-600 text-lg font-medium px-2 pt-2">
+                            תוספות וערות למוצר : {order.comments}
+                          </h2>
+
+                          <h2 className="text-gray-600 text-lg font-bold px-2">
+                            סה"כ מחיר למוצר : {order.itemTotalPrice}
+                          </h2>
                         </div>
-                       
-                        <h2 className="text-gray-600 text-lg font-medium px-2 pt-2">תוספות וערות למוצר : {order.comments}</h2>
-                        
-                        <h2 className="text-gray-600 text-lg font-bold px-2">סה"כ מחיר למוצר : {order.itemTotalPrice}</h2>
-                      </div>
-                    )
-                  })}
+                      );
+                    })}
                 </div>
               </div>
             </div>
@@ -89,15 +101,48 @@ const OrderDetails = () => {
       </div>
 
       <div className="flex justify-around p-3 mb-3">
-        <button className="bg-yellow-900 ring-4 ring-yellow-600 border-white text-white p-5 px-10 text-lg rounded-lg " onClick={() => {
-          alert("OrderReady / OnTheWay");
-        }}>
-        ההזמנה מוכנה
+        {orderDetail && !orderDetail["1"].orderStatus ? 
+        <button
+          className="bg-yellow-900 ring-4 ring-yellow-600 border-white text-white p-5 px-10 text-lg rounded-lg "
+          onClick={() => {
+            setShowModal(!showModal)
+          }}
+        >
+          ההזמנה מוכנה
         </button>
+        :
+        <h1>הודעה נשלחה ללקוח</h1>
+        }
 
-        <button className="bg-green-600 ring-4 ring-green-300 hover:ring-green-900 text-white p-5 px-10 text-xl rounded-lg" onClick={() => {
-          alert("orderPaidUp = true");
-        }}>
+        <Modal showModal={showModal} setShowModal={setShowModal}>
+          <div className="max-w-9/12 h-48 px-5 py-5 ">
+            <h1 className="text-2xl font-bold leading-6">
+              ? רק כדאי לוודא האם אתה בטוח שההזמנה מוכנה
+            </h1>
+
+            <div className="flex items-center justify-around mx-10 my-10">
+              <button className="px-5 py-2 m-5 bg-red-500 text-md text-white font-medium ring-4 ring-red-400 rounded-lg hover:bg-red-400 transition-color duration-300 "
+              onClick={() => {
+                setShowModal(!showModal);
+              }}
+              >
+                <h1>ביטול</h1>
+              </button>
+              <button className="px-5 py-2 m-5 bg-green-500 text-md text-white font-medium ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300 "
+              onClick={updateOrderFinished}
+              >
+                <h1>אישור</h1>
+              </button>
+            </div>
+          </div>
+        </Modal>
+
+        <button
+          className="bg-green-600 ring-4 ring-green-300 hover:ring-green-900 text-white p-5 px-10 text-xl rounded-lg"
+          onClick={() => {
+            updateOrderPaid();
+          }}
+        >
           אישור תשלום
         </button>
       </div>

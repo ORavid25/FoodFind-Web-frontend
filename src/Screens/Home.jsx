@@ -10,7 +10,7 @@ import {
 } from "../api/OrderController";
 
 export const Home = () => {
-  const { user, setOrderDetail } = useContext(FoodFindContext);
+  const { user,orderDetail, setOrderDetail } = useContext(FoodFindContext);
   const [businessOrders, setBusinessOrders] = useState([]);
 
   const fetchOrders = async () => {
@@ -20,18 +20,25 @@ export const Home = () => {
     }
   };
 
+  const renderAfterFinishedOrder = () => {
+    fetchOrders()
+    
+  }
+
   const businessOrdersToHome = async (
     orderID,
     orderDate,
     userName,
-    userEmail
+    userEmail,
+    orderStatus,
+    orderPaidUp,
   ) => {
     let result = await getAllItemOfOrderByOrderID(orderID);
     let newArray = [];
-    let obj = { orderID, orderDate, userName, userEmail };
+    let obj = { orderID, orderDate, userName, userEmail,orderStatus,orderPaidUp };
     newArray.push(result, obj);
     setOrderDetail(newArray);
-    console.log("orderDetail", obj);
+    console.log("orderDetail", orderDetail);
     console.log("newArr", newArray);
     console.log("itemsOfOrder", result);
   };
@@ -44,7 +51,7 @@ export const Home = () => {
     <Layout>
       <Navbar />
       <div className="ml-56 min-w-full flex flex-row pt-10">
-        <OrderDetails />
+        <OrderDetails renderAfterFinishedOrder={renderAfterFinishedOrder} />
         <BusinessOrders
           orderList={businessOrders}
           businessOrdersToHome={businessOrdersToHome}

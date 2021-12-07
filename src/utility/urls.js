@@ -54,6 +54,7 @@ export const DeleteItemOfBusiness = `${Base_URL}/businessitems/DeleteItemOfBusin
 export const UpdateToppingPrice = `${Base_URL}/businesstoppingsitem/UpdateToppingPrice`;
 export const UploadItemImage = `${Base_URL}/image/uploadimage`;
 
+
 export const BusinessItemController = {
     GetAllBusinessItemsByBusinessId,
     GetBusinessItemNameById,
@@ -74,9 +75,13 @@ export const BusinessItemController = {
 
 
 export const GetAllOrdersByBusinessID = `${Base_URL}/orders/GetAllOrdersByBusinessID/`
+export const UpdateOrderPaid = `${Base_URL}/orders/UpdateOrderPaid/`
+export const UpdateOrderFinished = `${Base_URL}/orders/UpdateOrderFinished/`
 
 export const OrdersController = {
-    GetAllOrdersByBusinessID
+    GetAllOrdersByBusinessID,
+    UpdateOrderPaid,
+    UpdateOrderFinished,
 }
 
 
