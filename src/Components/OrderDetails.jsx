@@ -34,7 +34,7 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
   }, [orderDetail]);
 
   return (
-    <div className="flex container flex-col w-full m-2 h-full bg-gray-200  rounded-lg  ring-4 ring-opacity-90 ring-green-300 mr-5 ">
+    <div className="flex container flex-col w-full h-full bg-gray-200 rounded-lg  ring-4 ring-opacity-90 ring-green-300 mr-5 ">
       <div dir="rtl" className="flex flex-col justify-between p-4 ">
         <h1 className="text-lg leading-6 font-medium text-gray-900">
           פירוט הזמנה
@@ -104,7 +104,7 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
         </div>
       </div>
 
-      <div className="flex justify-around p-3 mb-3">
+      <div className="flex justify-around p-3 mb-10">
         {orderDetail===undefined && <div></div> }
         {orderDetail!==undefined&&
         (!orderDetail["1"].orderStatus && !finishedOrder ? 
