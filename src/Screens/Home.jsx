@@ -34,10 +34,11 @@ export const Home = () => {
     userEmail,
     orderStatus,
     orderPaidUp,
+    pushToken,
   ) => {
     let result = await getAllItemOfOrderByOrderID(orderID);
     let newArray = [];
-    let obj = { orderID, orderDate, userName, userEmail,orderStatus,orderPaidUp };
+    let obj = { orderID, orderDate, userName, userEmail,orderStatus,orderPaidUp,pushToken };
     newArray.push(result, obj);
     setOrderDetail(newArray);
     console.log("orderDetail", orderDetail);

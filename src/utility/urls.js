@@ -77,11 +77,13 @@ export const BusinessItemController = {
 export const GetAllOrdersByBusinessID = `${Base_URL}/orders/GetAllOrdersByBusinessID/`
 export const UpdateOrderPaid = `${Base_URL}/orders/UpdateOrderPaid/`
 export const UpdateOrderFinished = `${Base_URL}/orders/UpdateOrderFinished/`
+export const SendEmail = `${Base_URL}/orders/sendEmail`
 
 export const OrdersController = {
     GetAllOrdersByBusinessID,
     UpdateOrderPaid,
     UpdateOrderFinished,
+    SendEmail,
 }
 
 

@@ -24,7 +24,7 @@ const BusinessOrders = ({orderList,businessOrdersToHome}) => {
       <div
         className="flex container bg-white border-4 hover:bg-green-300 "
         onClick={() => {
-         businessOrdersToHome(order.orderID,order.orderDate,order.userName,order.userEmail,order.orderStatus,order.orderPaidUp)
+         businessOrdersToHome(order.orderID,order.orderDate,order.userName,order.userEmail,order.orderStatus,order.orderPaidUp,order.pushToken)
         }}
       >
         <ul className="container" key={order.orderID}>

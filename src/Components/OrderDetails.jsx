@@ -1,15 +1,41 @@
 import React, { useEffect, useState, useContext } from "react";
 import { FoodFindContext } from "../context";
-import { UpdateOrderPaid, UpdateOrderFinished } from "../api/OrderController";
+import { UpdateOrderPaid, UpdateOrderFinished,sendMail } from "../api/OrderController";
 import Modal from "../Components/Modal";
 
 const OrderDetails = ({renderAfterFinishedOrder}) => {
-  const { orderDetail,setOrderDetail } = useContext(FoodFindContext);
+  
+  const { orderDetail,setOrderDetail ,user} = useContext(FoodFindContext);
   const [finishedOrder, setFinishedOrder] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showModalPaid, setShowModalPaid] = useState(false);
   
+  // const sendPushNotification = async () => {
+  //   try {
+  //     let response = await fetch("https://exp.host/--/api/v2/push/send", {
+  //       method: 'POST',
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'accept-encoding': 'gzip, deflate',
+  //         'Content-Type': 'application/json',
+          
+  //       },
+  //       body: JSON.stringify({
+  //         to: orderDetail["1"].pushToken,
+  //         title: `היי ${orderDetail["1"].userName}`,
+  //         body: `ההזמנה שלך מ${user.businessName} מוכנה , אתה מוזמן להגיע לאסוף !`,
+  //       })
+  //     });
+  //     console.log("response is:",response);
+  //   } catch(error) {
+  //     console.log(error);
+  //   }
+    
+  // };
 
+// useEffect(() => {
+//   setFinishedOrder(false);
+// }, [finishedOrder])
 
   const updateOrderPaid = async () => {
     const res = await UpdateOrderPaid(orderDetail[1].orderID);
@@ -25,12 +51,22 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
     setFinishedOrder(finishedOrder => !finishedOrder);
     renderAfterFinishedOrder();
     setShowModal(showModal=> !showModal)
+
+    /// send mail to user when order is finished.
+    sendMail(orderDetail["1"].userEmail,user.businessName,orderDetail["1"].userName,orderDetail[1].orderID)
+    console.log("email",orderDetail["1"].userEmail)
+    // console.log("businessName",user.businessName)
+    // console.log("userName=",orderDetail["1"].userName)
+    // console.log("orderID=",orderDetail[1].orderID)
+
+    // sendPushNotification()
+    setFinishedOrder(finishedOrder=> !finishedOrder)
     console.log("updateFinished=", res);
   };
 
   useEffect(() => {
     console.log("orderDetailsFromOrderblat", orderDetail);
-
+   
   }, [orderDetail]);
 
   return (
@@ -112,12 +148,16 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
           className="bg-yellow-900 ring-4 ring-yellow-600 border-white text-white p-5 px-10 text-lg rounded-lg "
           onClick={() => {
             setShowModal(!showModal)
+           
           }}
         >
           ההזמנה מוכנה
         </button>
         :
-        <h1>הודעה נשלחה ללקוח</h1>
+        <div className="flex p-5 items-center justify-center rounded-lg ">
+              <h1 className="text-xl leading-6 font-medium text-gray-900">הודעה נשלחה ללקוח</h1>
+        </div>
+       
         )
         }
 
