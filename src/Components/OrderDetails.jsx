@@ -51,10 +51,17 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
     setFinishedOrder(finishedOrder => !finishedOrder);
     renderAfterFinishedOrder();
     setShowModal(showModal=> !showModal)
-
+    let userEmail = orderDetail["1"].userEmail;
+    let businessName= user.businessName;
+    let userName = orderDetail["1"].userName;
+    let orderID = orderDetail[1].orderID;
     /// send mail to user when order is finished.
-    sendMail(orderDetail["1"].userEmail,user.businessName,orderDetail["1"].userName,orderDetail[1].orderID)
-    console.log("email",orderDetail["1"].userEmail)
+    if(userEmail&& businessName&& userName&& orderID){
+     let res = await sendMail(userEmail, businessName, userName, orderID)
+     console.log("sendEmail",res);
+    }
+    
+    // console.log("email",orderDetail["1"].userEmail)
     // console.log("businessName",user.businessName)
     // console.log("userName=",orderDetail["1"].userName)
     // console.log("orderID=",orderDetail[1].orderID)

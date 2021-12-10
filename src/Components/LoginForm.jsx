@@ -25,10 +25,11 @@ const LoginForm = () => {
       alert("אחד הפרטים לא נכון");
       return;
     }
-    if (res !== undefined && res.isAdmin === 2) {
+    if (res !== undefined && res && res.isAdmin === 2) {
       setUser(res)
       history.push("/AdminPage");
       window.localStorage.setItem("user", JSON.stringify(res))
+      return;
     }
 
     if (res !== null && res !== undefined && res !== "Conflict") {
@@ -38,23 +39,23 @@ const LoginForm = () => {
     }
   };
 
-  useEffect(async () => {
-    const req = {
-      method: "GET",
-    };
-    try {
-      const res = await fetch(
-        "http://proj14.ruppin-tech.co.il/api/GetAllBusinessUsers",
-        req
-      );
-      if (res.status !== 201 && res.status !== 200) return "Conflict";
-      const data = await res.json();
-      return data;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  }, []);
+  // useEffect(async () => {
+  //   const req = {
+  //     method: "GET",
+  //   };
+  //   try {
+  //     const res = await fetch(
+  //       "http://proj14.ruppin-tech.co.il/api/GetAllBusinessUsers",
+  //       req
+  //     );
+  //     if (res.status !== 201 && res.status !== 200) return "Conflict";
+  //     const data = await res.json();
+  //     return data;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return null;
+  //   }
+  // }, []);
 
   return (
     <div className="bg-gray-200 p-14 rounded-2xl shadow-xl">
