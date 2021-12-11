@@ -201,6 +201,17 @@ const BusinessUpdateForm = () => {
               </select>
             </div>
 
+            <div className="flex justify-around items-center mb-5 bg-red-400 ">
+              <h1 className="w-28 text-xl font-medium">עדכון לוגו עסק</h1>
+              <input
+              type="file"
+              className="w-60"
+              // onChange={(event) => {
+              //   ConvertToBase64(event);
+              // }}
+            />
+            </div>
+
             <div className="flex justify-center items-center mt-4 h-20">
               <button
                 className="bg-green-500 w-44 text-xl text-white font-medium py-2 ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300"

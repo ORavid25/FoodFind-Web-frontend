@@ -131,7 +131,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
 
   return (
     <div className="flex flex-col justify-around w-11/12 p-5 h-max rounded-t-xl ">
-      <div className="rounded-t-xl bg-gray-300 p-5 shadow-xl">
+      <div className="rounded-t-xl bg-gray-300 p-2 shadow-xl">
         <h1 className="text-lg font-medium ">פירוט המוצרים והתוספות</h1>
         <h2 className="text-md font-normal text-gray-500">
           כאן ניתן לבצע שינויים במוצר ובתוספות המוצר
@@ -139,29 +139,33 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
       </div>
       <div className=" flex justify-around items-center p-2 bg-gray-300">
         <h1 className="text-xl font-semibold">{ItemForEdit.itemName}</h1>
-   
       </div>
-      <div className="flex h-32 justify-evenly items-center flex-row p-5 font-semibold text-lg rounded-b-xl bg-gray-300 ">
-        <h1>מחיר מוצר</h1>
-        <input
-          type="number"
-          defaultValue={ItemForEdit.itemPrice}
-          onChange={(e) => {
-            setItemPrice(e.target.value);
-          }}
-          className="h-8 w-40 rounded-sm"
-        />
-        <h1>תיאור מוצר</h1>
-        <textarea
-          defaultValue={ItemForEdit.comment}
-          className="h-16 w-56 rounded-md"
-          onChange={(e) => {
-            setItemComment(e.target.value);
-          }}
-        />
+      <div className="flex max-h-40 justify-evenly flex-row p-2 font-semibold text-lg rounded-b-xl bg-gray-300 ">
+        <div className="p-5" >
+          <h1>מחיר מוצר</h1>
+          <input
+            type="number"
+            defaultValue={ItemForEdit.itemPrice}
+            onChange={(e) => {
+              setItemPrice(e.target.value);
+            }}
+            className="h-8 w-40 rounded-sm"
+          />
+        </div>
+
+        <div className=" p-5" >
+          <h1>תיאור מוצר</h1>
+          <textarea
+            defaultValue={ItemForEdit.comment}
+            className="h-16 w-56 rounded-md"
+            onChange={(e) => {
+              setItemComment(e.target.value);
+            }}
+          />
+        </div>
         <button
           type="button"
-          className="p-2 m-5 bg-green-500 w-52 text-2xl text-white font-medium  ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300 "
+          className="p-2 mt-12 bg-green-500 w-36 h-16 text-xl text-white font-medium  ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300 "
           onClick={handleUpdateBusinessItem}
         >
           עדכון
@@ -173,7 +177,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
             התוספות של המוצר {ItemForEdit.itemName}
           </h1>
           <h2 className="text-md font-normal text-gray-500 mx-5">
-            כאן ניתן לראות את כל התוספות {ItemForEdit.itemName}
+            כאן ניתן לראות את כל התוספות
           </h2>
         </div>
         <button
