@@ -131,16 +131,16 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
 
   return (
     <div className="flex flex-col justify-around w-11/12 p-5 h-max rounded-t-xl ">
-      <div className="rounded-t-xl bg-gray-300 p-2 shadow-xl">
+      <div className="rounded-t-xl bg-gray-200 p-2">
         <h1 className="text-lg font-medium ">פירוט המוצרים והתוספות</h1>
         <h2 className="text-md font-normal text-gray-500">
           כאן ניתן לבצע שינויים במוצר ובתוספות המוצר
         </h2>
       </div>
-      <div className=" flex justify-around items-center p-2 bg-gray-300">
+      <div className=" flex justify-around items-center p-2 bg-gray-200">
         <h1 className="text-xl font-semibold">{ItemForEdit.itemName}</h1>
       </div>
-      <div className="flex max-h-40 justify-evenly flex-row p-2 font-semibold text-lg rounded-b-xl bg-gray-300 ">
+      <div className="flex max-h-40 justify-evenly flex-row p-2 font-semibold text-lg rounded-b-xl bg-gray-200 ">
         <div className="p-5" >
           <h1>מחיר מוצר</h1>
           <input

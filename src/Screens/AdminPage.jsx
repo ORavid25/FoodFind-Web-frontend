@@ -87,7 +87,7 @@ const AdminPage = () => {
         </svg>
       </a>
         <h1 className="ml-96 text-xl font-sans leading-6 font-bold">
-          !שלום{user.adminName} אדמין
+          !שלום {user.adminName} אדמין
         </h1>
         <img src={Logo} alt="Logo" className=" w-52 mr-5 h-20" />
       </div>
