@@ -11,8 +11,6 @@ const BusinessOrders = ({orderList,businessOrdersToHome}) => {
     const filterOrder = orderList.filter(item => item.orderPaidUp === false)
     console.log("filter = ",filterOrder);
     setFilterdActiveOrders(filterOrder);
-    
-
   }
 
   useEffect(() => {
@@ -53,7 +51,7 @@ const BusinessOrders = ({orderList,businessOrdersToHome}) => {
             כאן תוכל לראות את ההזמנות הנכנסות
           </p>
         </div>
-        <div classNameName="container overflow-y-scroll  ">{orders}</div>
+        <div className="container overflow-y-scroll">{orders}</div>
       </div>
     </div>
   );

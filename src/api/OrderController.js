@@ -1,4 +1,5 @@
 import {OrdersController,ItemOfOrdersController} from  '../utility/urls';
+
 ///////////GET Methods
 export const getAllOrdersByBusinessID = async (businessID) => {
     const req = {
@@ -52,7 +53,7 @@ export const sendMail = async (email,businessName,userName,orderID) => {
   };
   try{
       const res = await fetch(OrdersController.SendEmail,req);
-      if(res.status!==201 && res.status!==200) return console.log(res);
+      if(res.status!==201 && res.status!==200) return console.log(res.url);
       const data = await res.json(); 
       console.log(data);
       return data;

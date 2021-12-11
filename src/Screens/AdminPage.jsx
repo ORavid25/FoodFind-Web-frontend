@@ -1,17 +1,26 @@
-import React, { useState, useEffect,useLayoutEffect } from "react";
+import React, { useState, useEffect,useLayoutEffect, useContext } from "react";
 import Logo from "../assats/foodfind.png";
 import { FcApprove, FcDisapprove } from "react-icons/fc";
 import { GetAllBusinessUsers,UpdateBusinessToActive } from "../api/BusinessUserController";
 import { GetAllClientUsers } from "../api/ClientUserController";
+import { FoodFindContext } from "../context";
 import BusinessUserList from "../Components/adminComponents/BusinessUserList";
 import ClientUserList from "../Components/adminComponents/ClientUserList";
 import Loader from "../Components/Loader";
+import { useHistory } from "react-router-dom";
 
 const AdminPage = () => {
+  const {user} = useContext(FoodFindContext);
   const [businessUsers, setBusinessUsers] = useState([]);
   const [clientUsers, setClientUsers] = useState([]);
   const [unActiveBusiness, setUnActiveBusiness] = useState([]);
   const [activeBusiness, setActiveBusiness] = useState([]);
+  const history = useHistory();
+
+  const Logout = () => {
+    window.localStorage.removeItem("user");
+    history.push("/login");
+  };
 
   const fetchAllBusinessUsers = async () => {
     const res = await GetAllBusinessUsers();
@@ -56,9 +65,29 @@ const AdminPage = () => {
   return (
     <div className="w-screen h-screen bg-gray-300 overflow-y-auto">
       {/* header */}
-      <div className=" bg-green-300 w-full h-20 flex justify-around items-center">
+      <div className=" bg-green-300 w-full h-20 flex justify-between items-center">
+      <a
+        href="/login"
+        onClick={Logout}
+        className="flex justify-center items-center w-20 h-20 text-black opacity-80 rounded-xl hover:bg-white hover:opacity-100 hover:text-green-500 transform hover:translate-x-3 duration-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-16 w-16 ml-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+          />
+        </svg>
+      </a>
         <h1 className="ml-96 text-xl font-sans leading-6 font-bold">
-          !שלום אדמין
+          !שלום{user.adminName} אדמין
         </h1>
         <img src={Logo} alt="Logo" className=" w-52 mr-5 h-20" />
       </div>
