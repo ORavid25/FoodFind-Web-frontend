@@ -89,7 +89,7 @@ const BusinessReport = () => {
                       <td>{item.orderID}</td>
                       <td>{item.userName}</td>
                       <td>{item.orderPaidUp ? "כן" : "לא"}</td>
-                      <td>{item.orderTotalPrice}</td>
+                      <td>{item.orderTotalPrice}₪</td>
                     </tr>
                   );
                 })}

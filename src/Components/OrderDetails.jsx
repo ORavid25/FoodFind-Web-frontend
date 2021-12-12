@@ -169,7 +169,6 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
           className="bg-yellow-900 ring-4 ring-yellow-600 border-white text-white p-5 px-10 text-lg rounded-lg "
           onClick={() => {
             setShowModal(!showModal)
-           
           }}
         >
           ההזמנה מוכנה
