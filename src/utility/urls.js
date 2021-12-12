@@ -78,12 +78,14 @@ export const GetAllOrdersByBusinessID = `${Base_URL}/orders/GetAllOrdersByBusine
 export const UpdateOrderPaid = `${Base_URL}/orders/UpdateOrderPaid/`
 export const UpdateOrderFinished = `${Base_URL}/orders/UpdateOrderFinished/`
 export const SendEmail = `${Base_URL}/orders/sendEmail`
+export const sendPushNotification = `${Base_URL}/orders/sendpushnotification/`
 
 export const OrdersController = {
     GetAllOrdersByBusinessID,
     UpdateOrderPaid,
     UpdateOrderFinished,
     SendEmail,
+    sendPushNotification,
 }
 
 

@@ -64,6 +64,29 @@ export const sendMail = async (email,businessName,userName,orderID) => {
   }
 }
 
+export const sendPushNotification = async (to,title,body) => {
+  const req = {
+      method: "POST",
+      headers: {
+          Accept: "application/json",
+          "content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify({to:to,title:title,body:body})
+  };
+  try{
+      const res = await fetch(OrdersController.sendPushNotification,req);
+      if(res.status!==201 && res.status!==200) return console.log(res);
+      const data = await res.json(); 
+      console.log(data);
+      return data;
+  }
+  catch(error){
+      console.log(error);
+      return null;
+  }
+}
+
 
 
 
