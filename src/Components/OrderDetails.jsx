@@ -57,12 +57,15 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
     let orderID = orderDetail[1].orderID;
     let pushToken = orderDetail["1"].pushToken;
     let title = "FoodFind IL";
-    let body = "הזמנתך מוכנה , נא להגיע לאסוף אותה , בתיאבון !";
+    let body = `היי ${userName}, הזמנתך מ${businessName} מוכנה , נא להגיע לאסוף. בתיאבון !
+    `
+
+    ///// להחזיר את המייל לעבוד
     /// send mail to user when order is finished.
-    if(userEmail&& businessName&& userName&& orderID){
-     let res = await sendMail(userEmail, businessName, userName, orderID)
-     console.log("sendEmail",res);
-    }
+    // if(userEmail&& businessName&& userName&& orderID){
+    //  let res = await sendMail(userEmail, businessName, userName, orderID)
+    //  console.log("sendEmail",res);
+    // }
 
     const sendPush = await sendPushNotification(pushToken,title,body);
     console.log("sendPush",sendPush);
