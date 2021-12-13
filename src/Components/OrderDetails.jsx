@@ -10,28 +10,6 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalPaid, setShowModalPaid] = useState(false);
   
-  // const sendPushNotification = async () => {
-  //   try {
-  //     let response = await fetch("https://exp.host/--/api/v2/push/send", {
-  //       method: 'POST',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'accept-encoding': 'gzip, deflate',
-  //         'Content-Type': 'application/json',
-          
-  //       },
-  //       body: JSON.stringify({
-  //         to: orderDetail["1"].pushToken,
-  //         title: `היי ${orderDetail["1"].userName}`,
-  //         body: `ההזמנה שלך מ${user.businessName} מוכנה , אתה מוזמן להגיע לאסוף !`,
-  //       })
-  //     });
-  //     console.log("response is:",response);
-  //   } catch(error) {
-  //     console.log(error);
-  //   }
-    
-  // };
 
 // useEffect(() => {
 //   setFinishedOrder(false);

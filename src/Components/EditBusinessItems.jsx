@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   UpdateItemOfBusiness,
   UpdateToppingToActive,
@@ -9,8 +9,11 @@ import { GrFormClose } from "react-icons/gr";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AddTopping } from "./AddTopping";
 import Modal from "./Modal";
+import { FoodFindContext } from "../context";
+import { BusinessItemController } from "../utility/urls";
 
 const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
+  const {user} = useContext(FoodFindContext);
   const [itemPrice, setItemPrice] = useState(0);
   const [itemComment, setItemComment] = useState("");
   const [unActiveToppings, setUnActiveToppings] = useState([]);
@@ -18,11 +21,55 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
   const [addToppingClicked, setAddToppingClicked] = useState(false);
   const [currentToppingForUpdate, setCurrentToppingForUpdate] = useState(false);
   const [updateTopping, setUpdateTopping] = useState(false);
+  const [base64, SetBase64] = useState("");
+  const [imageRes, SetImageRes] = useState(undefined);
 
   useEffect(() => {
     setItemPrice(ItemForEdit.itemPrice);
     setItemComment(ItemForEdit.comment);
+    getNameForUploadImg();
   }, []);
+
+  //get img name for update image in the server
+  const getNameForUploadImg= async () => {
+    let splitURL= ItemForEdit.itemImg.split('/');
+    console.log("split",splitURL);
+    console.log("split[5]",splitURL["5"]);
+    let res = splitURL["5"].replace(".jpg","")
+    console.log("res",res);
+    return res;
+  }
+
+  const ConvertToBase64 = (event) => {
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    reader.onloadend = function () {
+      SetBase64(reader.result.split(";base64,")[1]);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const UploadImage = async () => {
+    let imageName = await getNameForUploadImg();
+
+    let req = {
+      name: imageName,
+      folder: `businessItems`,
+      base64: base64,
+    };
+
+    let result = await fetch(BusinessItemController.UploadItemImage, {
+      method: "POST",
+      body: JSON.stringify(req),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    let data = await result.json();
+    SetImageRes(data.path);
+  };
 
   //get the corrent list of toppings for render it on screen
   const renderDataToppings = async () => {
@@ -171,6 +218,24 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
           עדכון
         </button>
       </div>
+
+      <div className="flex justify-evenly items-center p-2 m-2 ">
+              <h1 className="w-40 text-lg font-medium font-semibold">עדכון תמונת מוצר</h1>
+              <input
+              type="file"
+              className="w-60"
+              onChange={(event) => {
+                ConvertToBase64(event);
+              }}
+            />
+            <button
+                className="bg-green-500 w-40 text-md text-white font-medium ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300"
+                onClick={UploadImage}
+              >
+               עדכון תמונת מוצר
+              </button>
+            </div>
+
       <div className="mt-10 max-h-96">
         <div>
           <h1 className="font-semibold text-lg mx-5">
