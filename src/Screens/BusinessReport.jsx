@@ -20,7 +20,7 @@ const BusinessReport = () => {
 
   //handler if user click button without date insert
   const excelbuttonHandler = () => {
-    if(dateResult == null){
+    if (dateResult === null&&dateResult ===undefined) {
       alert("לא ניתן להפיק קובץ בלי מידע")
       return;
     }
@@ -36,7 +36,7 @@ const BusinessReport = () => {
     <Layout>
       <Navbar />
 
-      <div className="ml-56 w-full h-screen flex flex-col p-10  ">
+      <div className="ml-56 w-full h-screen flex flex-col p-5">
         <div dir="rtl" className="w-full h-28 flex flex-col ">
           <div className="bg-gray-200 p-5 rounded-t-xl">
             <h1 className="text-xl  font-medium my-2 ">הפקת דוחות</h1>
@@ -45,10 +45,10 @@ const BusinessReport = () => {
             </h2>
           </div>
         </div>
-        <div className="bg-gray-200 w-full h-36 flex justify-center items-center">
+        <div className="bg-gray-200 w-full h-36 flex justify-center items-center rounded-b-xl">
           <div className=" flex w-full items-center justify-around ">
             <button
-              className="bg-green-400 ring-4 ring-green-300 text-black hover:ring-green-900 hover:text-white p-5 px-10 text-xl rounded-lg"
+              className="bg-green-400 w-48 h-14 ring-4 ring-green-300 text-black hover:ring-green-900 hover:text-white text-xl rounded-lg"
               onClick={() => {
                 sendHandler();
               }}
@@ -68,47 +68,48 @@ const BusinessReport = () => {
           </div>
         </div>
 
-        <div dir="rtl" className="flex w-full h-full flex-col p-5 rounded-b-xl">
-          <table id="reportTable" className="table-auto flex flex-col ">
-          
-              <thead className="bg-red-500 flex flex-col p-5 mb-5 text-xl font-bold leading-6 rounded-md">
-                <tr className="flex items-center justify-between">
-                  <td>מספר הזמנה</td>
-                  <td>שם לקוח</td>
-                  <td>האם שולם ?</td>
-                  <td>סכום הזמנה</td>
-                </tr>
-              </thead>
-           
+        <div dir="rtl" className="flex w-full h-4/6 flex-col p-5 rounded-b-xl">
+          <table id="reportTable" className="table-auto flex flex-col  ">
 
-            <tbody className="flex flex-col p-5 max-h-fulloverflow-y-scroll">
-              {dateResult &&
-                dateResult.map((item, index) => {
-                  return (
-                    <tr className="bg-gray-50 w-full flex justify-between items-center my-2 flex-row p-5 text-lg leading-6 rounded-md overflow-auto ring-4 ring-green-500 hover:bg-green-300" key={index}>
-                      <td>{item.orderID}</td>
-                      <td>{item.userName}</td>
-                      <td>{item.orderPaidUp ? "כן" : "לא"}</td>
-                      <td>{item.orderTotalPrice}₪</td>
-                    </tr>
-                  );
-                })}
-            </tbody>
+            <thead className="bg-red-500 flex flex-col p-5 mb-5 text-xl font-bold leading-6 rounded-md">
+              <tr className="flex items-center justify-between">
+                <td>מספר הזמנה</td>
+                <td>שם לקוח</td>
+                <td>האם שולם ?</td>
+                <td>סכום הזמנה</td>
+              </tr>
+            </thead>
+
+            <div className="h-4/6 overflow-y-scroll">
+              <tbody className="flex flex-col p-5 ">
+                {dateResult &&
+                  dateResult.map((item, index) => {
+                    return (
+                      <tr className="bg-gray-50 w-full flex justify-between items-center my-2 flex-row p-5 text-lg leading-6 rounded-md overflow-auto ring-4 ring-green-500 hover:bg-green-300" key={index}>
+                        <td>{item.orderID}</td>
+                        <td>{item.userName}</td>
+                        <td>{item.orderPaidUp ? "כן" : "לא"}</td>
+                        <td>{item.orderTotalPrice}₪</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </div>
           </table>
-          <div className=" flex p-2 items-center justify-center">
 
+        </div>
+        {dateTo===""||dateFrom===""||dateResult===null?<div></div>:
+        <div className=" flex items-center justify-center">
           <ReactHTMLTableToExcel
             className="bg-green-400 ring-4 ring-green-300 text-black hover:ring-green-900 hover:text-white p-5 px-10 text-xl rounded-md"
             table="reportTable"
-            filename={`${user.businessName}-${dateFrom}-${dateTo}`}
+            filename={`${user&&user.businessName}-${dateFrom}-${dateTo}`}
             sheet="Sheet"
             buttonText="להפקת קובץ אקסל לחץ כאן"
-            onClick={() => {
-              // excelbuttonHandler()
-            }}
+            onClick={excelbuttonHandler}
           />
-          </div>
         </div>
+        }
       </div>
     </Layout>
   );

@@ -31,7 +31,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
   }, []);
 
   //get img name for update image in the server
-  const getNameForUploadImg= async () => {
+  const getNameForUploadImg = async () => {
     let splitURL= ItemForEdit.itemImg.split('/');
     console.log("split",splitURL);
     console.log("split[5]",splitURL["5"]);
