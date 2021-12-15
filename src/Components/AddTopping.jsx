@@ -12,7 +12,8 @@ export const AddTopping = ({
   const [inputs, setInputs] = useState({
     topName: "",
     topPrice: "",
-  });
+  }
+  );
 
   const handleAddClick = async () => {
     if (inputs.topName !== null && inputs.topPrice !== null) {
@@ -24,11 +25,9 @@ export const AddTopping = ({
         true
       );
       alert("נוספה תוספת בהצלחה");
-      // setInterval(() => {
-      //   <Loader/>
-      // }, 3000);
+      renderDataToppings();
+      console.log("handleclick");
       setAddToppingClicked(false);
-      await renderDataToppings();
     }
   };
 

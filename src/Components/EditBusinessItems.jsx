@@ -33,10 +33,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
   //get img name for update image in the server
   const getNameForUploadImg = async () => {
     let splitURL= ItemForEdit.itemImg.split('/');
-    console.log("split",splitURL);
-    console.log("split[5]",splitURL["5"]);
     let res = splitURL["5"].replace(".jpg","")
-    console.log("res",res);
     return res;
   }
 
@@ -49,6 +46,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
     reader.readAsDataURL(file);
   };
 
+  // upload a new image for item with the same name in the server
   const UploadImage = async () => {
     let imageName = await getNameForUploadImg();
 
@@ -73,36 +71,39 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
 
   //get the corrent list of toppings for render it on screen
   const renderDataToppings = async () => {
-    if (itemToppings.length !== 0) {
-      const res = await GetBusinessItemsByBusinessID(
-        itemToppings["0"].businessID
-      );
+    if (itemToppings) {
+      const res = await GetBusinessItemsByBusinessID(user.businessID);
       const toppings = res["toppings"];
       // console.log("Before filter", toppings);
       const filtered = toppings.filter(
         (item) => item.itemID === ItemForEdit.itemID
       );
-      await setItemsToppings(filtered);
+      console.log("filtered",filtered);
+      setItemsToppings(filtered);
+      filterToppings();
     }
   };
 
+
   // filter topping to category Active/UnActive
   const filterToppings = async () => {
+    if(itemToppings){
     const unActiveTopping1 = itemToppings.filter(
       (item) => item.isActive === false
     );
     await setUnActiveToppings(unActiveTopping1);
-
+    
     const activeTopping1 = itemToppings.filter(
       (item) => item.isActive === true
     );
     await setActiveToppings(activeTopping1);
-  };
+  }};
 
   useEffect(() => {
     filterToppings();
-  }, [itemToppings]);
+  }, [setItemsToppings]);
 
+  //handle the click button for updating item
   const handleUpdateBusinessItem = async () => {
     if (
       itemPrice !== ItemForEdit.itemPrice ||
@@ -114,9 +115,10 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
         itemPrice,
         itemComment
       );
-      console.log("updateBusinessItem res = ", res);
     }
   };
+
+  //function to update active topping for item to unactive
   const ActiveTopping = ({ item }) => {
     return (
       <div className="flex flex-row justify-center items-center p-2">
@@ -147,6 +149,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
     );
   };
 
+  //function to update unactive topping for item to active
   const UnActiveToppings = ({ item }) => {
     return (
       <div className="flex flex-row justify-center items-center p-2">
@@ -268,7 +271,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
           </div>
         ) : (
           <div className="grid grid-cols-4 gap-x-20 gap-y-5 max-h-60 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll overflow-x-hidden designedScroll">
-            {activeToppings !== null ? (
+            {activeToppings ? (
               activeToppings.map((item) => {
                 return <ActiveTopping key={item.toppingID} item={item} />;
               })
@@ -276,7 +279,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
               <div></div>
             )}
 
-            {unActiveToppings !== null ? (
+            {unActiveToppings ? (
               unActiveToppings.map((item) => {
                 return <UnActiveToppings key={item.toppingID} item={item} />;
               })
@@ -285,6 +288,7 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
             )}
           </div>
         )}
+        {/* modal to check if is for update or for edit by parameter */}
         <Modal showModal={updateTopping} setShowModal={setUpdateTopping}>
           <AddTopping
             data={currentToppingForUpdate}
