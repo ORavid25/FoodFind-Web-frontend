@@ -13,11 +13,9 @@ import { FoodFindContext } from "../context";
 import { BusinessItemController } from "../utility/urls";
 
 const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
-  const {user} = useContext(FoodFindContext);
+  const { user } = useContext(FoodFindContext);
   const [itemPrice, setItemPrice] = useState(0);
   const [itemComment, setItemComment] = useState("");
-  const [unActiveToppings, setUnActiveToppings] = useState([]);
-  const [activeToppings, setActiveToppings] = useState([]);
   const [addToppingClicked, setAddToppingClicked] = useState(false);
   const [currentToppingForUpdate, setCurrentToppingForUpdate] = useState(false);
   const [updateTopping, setUpdateTopping] = useState(false);
@@ -32,8 +30,8 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
 
   //get img name for update image in the server
   const getNameForUploadImg = async () => {
-    let splitURL= ItemForEdit.itemImg.split('/');
-    let res = splitURL["5"].replace(".jpg","")
+    let splitURL = ItemForEdit.itemImg.split('/');
+    let res = splitURL["5"].replace(".jpg", "")
     return res;
   }
 
@@ -74,34 +72,13 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
     if (itemToppings) {
       const res = await GetBusinessItemsByBusinessID(user.businessID);
       const toppings = res["toppings"];
-      // console.log("Before filter", toppings);
       const filtered = toppings.filter(
         (item) => item.itemID === ItemForEdit.itemID
       );
-      console.log("filtered",filtered);
+      console.log("filtered", filtered);
       setItemsToppings(filtered);
-      filterToppings();
     }
   };
-
-
-  // filter topping to category Active/UnActive
-  const filterToppings = async () => {
-    if(itemToppings){
-    const unActiveTopping1 = itemToppings.filter(
-      (item) => item.isActive === false
-    );
-    await setUnActiveToppings(unActiveTopping1);
-    
-    const activeTopping1 = itemToppings.filter(
-      (item) => item.isActive === true
-    );
-    await setActiveToppings(activeTopping1);
-  }};
-
-  useEffect(() => {
-    filterToppings();
-  }, [setItemsToppings]);
 
   //handle the click button for updating item
   const handleUpdateBusinessItem = async () => {
@@ -119,52 +96,32 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
   };
 
   //function to update active topping for item to unactive
-  const ActiveTopping = ({ item }) => {
+  const HandleToppings = ({ item }) => {
     return (
       <div className="flex flex-row justify-center items-center p-2">
-        <div className=" text-xl font-semibold rounded-lg w-40 bg-yellow-200 py-2 flex justify-around items-center">
+        <div className={`text-xl font-semibold rounded-lg w-40  py-2 flex justify-around items-center
+            ${item.isActive ? 'bg-yellow-200' : 'bg-red-200'}`}>
           <button
             onClick={async () => {
-              const res = await UpdateToppingToUnActive(
-                item.businessID,
-                item.itemID,
-                item.toppingID
-              );
-
-              renderDataToppings();
+              if (item.isActive) {
+                const res = await UpdateToppingToUnActive(
+                  item.businessID,
+                  item.itemID,
+                  item.toppingID
+                );
+                renderDataToppings();
+              }
+              else {
+                const res = await UpdateToppingToActive(
+                  item.businessID,
+                  item.itemID,
+                  item.toppingID
+                );
+                renderDataToppings();
+              }
             }}
           >
-            <GrFormClose size={25} />
-          </button>
-          <button
-            onClick={async () => {
-              await setUpdateTopping(!updateTopping);
-              await setCurrentToppingForUpdate(item);
-            }}
-          >
-            {item.toppingName}
-          </button>
-        </div>
-      </div>
-    );
-  };
-
-  //function to update unactive topping for item to active
-  const UnActiveToppings = ({ item }) => {
-    return (
-      <div className="flex flex-row justify-center items-center p-2">
-        <div className=" text-xl  font-semibold rounded-lg w-40 bg-red-200 py-2 flex justify-around items-center">
-          <button
-            onClick={async () => {
-              const res = await UpdateToppingToActive(
-                item.businessID,
-                item.itemID,
-                item.toppingID
-              );
-              renderDataToppings();
-            }}
-          >
-            <AiOutlinePlus size={25} />
+            {item.isActive?<GrFormClose size={25}/>: <AiOutlinePlus size={25} />}
           </button>
           <button
             onClick={async () => {
@@ -223,21 +180,21 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
       </div>
 
       <div className="flex justify-evenly items-center p-2 m-2 ">
-              <h1 className="w-40 text-lg font-medium font-semibold">עדכון תמונת מוצר</h1>
-              <input
-              type="file"
-              className="w-60"
-              onChange={(event) => {
-                ConvertToBase64(event);
-              }}
-            />
-            <button
-                className="bg-green-500 w-40 text-md text-white font-medium ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300"
-                onClick={UploadImage}
-              >
-               עדכון תמונת מוצר
-              </button>
-            </div>
+        <h1 className="w-40 text-lg font-medium font-semibold">עדכון תמונת מוצר</h1>
+        <input
+          type="file"
+          className="w-60"
+          onChange={(event) => {
+            ConvertToBase64(event);
+          }}
+        />
+        <button
+          className="bg-green-500 w-40 text-md text-white font-medium ring-4 ring-green-400 rounded-lg hover:bg-green-400 transition-color duration-300"
+          onClick={UploadImage}
+        >
+          עדכון תמונת מוצר
+        </button>
+      </div>
 
       <div className="mt-10 max-h-96">
         <div>
@@ -271,17 +228,9 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
           </div>
         ) : (
           <div className="grid grid-cols-4 gap-x-20 gap-y-5 max-h-60 p-5 rounded-b-lg justify-items-center bg-gray-200  overflow-y-scroll overflow-x-hidden designedScroll">
-            {activeToppings ? (
-              activeToppings.map((item) => {
-                return <ActiveTopping key={item.toppingID} item={item} />;
-              })
-            ) : (
-              <div></div>
-            )}
-
-            {unActiveToppings ? (
-              unActiveToppings.map((item) => {
-                return <UnActiveToppings key={item.toppingID} item={item} />;
+            {itemToppings ? (
+              itemToppings.map((item) => {
+                return <HandleToppings key={item.toppingID} item={item} />;
               })
             ) : (
               <div></div>
