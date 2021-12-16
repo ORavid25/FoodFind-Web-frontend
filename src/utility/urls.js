@@ -73,7 +73,7 @@ export const BusinessItemController = {
 
 }
 
-
+export const GetAllOrders = `${Base_URL}/orders/`
 export const GetAllOrdersByBusinessID = `${Base_URL}/orders/GetAllOrdersByBusinessID/`
 export const UpdateOrderPaid = `${Base_URL}/orders/UpdateOrderPaid/`
 export const UpdateOrderFinished = `${Base_URL}/orders/UpdateOrderFinished/`
@@ -82,6 +82,7 @@ export const sendPushNotification = `${Base_URL}/orders/sendpushnotification/`
 export const getReportByDate = `${Base_URL}/orders/getReportByDate/`
 
 export const OrdersController = {
+    GetAllOrders,
     GetAllOrdersByBusinessID,
     UpdateOrderPaid,
     UpdateOrderFinished,

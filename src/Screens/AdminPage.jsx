@@ -8,6 +8,7 @@ import BusinessUserList from "../Components/adminComponents/BusinessUserList";
 import ClientUserList from "../Components/adminComponents/ClientUserList";
 import Loader from "../Components/Loader";
 import { useHistory } from "react-router-dom";
+import {getAllOrdersByBusinessID} from  "../api/OrderController";
 
 const AdminPage = () => {
   const {user} = useContext(FoodFindContext);
@@ -15,7 +16,29 @@ const AdminPage = () => {
   const [clientUsers, setClientUsers] = useState([]);
   const [unActiveBusiness, setUnActiveBusiness] = useState([]);
   const [activeBusiness, setActiveBusiness] = useState([]);
+  const [listTopBusiness,setListTopBusiness] = useState([]);
+
   const history = useHistory();
+
+  const GetOrdersForFilter = async () => {
+    for (let index = 0; index < businessUsers.length; index++) {
+      const result = await getAllOrdersByBusinessID(businessUsers[index].businessID);
+      console.log("result is=",result);
+      if(result.length < 1){
+        break;
+      }
+      listTopBusiness.push(result);
+    }
+    console.log("listTopBusiness",listTopBusiness);
+  }
+  
+
+  useEffect( () => {
+    GetOrdersForFilter()
+  
+},[businessUsers])
+
+
 
   const Logout = () => {
     window.localStorage.removeItem("user");
@@ -24,6 +47,7 @@ const AdminPage = () => {
 
   const fetchAllBusinessUsers = async () => {
     const res = await GetAllBusinessUsers();
+    
     await setBusinessUsers(res);
     let active = res.filter((user) => user.businessStatus === true);
     await setActiveBusiness(active);
@@ -87,7 +111,7 @@ const AdminPage = () => {
         </svg>
       </a>
         <h1 className="ml-96 text-xl font-sans leading-6 font-bold">
-          !שלום {user.adminName} אדמין
+          !שלום {user&&user.adminName} אדמין
         </h1>
         <img src={Logo} alt="Logo" className=" w-52 mr-5 h-20" />
       </div>
