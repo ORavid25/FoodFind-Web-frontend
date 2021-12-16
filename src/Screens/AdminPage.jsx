@@ -9,6 +9,11 @@ import ClientUserList from "../Components/adminComponents/ClientUserList";
 import Loader from "../Components/Loader";
 import { useHistory } from "react-router-dom";
 import {getAllOrdersByBusinessID} from  "../api/OrderController";
+import 'chart.js/auto';
+import {Pie} from "react-chartjs-2";
+ 
+
+
 
 const AdminPage = () => {
   const {user} = useContext(FoodFindContext);
@@ -19,6 +24,69 @@ const AdminPage = () => {
   const [listTopBusiness,setListTopBusiness] = useState([]);
 
   const history = useHistory();
+
+
+  const PieChart = () => {
+    return (
+      
+         <Pie
+        data={{
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [
+            {
+              label: '# of votes',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+              ],
+              borderWidth: 1,
+            },
+            // {
+            //   label: 'Quantity',
+            //   data: [47, 52, 67, 58, 9, 50],
+            //   backgroundColor: 'orange',
+            //   borderColor: 'red',
+            // },
+          ],
+        }}
+        height={400}
+        width={600}
+        options={{
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
+          },
+          legend: {
+            labels: {
+              fontSize: 25,
+            },
+          },
+        }}
+      />
+      
+    )
+
+  }
+
 
   const GetOrdersForFilter = async () => {
     for (let index = 0; index < businessUsers.length; index++) {
@@ -137,11 +205,7 @@ const AdminPage = () => {
           </div>
 
           <div className="bg-gray-300 flex flex-col w-3/6 h-96 p-3 mx-3 items-end rounded-lg text-3xl leading-6 ">
-            <h1 className=" mb-4 mt-2 mr-5">עסקים מובילים</h1>
-            <div className="bg-white w-full  flex items-center justify-around text-xl rounded-xl">
-              <h1>{businessUsers.length} :בעלי עסק</h1>
-              <h1>{clientUsers.length} :לקוחות אפליקציה</h1>
-            </div>
+            <PieChart/>
           </div>
         </div>
       </div>
