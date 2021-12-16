@@ -1,41 +1,85 @@
-import React, { useState, useEffect,useLayoutEffect, useContext } from "react";
+import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
 import Logo from "../assats/foodfind.png";
 import { FcApprove, FcDisapprove } from "react-icons/fc";
-import { GetAllBusinessUsers,UpdateBusinessToActive } from "../api/BusinessUserController";
+import { GetAllBusinessUsers, UpdateBusinessToActive } from "../api/BusinessUserController";
 import { GetAllClientUsers } from "../api/ClientUserController";
 import { FoodFindContext } from "../context";
 import BusinessUserList from "../Components/adminComponents/BusinessUserList";
 import ClientUserList from "../Components/adminComponents/ClientUserList";
 import Loader from "../Components/Loader";
 import { useHistory } from "react-router-dom";
-import {getAllOrdersByBusinessID} from  "../api/OrderController";
+import { getAllOrdersByBusinessID } from "../api/OrderController";
 import 'chart.js/auto';
-import {Pie} from "react-chartjs-2";
- 
+import { Pie } from "react-chartjs-2";
+
 
 
 
 const AdminPage = () => {
-  const {user} = useContext(FoodFindContext);
+  const { user } = useContext(FoodFindContext);
   const [businessUsers, setBusinessUsers] = useState([]);
   const [clientUsers, setClientUsers] = useState([]);
   const [unActiveBusiness, setUnActiveBusiness] = useState([]);
   const [activeBusiness, setActiveBusiness] = useState([]);
-  const [listTopBusiness,setListTopBusiness] = useState([]);
+  const [listTopBusiness, setListTopBusiness] = useState([]);
+  const [namesOfBusiness, setNamesOfBusiness] = useState([]);
+  const [numberOfOrders, setNumberOfOrders] = useState([]);
 
   const history = useHistory();
 
+  const listOfNames = () => {
+    const names = []
+    const numberOfOrder=[];
+    console.log("businessUser",businessUsers);
+    if(businessUsers!== null && businessUsers !== undefined){
+      names.push(businessUsers[0].businessName)
+      names.push(businessUsers[1].businessName)
+    }
+   
+    for (let index = 0; index < listTopBusiness.length; index++) {
+     numberOfOrder.push(listTopBusiness[index].length)
+      
+    }
+    console.log("numberOfOrders",numberOfOrder);
+    setNamesOfBusiness(names);
+    setNumberOfOrders(numberOfOrder);    
+  }
+
+  const GetOrdersForFilter = async () => {
+    if(listTopBusiness.length>1){
+      await setListTopBusiness([])
+    }
+    for (let index = 0; index < businessUsers.length; index++) {
+      const result = await getAllOrdersByBusinessID(businessUsers[index].businessID);
+      console.log("result is=", result);
+      if (result.length < 1 || result === "Conflict") {
+        break;
+      }
+      listTopBusiness.push(result);
+    }
+    console.log("listTopBusiness", listTopBusiness);
+    setListTopBusiness(listTopBusiness);
+  }
+
+
+  useEffect(() => {
+    async function getOrders(){
+     await GetOrdersForFilter()
+      await listOfNames();
+    }
+    getOrders();
+  }, [businessUsers])
 
   const PieChart = () => {
     return (
-      
-         <Pie
+
+      <Pie
         data={{
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: namesOfBusiness,
           datasets: [
             {
               label: '# of votes',
-              data: [12, 19, 3, 5, 2, 3],
+              data: numberOfOrders ,
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -82,31 +126,15 @@ const AdminPage = () => {
           },
         }}
       />
-      
+
     )
 
   }
 
 
-  const GetOrdersForFilter = async () => {
-    for (let index = 0; index < businessUsers.length; index++) {
-      const result = await getAllOrdersByBusinessID(businessUsers[index].businessID);
-      console.log("result is=",result);
-      if(result.length < 1){
-        break;
-      }
-      listTopBusiness.push(result);
-    }
-    console.log("listTopBusiness",listTopBusiness);
-  }
-  
+ 
 
-  useEffect( () => {
-    GetOrdersForFilter()
-  
-},[businessUsers])
-
-
+ 
 
   const Logout = () => {
     window.localStorage.removeItem("user");
@@ -115,16 +143,15 @@ const AdminPage = () => {
 
   const fetchAllBusinessUsers = async () => {
     const res = await GetAllBusinessUsers();
-    
-    await setBusinessUsers(res);
+
+    setBusinessUsers(res);
     let active = res.filter((user) => user.businessStatus === true);
-    await setActiveBusiness(active);
+    setActiveBusiness(active);
   };
 
   const fetchAllClientUsers = async () => {
     const res = await GetAllClientUsers();
-    await setClientUsers(res);
-    console.log("client users :", res);
+    setClientUsers(res);
   };
 
   const filterUnActiveBusiness = async () => {
@@ -132,13 +159,12 @@ const AdminPage = () => {
       (user) => user.businessStatus === false
     );
 
-    await setUnActiveBusiness(unActive);
+     setUnActiveBusiness(unActive);
   };
 
   const UpdateBusinessUserToActive = async (id) => {
-    if(id!==undefined&&id!==null){
+    if (id !== undefined && id !== null) {
       let res = await UpdateBusinessToActive(id)
-      console.log("resActive",res);
       fetchAllBusinessUsers();
     }
   }
@@ -158,28 +184,28 @@ const AdminPage = () => {
     <div className="w-screen h-screen bg-gray-300 overflow-y-auto">
       {/* header */}
       <div className=" bg-green-300 w-full h-20 flex justify-between items-center">
-      <a
-        href="/login"
-        onClick={Logout}
-        className="flex justify-center items-center w-20 h-20 text-black opacity-80 rounded-xl hover:bg-white hover:opacity-100 hover:text-green-500 transform hover:translate-x-3 duration-300"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-16 w-16 ml-2"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+        <a
+          href="/login"
+          onClick={Logout}
+          className="flex justify-center items-center w-20 h-20 text-black opacity-80 rounded-xl hover:bg-white hover:opacity-100 hover:text-green-500 transform hover:translate-x-3 duration-300"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-          />
-        </svg>
-      </a>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-16 w-16 ml-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            />
+          </svg>
+        </a>
         <h1 className="ml-96 text-xl font-sans leading-6 font-bold">
-          !שלום {user&&user.adminName} אדמין
+          !שלום {user && user.adminName} אדמין
         </h1>
         <img src={Logo} alt="Logo" className=" w-52 mr-5 h-20" />
       </div>
@@ -205,7 +231,7 @@ const AdminPage = () => {
           </div>
 
           <div className="bg-gray-300 flex flex-col w-3/6 h-96 p-3 mx-3 items-end rounded-lg text-3xl leading-6 ">
-            <PieChart/>
+            <PieChart />
           </div>
         </div>
       </div>
@@ -242,7 +268,7 @@ const AdminPage = () => {
                       <FcApprove
                         className="mx-5 cursor-pointer"
                         size={50}
-                        onClick={()=>UpdateBusinessUserToActive(user.businessID)}
+                        onClick={() => UpdateBusinessUserToActive(user.businessID)}
                       />
                       <FcDisapprove
                         className="mx-5 cursor-pointer"
