@@ -81,6 +81,7 @@ export const SendEmail = `${Base_URL}/orders/sendEmail`
 export const sendPushNotification = `${Base_URL}/orders/sendpushnotification/`
 export const getReportByDate = `${Base_URL}/orders/getReportByDate/`
 export const getTop3BusinessOrders = `${Base_URL}/orders/GetTop3BusinessOrders`
+export const getTop5AppUserOrders = `${Base_URL}/orders/Get5TopAppUserOrders`
 
 export const OrdersController = {
     GetAllOrders,
@@ -91,6 +92,7 @@ export const OrdersController = {
     sendPushNotification,
     getReportByDate,
     getTop3BusinessOrders,
+    getTop5AppUserOrders,
 }
 
 

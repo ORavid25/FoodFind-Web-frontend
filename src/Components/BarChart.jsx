@@ -1,20 +1,20 @@
 import React from 'react';
 import "chart.js/auto";
-import { Pie } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
 
 
 
-const PieChart = ({numberOfOrders,namesOfBusiness}) => {
+const BarChart = ({nameOfUsers,userNumOfOrders}) => {
     return (
-      <Pie
+      <Bar
       className="flex mb-5"
         data={{
-          labels: namesOfBusiness,
+          labels: nameOfUsers,
           datasets: [
             {
-              label: "# of votes",
-              data: numberOfOrders,
+              label: "מספר הזמנות",
+              data: userNumOfOrders,
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
                 "rgba(54, 162, 235, 0.2)",
@@ -45,7 +45,7 @@ const PieChart = ({numberOfOrders,namesOfBusiness}) => {
         width={600}
         options={{
           maintainAspectRatio: false,
-        
+         
           legend: {
             labels: {
               fontSize: 25,
@@ -55,4 +55,4 @@ const PieChart = ({numberOfOrders,namesOfBusiness}) => {
       />
     );
   };
-export default PieChart;
+export default BarChart;
