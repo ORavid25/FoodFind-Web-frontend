@@ -80,6 +80,7 @@ export const UpdateOrderFinished = `${Base_URL}/orders/UpdateOrderFinished/`
 export const SendEmail = `${Base_URL}/orders/sendEmail`
 export const sendPushNotification = `${Base_URL}/orders/sendpushnotification/`
 export const getReportByDate = `${Base_URL}/orders/getReportByDate/`
+export const getTop3BusinessOrders = `${Base_URL}/orders/GetTop3BusinessOrders`
 
 export const OrdersController = {
     GetAllOrders,
@@ -89,6 +90,7 @@ export const OrdersController = {
     SendEmail,
     sendPushNotification,
     getReportByDate,
+    getTop3BusinessOrders,
 }
 
 

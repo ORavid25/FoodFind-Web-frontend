@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
 import Logo from "../assats/foodfind.png";
 import { FcApprove, FcDisapprove } from "react-icons/fc";
-import { GetAllBusinessUsers, UpdateBusinessToActive } from "../api/BusinessUserController";
+import {
+  GetAllBusinessUsers,
+  UpdateBusinessToActive,
+} from "../api/BusinessUserController";
 import { GetAllClientUsers } from "../api/ClientUserController";
 import { FoodFindContext } from "../context";
 import BusinessUserList from "../Components/adminComponents/BusinessUserList";
 import ClientUserList from "../Components/adminComponents/ClientUserList";
+import PieChart from "../Components/PieChart";
 import Loader from "../Components/Loader";
 import { useHistory } from "react-router-dom";
-import { getAllOrdersByBusinessID } from "../api/OrderController";
-import 'chart.js/auto';
-import { Pie } from "react-chartjs-2";
-
-
-
+import {
+  getAllOrdersByBusinessID,
+  GetTop3BusinessOrders,
+} from "../api/OrderController";
 
 const AdminPage = () => {
   const { user } = useContext(FoodFindContext);
@@ -27,115 +29,22 @@ const AdminPage = () => {
 
   const history = useHistory();
 
-  const listOfNames = () => {
-    const names = []
-    const numberOfOrder=[];
-    console.log("businessUser",businessUsers);
-    if(businessUsers!== null && businessUsers !== undefined){
-      names.push(businessUsers[0].businessName)
-      names.push(businessUsers[1].businessName)
-    }
-   
-    for (let index = 0; index < listTopBusiness.length; index++) {
-     numberOfOrder.push(listTopBusiness[index].length)
-      
-    }
-    console.log("numberOfOrders",numberOfOrder);
+  // retun the top 3 business of FoodFind
+  const GetTop3 = async () => {
+    const res = await GetTop3BusinessOrders();
+    let names = [];
+    let numOfOrders = [];
+    // get business names and number of orders of top 3 highest orders amount
+    res.map((name) => {
+      names.push(name.businessName);
+      numOfOrders.push(name.numOfOrders);
+    });
+
     setNamesOfBusiness(names);
-    setNumberOfOrders(numberOfOrder);    
-  }
+    setNumberOfOrders(numOfOrders);
+  };
 
-  const GetOrdersForFilter = async () => {
-    if(listTopBusiness.length>1){
-      await setListTopBusiness([])
-    }
-    for (let index = 0; index < businessUsers.length; index++) {
-      const result = await getAllOrdersByBusinessID(businessUsers[index].businessID);
-      console.log("result is=", result);
-      if (result.length < 1 || result === "Conflict") {
-        break;
-      }
-      listTopBusiness.push(result);
-    }
-    console.log("listTopBusiness", listTopBusiness);
-    setListTopBusiness(listTopBusiness);
-  }
-
-
-  useEffect(() => {
-    async function getOrders(){
-     await GetOrdersForFilter()
-      await listOfNames();
-    }
-    getOrders();
-  }, [businessUsers])
-
-  const PieChart = () => {
-    return (
-
-      <Pie
-        data={{
-          labels: namesOfBusiness,
-          datasets: [
-            {
-              label: '# of votes',
-              data: numberOfOrders ,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-              ],
-              borderWidth: 1,
-            },
-            // {
-            //   label: 'Quantity',
-            //   data: [47, 52, 67, 58, 9, 50],
-            //   backgroundColor: 'orange',
-            //   borderColor: 'red',
-            // },
-          ],
-        }}
-        height={400}
-        width={600}
-        options={{
-          maintainAspectRatio: false,
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
-                },
-              },
-            ],
-          },
-          legend: {
-            labels: {
-              fontSize: 25,
-            },
-          },
-        }}
-      />
-
-    )
-
-  }
-
-
- 
-
- 
-
+  
   const Logout = () => {
     window.localStorage.removeItem("user");
     history.push("/login");
@@ -159,20 +68,21 @@ const AdminPage = () => {
       (user) => user.businessStatus === false
     );
 
-     setUnActiveBusiness(unActive);
+    setUnActiveBusiness(unActive);
   };
 
   const UpdateBusinessUserToActive = async (id) => {
     if (id !== undefined && id !== null) {
-      let res = await UpdateBusinessToActive(id)
+      let res = await UpdateBusinessToActive(id);
       fetchAllBusinessUsers();
     }
-  }
+  };
 
   /// will work on page load
   useEffect(() => {
     fetchAllBusinessUsers();
     fetchAllClientUsers();
+    GetTop3();
   }, []);
 
   /// will work only if we have data in BusinessUsers
@@ -211,8 +121,8 @@ const AdminPage = () => {
       </div>
 
       <div className="bg-gray-300 flex flex-wrap w-full h-full items-center justify-center rounded-lg p-2">
-        <div className="bg-green-700 w-full h-full my-5 flex flex-row-reverse p-5 ">
-          <div className="bg-gray-300 flex flex-col max-w-5/6 w-3/6 p-3 h-full items-end rounded-lg text-3xl leading-6 ">
+        <div className="w-full h-full my-5 flex flex-row-reverse p-5 ">
+          <div className="bg-white flex flex-col max-w-5/6 w-3/6 p-3 h-full items-end rounded-lg text-3xl leading-6 ">
             <div className="bg-yellow-300 flex flex-col max-w-5/6 w-full p-3 h-5/12 items-end rounded-lg text-3xl leading-6 ">
               <h1 className=" mb-4 mt-2 mr-5">כמות משתמשים</h1>
               <div className="bg-white w-full h-16 flex items-center justify-around text-xl rounded-xl">
@@ -230,8 +140,11 @@ const AdminPage = () => {
             </div>
           </div>
 
-          <div className="bg-gray-300 flex flex-col w-3/6 h-96 p-3 mx-3 items-end rounded-lg text-3xl leading-6 ">
-            <PieChart />
+          <div className="bg-white flex flex-col justify-center items-center w-3/6 max-h-96  p-3 mx-3  rounded-lg text-3xl leading-6 ">
+       
+          
+
+            <PieChart numberOfOrders={numberOfOrders} namesOfBusiness={namesOfBusiness} />
           </div>
         </div>
       </div>
@@ -268,7 +181,9 @@ const AdminPage = () => {
                       <FcApprove
                         className="mx-5 cursor-pointer"
                         size={50}
-                        onClick={() => UpdateBusinessUserToActive(user.businessID)}
+                        onClick={() =>
+                          UpdateBusinessUserToActive(user.businessID)
+                        }
                       />
                       <FcDisapprove
                         className="mx-5 cursor-pointer"
