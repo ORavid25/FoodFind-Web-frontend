@@ -129,7 +129,11 @@ const BusinessUpdateForm = () => {
   };
 
   const UploadImage = async () => {
-
+    if(base64==="")
+    {
+      alert('לא נבחרה תמונה')
+      return;
+    }
     let req = {
       name: user.userID,
       folder: `businessUser`,
@@ -144,9 +148,11 @@ const BusinessUpdateForm = () => {
         Accept: "application/json",
       },
     });
-
-    let data = await result.json();
-    SetImageRes(data.path);
+    
+      let data = await result.json();
+      SetImageRes(data.path);
+      alert('לוגו עסק עודכן בהצלחה!')
+    
   };
 
 

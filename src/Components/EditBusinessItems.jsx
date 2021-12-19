@@ -46,6 +46,10 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
 
   // upload a new image for item with the same name in the server
   const UploadImage = async () => {
+    if(base64===""){
+      alert('לא נבחרה תמונה למוצר')
+      return;
+    }
     let imageName = await getNameForUploadImg();
 
     let req = {
@@ -62,9 +66,15 @@ const EditBusinessItems = ({ ItemForEdit, itemToppings, setItemsToppings }) => {
         Accept: "application/json",
       },
     });
+    if(result!==null && result !== undefined){
+      alert('עדכון תמונת מוצר בוצעה בהצלחה')
+      let data = await result.json();
+      SetImageRes(data.path);
+    }else{
+      alert('שגיאה במהלך ההעלאת תמונת מוצר')
+    }
 
-    let data = await result.json();
-    SetImageRes(data.path);
+    
   };
 
   //get the corrent list of toppings for render it on screen
