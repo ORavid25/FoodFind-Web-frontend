@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { FoodFindContext } from "../context";
-import { UpdateOrderPaid, UpdateOrderFinished,sendMail,sendPushNotification } from "../api/OrderController";
+import { UpdateOrderPaid, UpdateOrderFinished,sendPushNotification } from "../api/OrderController";
 import Modal from "../Components/Modal";
 
 const OrderDetails = ({renderAfterFinishedOrder}) => {
@@ -10,10 +10,6 @@ const OrderDetails = ({renderAfterFinishedOrder}) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalPaid, setShowModalPaid] = useState(false);
   
-
-// useEffect(() => {
-//   setFinishedOrder(false);
-// }, [finishedOrder])
 
   const updateOrderPaid = async () => {
     const res = await UpdateOrderPaid(orderDetail[1].orderID);

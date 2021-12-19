@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { DeleteItemOfBusiness, GetBusinessItemsByBusinessID } from "../api/BusinessItemController";
 import { AiFillDelete } from "react-icons/ai";
 import Modal from "../Components/Modal";
@@ -26,10 +26,6 @@ const ItemsDisplay = ({ businessItems, setBusinessItems, businessToppings}) => {
     }
   };
 
-  // useEffect(() => {
-  //    renderDataToppings()
-
-  // }, []);
 
 
   const handleDeleteItem = async () => {

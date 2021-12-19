@@ -1,9 +1,7 @@
-import React,{useContext,useEffect,useState} from "react";
-import { FoodFindContext } from "../context";
+import React,{useEffect,useState} from "react";
 
 const BusinessOrders = ({orderList,businessOrdersToHome}) => {
 
-  const {orderData,setOrderData} = useContext(FoodFindContext);
   const [filterdActiveOrders,setFilterdActiveOrders] = useState([]);
 
 

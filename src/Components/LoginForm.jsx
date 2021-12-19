@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import FoodFindLogo from "../assats/foodfind.png";
 import { LoginWithEmailAndPass } from "../api/BusinessUserController";
 import { useHistory } from "react-router-dom";
@@ -39,24 +39,7 @@ const LoginForm = () => {
     }
   };
 
-  // useEffect(async () => {
-  //   const req = {
-  //     method: "GET",
-  //   };
-  //   try {
-  //     const res = await fetch(
-  //       "http://proj14.ruppin-tech.co.il/api/GetAllBusinessUsers",
-  //       req
-  //     );
-  //     if (res.status !== 201 && res.status !== 200) return "Conflict";
-  //     const data = await res.json();
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return null;
-  //   }
-  // }, []);
-
+ 
   return (
     <div className="bg-gray-200 p-14 rounded-2xl shadow-xl">
       <div className="max-w-md w-full">

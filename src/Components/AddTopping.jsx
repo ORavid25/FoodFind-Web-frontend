@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { insertTopping , UpdateToppingPrice } from "../api/BusinessItemController";
-import Loader from "./Loader";
+
 
 export const AddTopping = ({
   data,

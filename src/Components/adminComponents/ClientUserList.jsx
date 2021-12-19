@@ -16,9 +16,9 @@ const ClientUserList = ({clientUsers}) => {
           <h1>תאריך יצירה</h1>
         </div>
 
-        {clientUsers === null ? <Loader/> : clientUsers.map((user) => {
+        {clientUsers === null ? <Loader/> : clientUsers.map((user,index) => {
           return (
-            <div className="bg-gray-50 w-full flex justify-between my-2 flex-row-reverse p-5 text-lg leading-6 rounded-lg overflow-auto ring-4 ring-green-500 hover:bg-green-300">
+            <div key={index} className="bg-gray-50 w-full flex justify-between my-2 flex-row-reverse p-5 text-lg leading-6 rounded-lg overflow-auto ring-4 ring-green-500 hover:bg-green-300">
               <h1>{user.userID}</h1>
               <h1>{user.userName}</h1>
               <h1>{user.userEmail}</h1>

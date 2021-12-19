@@ -16,9 +16,9 @@ const BusinessUserList = ({ businessUsersList }) => {
           <h1>תאריך יצירה</h1>
         </div>
 
-        {businessUsersList === null ? <Loader/> : businessUsersList.map((user) => {
+        {businessUsersList === null ? <Loader/> : businessUsersList.map((user,index) => {
           return (
-            <div className="bg-gray-50 w-full flex justify-between my-2 flex-row-reverse p-5 text-lg leading-6 rounded-lg overflow-auto ring-4 ring-green-500 hover:bg-green-300">
+            <div key={index} className="bg-gray-50 w-full flex justify-between my-2 flex-row-reverse p-5 text-lg leading-6 rounded-lg overflow-auto ring-4 ring-green-500 hover:bg-green-300">
               <h1>{user.businessID}</h1>
               <h1>{user.businessName}</h1>
               <h1>{user.businessEmail}</h1>

@@ -6,21 +6,23 @@ import {
   UpdateBusinessToActive,
 } from "../api/BusinessUserController";
 import { reportByDate } from "../api/OrderController";
-
+import {retrieveLocalStorageData } from "../utility/localStorage";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { GetAllClientUsers } from "../api/ClientUserController";
 import { FoodFindContext } from "../context";
 import BusinessUserList from "../Components/adminComponents/BusinessUserList";
 import ClientUserList from "../Components/adminComponents/ClientUserList";
-import PieChart from "../Components/PieChart";
-import BarChart from "../Components/BarChart";
+import PieChart from "../Components/adminComponents/PieChart";
+import BarChart from "../Components/adminComponents/BarChart";
 import Loader from "../Components/Loader";
 import { useHistory } from "react-router-dom";
 import {
-  getAllOrdersByBusinessID,
+  
   GetTop3BusinessOrders,
   GetTop5AppUserOrders,
+  GetFoodFindOrders,
 } from "../api/OrderController";
+import LineChart from "../Components/adminComponents/LineChart";
 
 const AdminPage = () => {
   const { user } = useContext(FoodFindContext);
@@ -35,9 +37,19 @@ const AdminPage = () => {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [inputBusinessID, setInputBusinessID] = useState("");
+  const [adminName, setAdminName] = useState("");
   const [dateResult, setDateResult] = useState([]);
-
+  const [monthNamesForLine, setMonthNamesForLine] = useState([]);
+  const [orderAmountForLine, setOrderAmountForLine] = useState([]);
   const history = useHistory();
+
+  const GetAdminName = async () => {
+    const res = await retrieveLocalStorageData("user");
+    console.log("retrive",res)
+    if(res !== undefined) {
+      setAdminName(res);
+    }
+  }
 
   // retun the top 3 business of FoodFind
   const GetTop3 = async () => {
@@ -72,6 +84,21 @@ const AdminPage = () => {
     setUserNumOfOrders(numOfOrders);
   };
 
+  const GetFoodFindOrdersForChart = async () => {
+    let names = [];
+    let numOfOrders = [];
+    const res = await GetFoodFindOrders();
+    console.log("GetFoodFindOrdersForChart", res);
+    if (res !== "Conflict") {
+      res.map((order) => {
+        names.push(order.monthName);
+        numOfOrders.push(order.numOfOrders);
+      });
+    }
+    setMonthNamesForLine(names);
+    setOrderAmountForLine(numOfOrders);
+  };
+
   const Logout = () => {
     window.localStorage.removeItem("user");
     history.push("/login");
@@ -84,6 +111,7 @@ const AdminPage = () => {
     let active = res.filter((user) => user.businessStatus === true);
     setActiveBusiness(active);
     GetTop3();
+  
   };
 
   const fetchAllClientUsers = async () => {
@@ -109,8 +137,10 @@ const AdminPage = () => {
 
   /// will work on page load
   useEffect(() => {
+    GetAdminName();
     fetchAllBusinessUsers();
     fetchAllClientUsers();
+    GetFoodFindOrdersForChart();
   }, []);
 
   /// will work only if we have data in BusinessUsers
@@ -118,29 +148,23 @@ const AdminPage = () => {
     filterUnActiveBusiness();
   }, [businessUsers]);
 
-
-
   const sendHandler = async () => {
-    if(inputBusinessID !== "" && dateFrom !== "" && dateTo !== ""){
+    if (inputBusinessID !== "" && dateFrom !== "" && dateTo !== "") {
       const res = await reportByDate(inputBusinessID, dateFrom, dateTo);
       console.log("reportDates =", res);
       setDateResult(res);
+    } else {
+      alert("הנה מלא את כל השדות");
     }
-    else{
-      alert("הנה מלא את כל השדות")
-    }
-    
-   
   };
 
   //handler if user click button without date insert
   const excelbuttonHandler = () => {
-    if (dateResult === null&&dateResult ===undefined) {
-      alert("לא ניתן להפיק קובץ בלי מידע")
+    if (dateResult === null && dateResult === undefined) {
+      alert("לא ניתן להפיק קובץ בלי מידע");
       return;
     }
-
-  }
+  };
 
   return (
     <div className="w-screen h-screen bg-gray-300 overflow-y-auto">
@@ -167,7 +191,7 @@ const AdminPage = () => {
           </svg>
         </a>
         <h1 className="ml-96 text-xl font-sans leading-6 font-bold">
-          !שלום {user && user.adminName} אדמין
+          !שלום {user ? user.adminName : adminName && adminName.adminName} אדמין
         </h1>
         <img src={Logo} alt="Logo" className=" w-52 mr-5 h-20" />
       </div>
@@ -182,31 +206,44 @@ const AdminPage = () => {
                 <h1>{clientUsers.length} :לקוחות אפליקציה</h1>
               </div>
             </div>
-            <div   dir="rtl" className="flex justify-center items-center w-full p-5">
-              <h1 className="leading-6 text-2xl ">5 המשתמשים בעלי כמות ההזמנות הגבוהה ביותר</h1>
+            <div
+              dir="rtl"
+              className="flex justify-center items-center w-full p-5"
+            >
+              <h1 className="leading-6 text-2xl ">
+                5 המשתמשים בעלי כמות ההזמנות הגבוהה ביותר
+              </h1>
             </div>
-            <div  className=" w-full h-full ">
+            <div className=" w-full h-full ">
               <BarChart
                 nameOfUsers={nameOfUsers}
                 userNumOfOrders={userNumOfOrders}
               />
             </div>
           </div>
+          <div className="flex flex-col justify-around  w-3/6 max-h-full  p-3 mx-3  rounded-lg  ">
+            <div
+              dir="rtl"
+              className="bg-white flex flex-col  items-center max-w-full max-h-96  p-3 mx-3  rounded-lg  "
+            >
+              <h1 className="text-2xl leading-6">3 העסקים המובילים</h1>
 
-          <div
-            dir="rtl"
-            className="bg-white flex flex-col justify-center items-center w-3/6 max-h-96  p-3 mx-3  rounded-lg  "
-          >
-            <h1 className="text-2xl leading-6">3 העסקים המובילים</h1>
-
-            <PieChart
-              numberOfOrders={numberOfOrders}
-              namesOfBusiness={namesOfBusiness}
-            />
+              <PieChart
+                numberOfOrders={numberOfOrders}
+                namesOfBusiness={namesOfBusiness}
+              />
+            </div>
+            <div   dir="rtl"
+              className="bg-white flex flex-col  items-center max-w-full h-96  p-3 mx-3 rounded-lg  ">
+                <LineChart 
+                monthNamesForLine={monthNamesForLine}
+                orderAmountForLine={orderAmountForLine}
+                
+                />
+            </div>
           </div>
         </div>
       </div>
-
       <div>
         <div className="bg-gray-200 flex flex-col w-full h-full items-center rounded-lg p-2">
           <div className="bg-gray-300 flex w-full  items-center justify-end p-7 rounded-lg">
@@ -228,9 +265,9 @@ const AdminPage = () => {
             {unActiveBusiness === null ? (
               <Loader />
             ) : (
-              unActiveBusiness.map((user) => {
+              unActiveBusiness.map((user,index) => {
                 return (
-                  <div className="bg-gray-50 w-full flex justify-between items-center my-2 flex-row-reverse p-5 text-lg leading-6 rounded-lg overflow-auto ring-4 ring-green-500 hover:bg-green-300">
+                  <div key={index} className ="bg-gray-50 w-full flex justify-between items-center my-2 flex-row-reverse p-5 text-lg leading-6 rounded-lg overflow-auto ring-4 ring-green-500 hover:bg-green-300">
                     <h1>{user.businessID}</h1>
                     <h1>{user.businessName}</h1>
                     <h1>{user.businessEmail}</h1>
@@ -260,108 +297,106 @@ const AdminPage = () => {
         <div className="bg-gray-300 flex w-full my-7  items-center justify-end p-8 rounded-lg">
           <h1 className="text-3xl leading-6">הפקת דוחות</h1>
         </div>
-        
-      <div className="w-full h-screen flex flex-col p-5">
-        <div dir="rtl" className="w-full h-28 flex flex-col ">
-          <div className="bg-gray-200 p-5 rounded-t-xl">
-            <h1 className="text-xl  font-medium my-2 ">הפקת דוחות</h1>
-            <h2 className="text-md font-normal text-gray-500">
-              כאן ניתן לצפות בהזמנות שלך לפי תאריך ולהפיק את ההזמנות לקובץ אקסל
-            </h2>
-          </div>
-        </div>
-        <div className="bg-gray-200 w-full h-36 flex justify-center items-center rounded-b-xl">
-          <div  className=" flex w-full items-center justify-around ">
-            <button
-              className="bg-green-400 w-48 h-14 ring-4 ring-green-300 text-black hover:ring-green-900 hover:text-white text-xl rounded-lg"
-              onClick={() => {
-                sendHandler();
-              }}
-            >
-              להצגת ההזמנות
-            </button>
-            <div className="flex flex-row items-center">
 
-            <input
-              
-              type="text"
-              className="w-48 rounded-md h-14 font-semibold"
-              onChange={(val) => setInputBusinessID(val.target.value)}
-            />
-             <p className="m-2 text-lg">קוד בעל עסק</p>
-            </div>
-            <div className="flex flex-row items-center">
-
-            <input
-             
-              type="date"
-              className="w-48 rounded-md h-14 font-semibold"
-              onChange={(val) => setDateTo(val.target.value)}
-            />
-            <p className="m-2 text-lg">עד תאריך</p>
-
-            </div>
-            <div className="flex flex-row items-center">
-
-            <input
-              type="date"
-              className="w-48 rounded-md h-14 font-semibold"
-              onChange={(val) => setDateFrom(val.target.value)}
-            />
-           <p className="m-2 text-lg">מתאריך</p>
-         
+        <div className="w-full h-screen flex flex-col p-5">
+          <div dir="rtl" className="w-full h-28 flex flex-col ">
+            <div className="bg-gray-200 p-5 rounded-t-xl">
+              <h1 className="text-xl  font-medium my-2 ">הפקת דוחות</h1>
+              <h2 className="text-md font-normal text-gray-500">
+                כאן ניתן לצפות בהזמנות שלך לפי תאריך ולהפיק את ההזמנות לקובץ
+                אקסל
+              </h2>
             </div>
           </div>
-        </div>
-
-        <div dir="rtl" className="flex w-full h-4/6 flex-col p-5 rounded-b-xl">
-          <table id="reportTable" className="table-auto flex flex-col  ">
-
-            <thead className="bg-red-500 flex flex-col p-5 mb-5 text-xl font-bold leading-6 rounded-md">
-              <tr className="flex items-center justify-between">
-                <td>מספר הזמנה</td>
-                <td>שם לקוח</td>
-                <td>האם שולם ?</td>
-                <td>תאריך הזמנה</td>
-                <td>סכום הזמנה</td>
-              </tr>
-            </thead>
-
-            <div className="h-4/6 overflow-y-scroll">
-              <tbody className="flex flex-col p-5 ">
-                {dateResult &&
-                  dateResult.map((item, index) => {
-                    return (
-                      <tr className="bg-gray-50 w-full flex justify-between items-center my-2 flex-row p-5 text-lg leading-6 rounded-md overflow-auto ring-4 ring-green-500 hover:bg-green-300" key={index}>
-                        <td>{item.orderID}</td>
-                        <td>{item.userName}</td>
-                        <td>{item.orderPaidUp ? "כן" : "לא"}</td>
-                        <td>{item.orderDate}</td>
-                        <td>{item.orderTotalPrice}₪</td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
+          <div className="bg-gray-200 w-full h-36 flex justify-center items-center rounded-b-xl">
+            <div className=" flex w-full items-center justify-around ">
+              <button
+                className="bg-green-400 w-48 h-14 ring-4 ring-green-300 text-black hover:ring-green-900 hover:text-white text-xl rounded-lg"
+                onClick={() => {
+                  sendHandler();
+                }}
+              >
+                להצגת ההזמנות
+              </button>
+              <div className="flex flex-row items-center">
+                <input
+                  type="text"
+                  className="w-48 rounded-md h-14 font-semibold"
+                  onChange={(val) => setInputBusinessID(val.target.value)}
+                />
+                <p className="m-2 text-lg">קוד בעל עסק</p>
+              </div>
+              <div className="flex flex-row items-center">
+                <input
+                  type="date"
+                  className="w-48 rounded-md h-14 font-semibold"
+                  onChange={(val) => setDateTo(val.target.value)}
+                />
+                <p className="m-2 text-lg">עד תאריך</p>
+              </div>
+              <div className="flex flex-row items-center">
+                <input
+                  type="date"
+                  className="w-48 rounded-md h-14 font-semibold"
+                  onChange={(val) => setDateFrom(val.target.value)}
+                />
+                <p className="m-2 text-lg">מתאריך</p>
+              </div>
             </div>
-          </table>
+          </div>
 
-        </div>
-        {dateTo===""||dateFrom===""||dateResult===null?<div></div>:
-        <div className=" flex items-center justify-center">
-          <ReactHTMLTableToExcel
-            className="bg-green-400 ring-4 ring-green-300 text-black hover:ring-green-900 hover:text-white p-5 px-10 text-xl rounded-md"
-            table="reportTable"
-            filename={`${inputBusinessID}-${dateFrom}-${dateTo}`}
-            sheet="Sheet"
-            buttonText="להפקת קובץ אקסל לחץ כאן"
-            onClick={excelbuttonHandler}
-          />
-        </div>
-        }
-      </div>
-      </div>
+          <div
+            dir="rtl"
+            className="flex w-full h-4/6 flex-col p-5 rounded-b-xl"
+          >
+            <table id="reportTable" className="table-auto flex flex-col  ">
+              <thead className="bg-red-500 flex flex-col p-5 mb-5 text-xl font-bold leading-6 rounded-md">
+                <tr className="flex items-center justify-between">
+                  <td>מספר הזמנה</td>
+                  <td>שם לקוח</td>
+                  <td>האם שולם ?</td>
+                  <td>תאריך הזמנה</td>
+                  <td>סכום הזמנה</td>
+                </tr>
+              </thead>
 
-    
+              <div className="h-4/6 overflow-y-scroll">
+                <tbody className="flex flex-col p-5 ">
+                  {dateResult &&
+                    dateResult.map((item, index) => {
+                      return (
+                        <tr
+                          className="bg-gray-50 w-full flex justify-between items-center my-2 flex-row p-5 text-lg leading-6 rounded-md overflow-auto ring-4 ring-green-500 hover:bg-green-300"
+                          key={index}
+                        >
+                          <td>{item.orderID}</td>
+                          <td>{item.userName}</td>
+                          <td>{item.orderPaidUp ? "כן" : "לא"}</td>
+                          <td>{item.orderDate}</td>
+                          <td>{item.orderTotalPrice}₪</td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </div>
+            </table>
+          </div>
+          {dateTo === "" || dateFrom === "" || dateResult === null ? (
+            <div></div>
+          ) : (
+            <div className=" flex items-center justify-center">
+              <ReactHTMLTableToExcel
+                className="bg-green-400 ring-4 ring-green-300 text-black hover:ring-green-900 hover:text-white p-5 px-10 text-xl rounded-md"
+                table="reportTable"
+                filename={`${inputBusinessID}-${dateFrom}-${dateTo}`}
+                sheet="Sheet"
+                buttonText="להפקת קובץ אקסל לחץ כאן"
+                onClick={excelbuttonHandler}
+              />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
