@@ -6,7 +6,7 @@ export const Footer = () => {
      
      <a href="mailto:foodfindil@gmail.com">צור קשר</a>
       
-      <p>תנאי השימוש</p>
+      <p>© FoodFind IL </p>
     </div>
   );
 };

@@ -235,6 +235,7 @@ const AdminPage = () => {
             </div>
             <div   dir="rtl"
               className="bg-white flex flex-col  items-center max-w-full h-96  p-3 mx-3 rounded-lg  ">
+                <h1 className="text-2xl leading-6">גרף כמות הזמנות על פי חודשים</h1>
                 <LineChart 
                 monthNamesForLine={monthNamesForLine}
                 orderAmountForLine={orderAmountForLine}
