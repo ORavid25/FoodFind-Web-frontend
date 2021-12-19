@@ -32,7 +32,9 @@ const LineChart = ({monthNamesForLine,orderAmountForLine}) => {
                 "rgba(255, 159, 64, 1)",
               ],
               borderWidth: 2,
+              tension:0.3,
             },
+            
             // {
             //   label: 'Quantity',
             //   data: [47, 52, 67, 58, 9, 50],

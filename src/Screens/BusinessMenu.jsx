@@ -33,6 +33,10 @@ const BusinessMenu = () => {
     await setBusinessToppings(toppings)
   }
 
+  const handleCloseAddItem=() => {
+    setAddItem(!addItem);
+  }
+
   useEffect(() => {
     GetAllItemsAndToppings();
   }, []);
@@ -64,6 +68,7 @@ const BusinessMenu = () => {
                 dataItemID={upliftData}
                 GetAllItemsAndToppings={GetAllItemsAndToppings}
                 businessItems={businessItems}
+                handleCloseAddItem={handleCloseAddItem}
               />
             </div>
           ) : (

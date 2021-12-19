@@ -127,6 +127,7 @@ const FormContainer = (props) => {
                 );
                 await props.dataItemID(res);
                 await props.GetAllItemsAndToppings();
+                await props.handleCloseAddItem();
               } else {
                 alert(
                   "נא למלא את הפרטים, מלבד תיאור מוצר שאינו חובה אך מומלץ!"
